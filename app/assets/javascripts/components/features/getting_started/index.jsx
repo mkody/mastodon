@@ -44,6 +44,10 @@ const GettingStarted = ({ intl, me }) => {
       <div className='scrollable optionally-scrollable' style={{ display: 'flex', flexDirection: 'column' }}>
         <div className='static-content getting-started'>
           <p><FormattedMessage id='getting_started.open_source_notice' defaultMessage='Mastodon is open source software. You can contribute or report issues on GitHub at {github}. {apps}.' values={{ github: <a href="https://github.com/tootsuite/mastodon" target="_blank">tootsuite/mastodon</a>, apps: <a href="https://github.com/tootsuite/documentation/blob/master/Using-Mastodon/Apps.md" target="_blank"><FormattedMessage id='getting_started.apps' defaultMessage='Various apps are available' /></a> }} /></p>
+          <p>
+            Theme <a href="https://userstyles.org/styles/140852/mastodon-flat-dark-and-colourful">Flat, Dark and Colourful!</a> by <a class="aboutlink" href="https://aleph.land/@dia">@dia@aleph.land</a>.<br />
+            <a href="http://tertonda.deviantart.com/art/Space-Core-268796291">Space Core</a> by TertonDA.
+          </p>
         </div>
       </div>
     </Column>

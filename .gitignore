@@ -22,6 +22,7 @@ public/assets
 .env.production
 node_modules/
 neo4j/
+/vendor/bundle
 
 # Ignore Vagrant files
 .vagrant/
