@@ -1,41 +1,35 @@
 .aboutlink {
-	color: white;
+  color: white;
 }
 
 .spacecore {
-	-webkit-animation: rotateCore 15s linear infinite;
-	animation: rotateCore 15s linear infinite;
-	background: url('https://im-in.space/system/media_attachments/files/000/000/001/original/4652c4979c154c94.png') no-repeat;
-	background-size: cover;
-	height: 150px; width: 150px;
-	margin: 15px auto 30px;
+  animation: rotateCore 15s linear infinite;
+  background: url('https://im-in.space/system/media_attachments/files/000/000/001/original/4652c4979c154c94.png') no-repeat;
+  background-size: cover;
+  height: 150px;
+  margin: 15px auto 30px;
+  width: 150px;
 }
 
 @keyframes rotateCore {
-    0% {
-    	-ms-transform: rotate(0deg);
-	transform: rotate(0deg);
-    }
-    20% {
-    	-ms-transform: rotate(20deg);
-    	transform: rotate(20deg);
-    }
-    40% {
-    	-ms-transform: rotate(100deg);
-    	transform: rotate(100deg);
-    }
-    60% {
-    	-ms-transform: rotate(220deg);
-    	transform: rotate(220deg);
-    }
-    80% {
-    	-ms-transform: rotate(300deg);
-    	transform: rotate(300deg);
-    }
-    100% {
-    	-ms-transform: rotate(360deg);
-    	transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(20deg);
+  }
+  40% {
+    transform: rotate(100deg);
+  }
+  60% {
+    transform: rotate(220deg);
+  }
+  80% {
+    transform: rotate(300deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 body.app-body {
