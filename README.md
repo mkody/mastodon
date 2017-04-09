@@ -1,11 +1,11 @@
 Mastodon
 ========
 
-[![Build Status](http://img.shields.io/travis/tootsuite/mastodon.svg)][travis]
-[![Code Climate](https://img.shields.io/codeclimate/github/tootsuite/mastodon.svg)][code_climate]
+[![Build Status](http://img.shields.io/travis/im-in-space/mastodon.svg)][travis]
+[![Code Climate](https://img.shields.io/codeclimate/github/im-in-space/mastodon.svg)][code_climate]
 
-[travis]: https://travis-ci.org/tootsuite/mastodon
-[code_climate]: https://codeclimate.com/github/tootsuite/mastodon
+[travis]: https://travis-ci.org/im-in-space/mastodon
+[code_climate]: https://codeclimate.com/github/im-in-space/mastodon
 
 Mastodon is a free, open-source social network server. A decentralized solution to commercial platforms, it avoids the risks of a single company monopolizing your communication. Anyone can run Mastodon and participate in the social network seamlessly.
 
@@ -13,7 +13,7 @@ An alternative implementation of the GNU social project. Based on ActivityStream
 
 Click on the screenshot to watch a demo of the UI:
 
-[![Screenshot](https://i.imgur.com/T2q5V65.png)][youtube_demo]
+[![Screenshot](https://i.imgur.com/LPtJJtR.png)][youtube_demo]
 
 [youtube_demo]: https://www.youtube.com/watch?v=YO1jQ8_rAMU
 
@@ -25,7 +25,7 @@ If you would like, you can [support the development of this project on Patreon][
 
 ## Resources
 
-- [List of Mastodon instances](https://github.com/tootsuite/documentation/blob/master/Using-Mastodon/List-of-Mastodon-instances.md)
+- [List of Mastodon instances](https://instances.mastodon.xyz)
 - [Use this tool to find Twitter friends on Mastodon](https://mastodon-bridge.herokuapp.com)
 - [API overview](https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md)
 - [Frequently Asked Questions](https://github.com/tootsuite/documentation/blob/master/Using-Mastodon/FAQ.md)
