@@ -1,10 +1,29 @@
-.aboutlink {
-  color: white;
+/* Change app background */
+body {
+  background: $color1 image-url('space-bg.jpg');
 }
 
+
+/* Some changes to the about pages */
+.about-body {
+  background-color: rgba(0, 0, 0, 0.7);
+  max-width: 700px;
+  padding: 50px;
+
+  ol {
+    margin-bottom: 26px;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+}
+
+
+/* Funny rotating Space Core */
 .spacecore {
   animation: rotateCore 15s linear infinite;
-  background: url('https://im-in.space/system/media_attachments/files/000/000/001/original/4652c4979c154c94.png') no-repeat;
+  background: url('logo.png') no-repeat;
   background-size: cover;
   height: 150px;
   margin: 15px auto 30px;
@@ -32,6 +51,55 @@
   }
 }
 
+
+/* Make UI fluid for large width */
+/* 1338px, we failed by ONE pixel */
+@media screen and (min-width: 1338px) {
+  body.app-body .column {
+    flex: 1 1 0;
+  }
+}
+
+
+/* Header image is also a blurred background image */
+.pagination {
+  a, .current, .next_page, .previous_page, .gap {
+    background: $color1;
+  }
+
+  .next_page .fa {
+    margin-right: 7px;
+  }
+}
+
+.bg-profile {
+  display: none;
+}
+
+@supports (filter: blur(8px)) {
+  .bg-profile {
+    display: block;
+    filter: blur(8px);
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+
+    .bg-profile-img {
+      background-size: cover;
+      background-position: center;
+      height: calc(100% + 30px);
+      margin: -15px;
+      width: calc(100% + 30px);
+    }
+  }
+}
+
+
+/* Wrapping this style in the body for the app only */
+/* https://userstyles.org/styles/140852/mastodon-flat-dark-and-colourful */
 body.app-body {
 
 .button {
