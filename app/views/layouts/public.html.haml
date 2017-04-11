@@ -7,13 +7,12 @@
     %span.domain= link_to Rails.configuration.x.local_domain, root_path
     %span.powered-by
       = t('generic.powered_by', link: link_to('Mastodon', 'https://github.com/tootsuite/mastodon')).html_safe
+    %br
+    = link_to image_tag("https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0", style: "border: 0px; height: 26px; vertical-align: middle;"), "https://ko-fi.com/A637AV5"
     = javascript_include_tag("https://liberapay.com/kdy/widgets/button.js")
     %noscript
-      %a{ href: "https://liberapay.com/kdy/donate" }
-        = image_tag("https://liberapay.com/assets/widgets/donate.svg")
-    %br
-    %a{ href: "https://ko-fi.com/A637AV5" }
-      = image_tag("https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0", style: "border: 0px; height: 36px;")
+      = link_to image_tag("https://liberapay.com/assets/widgets/donate.svg"), "https://liberapay.com/kdy/donate"
+
 
 
 = render template: "layouts/application"
