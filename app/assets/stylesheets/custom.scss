@@ -5,8 +5,9 @@ body {
 
 
 /* Some changes to the about pages */
-.about-body {
+.about-body .wrapper {
   background-color: rgba(0, 0, 0, 0.7);
+  margin: 0 auto;
   max-width: 700px;
   padding: 50px;
 
@@ -23,7 +24,7 @@ body {
 /* Funny rotating Space Core */
 .spacecore {
   animation: rotateCore 15s linear infinite;
-  background: url('logo.png') no-repeat;
+  background: url('https://im-in.space/assets/logo-f768c8c8320b2bda59cbf815532fb57328a4478a98e04b0ee25f948953565897.png') no-repeat;
   background-size: cover;
   height: 150px;
   margin: 15px auto 30px;
