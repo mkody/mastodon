@@ -1,6 +1,9 @@
 - content_for :page_title do
   = t('accounts.people_who_follow', name: display_name(@account))
 
+.bg-profile
+  .bg-profile-img{ style: "background-image: url(#{@account.header.url(:original)})" }
+
 = render partial: 'header'
 
 .accounts-grid
