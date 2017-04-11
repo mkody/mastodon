@@ -202,7 +202,8 @@ body.app-body {
   }
   
   .status__prepend,
-  .status {
+  .status,
+  .column>.scrollable {
     background-color: #223;
     color: #fff;
     border-bottom: 0;
