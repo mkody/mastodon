@@ -64,7 +64,7 @@ body {
 
 /* Header image is also a blurred background image */
 .pagination {
-  a, .current, .next_page, .previous_page, .gap {
+  a, .next_page, .previous_page, .gap {
     background: $color1;
   }
 
