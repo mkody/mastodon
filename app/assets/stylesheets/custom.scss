@@ -64,12 +64,8 @@ body {
 
 /* Header image is also a blurred background image */
 .pagination {
-  a, .next_page, .previous_page, .gap {
+  a {
     background: $color1;
-  }
-
-  .next_page .fa {
-    margin-right: 7px;
   }
 }
 
