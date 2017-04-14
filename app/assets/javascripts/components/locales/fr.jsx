@@ -59,7 +59,7 @@ const fr = {
   "tabs_bar.local_timeline": "Fil public local",
   "tabs_bar.federated_timeline": "Fil public global",
   "compose_form.placeholder": "Qu’avez-vous en tête ?",
-  "compose_form.publish": "Pouet",
+  "compose_form.publish": "Décollage",
   "compose_form.sensitive": "Marquer le média comme délicat",
   "compose_form.spoiler": "Masquer le texte derrière un avertissement",
   "compose_form.spoiler_placeholder": "Avertissement",
