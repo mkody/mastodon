@@ -2,7 +2,7 @@
   = t('accounts.people_followed_by', name: display_name(@account))
 
 .bg-profile
-  .bg-profile-img{ style: "background-image: url(#{@account.header.url(:original)})" }
+  .bg-profile-img{ style: "background-image: url(#{@account.header_static_url})" }
 
 = render partial: 'header'
 
