@@ -80,6 +80,13 @@ body {
 }
 
 
+/* Revert margin to make the app scrollable horizontaly */
+.columns-area {
+  margin: 0;
+}
+
+
+
 /* Header image is also a blurred background image */
 .pagination {
   a {

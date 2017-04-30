@@ -2,3 +2,9 @@
   .panel-header= t 'about.version'
   .panel-body
     %strong= version.version_number
+
+.panel
+  .panel-header= 'Git Commit'
+  .panel-list
+    %ul
+      %li= link_to version.git_hash, ('https://github.com/im-in-space/mastodon/commit/' + version.git_hash)
