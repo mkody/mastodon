@@ -46,17 +46,13 @@
   "emoji_button.flags": "Flags",
   "emoji_button.food": "Food & Drink",
   "emoji_button.label": "Insérer un emoji",
-<<<<<<< HEAD:app/assets/javascripts/components/locales/fr.jsx
-  "empty_column.community": "Le fil du système solaire est vide. Écrivez-donc quelque chose pour le remplir !",
-=======
   "emoji_button.nature": "Nature",
   "emoji_button.objects": "Objects",
   "emoji_button.people": "People",
   "emoji_button.search": "Search...",
   "emoji_button.symbols": "Symbols",
   "emoji_button.travel": "Travel & Places",
-  "empty_column.community": "Le fil public local est vide. Écrivez-donc quelque chose pour le remplir !",
->>>>>>> master:app/javascript/mastodon/locales/fr.json
+  "empty_column.community": "Le fil du système solaire est vide. Écrivez-donc quelque chose pour le remplir !",
   "empty_column.hashtag": "Il n’y a encore aucun contenu relatif à ce hashtag",
   "empty_column.home.public_timeline": "le fil galactique",
   "empty_column.home": "Vous ne suivez encore personne. Visitez {public} ou bien utilisez la recherche pour vous connecter à d’autres utilisateurs⋅trices.",
@@ -154,15 +150,8 @@
   "tabs_bar.compose": "Composer",
   "tabs_bar.federated_timeline": "Fil galactique",
   "tabs_bar.home": "Accueil",
-<<<<<<< HEAD:app/assets/javascripts/components/locales/fr.jsx
   "tabs_bar.local_timeline": "Fil du système solaire",
-  "tabs_bar.mentions": "Mentions",
   "tabs_bar.notifications": "Notifications",
-  "tabs_bar.public": "Fil public",
-=======
-  "tabs_bar.local_timeline": "Fil public local",
-  "tabs_bar.notifications": "Notifications",
->>>>>>> master:app/javascript/mastodon/locales/fr.json
   "upload_area.title": "Glissez et déposez pour envoyer",
   "upload_button.label": "Joindre un média",
   "upload_form.undo": "Annuler",
