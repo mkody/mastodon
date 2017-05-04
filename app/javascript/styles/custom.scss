@@ -1,6 +1,6 @@
 /* Change app background */
 body {
-  background: $color1 image-url('space-bg.jpg');
+  background: $color1 url('../images/space-bg.jpg');
 }
 
 
@@ -20,7 +20,7 @@ body {
 /* Funny rotating Space Core */
 .spacecore {
   animation: rotateCore 15s linear infinite;
-  background: url('https://im-in.space/assets/logo-f768c8c8320b2bda59cbf815532fb57328a4478a98e04b0ee25f948953565897.png') no-repeat;
+  background: url('../images/spacecore.png') no-repeat;
   background-size: cover;
   height: 150px;
   margin: 15px auto 30px;
