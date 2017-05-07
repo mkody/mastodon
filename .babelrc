@@ -1,16 +1,18 @@
 {
   "presets": [
-    "es2015",
     "react",
     [
       "env",
       {
         "loose": true,
-        "modules": false
+        "targets": {
+          "browsers": ["last 2 versions", "IE >= 11", "iOS >= 9"]
+        }
       }
     ]
   ],
   "plugins": [
+    "syntax-dynamic-import",
     "transform-object-rest-spread",
     [
       "react-intl",
