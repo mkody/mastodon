@@ -96,11 +96,6 @@ body {
   }
 }
 
-/* Fix background color toggle in column settings */
-body.app-body .setting-toggle {
-  background-color: transparent;
-}
-
 /* Wrapping this style in the body for the app only */
 /* https://userstyles.org/styles/140852/mastodon-flat-dark-and-colourful */
 body.app-body {
@@ -136,7 +131,7 @@ body.app-body {
     font-size: 20px !important;
     padding-bottom: 13px !important;
   }
-  .column-settings--outer, .column-settings--section, .setting-toggle {
+  .column-settings--outer, .column-settings--section {
     background-color: #3aaacf;
     color: #fff;
   }
