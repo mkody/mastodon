@@ -7,14 +7,14 @@
     - if !user_signed_in? && single_user_mode?
       %span.single-user-login
         = link_to t('auth.login'), new_user_session_path
-        = "\u2014"
+        \u2014
     %span.domain= link_to site_hostname, root_path
     %span.powered-by
-      = t('generic.powered_by', link: link_to('Mastodon', 'https://github.com/im-in-space/mastodon')).html_safe
+      != t('generic.powered_by', link: link_to('Mastodon', 'https://github.com/im-in-space/mastodon'))
     %br
     = link_to image_tag("/assets/kofi2.png", style: "border: 0px; height: 26px; vertical-align: top;"), "https://ko-fi.com/A637AV5"
     = javascript_include_tag("https://liberapay.com/kdy/widgets/button.js")
     %noscript
       = link_to image_tag("https://liberapay.com/assets/widgets/donate.svg"), "https://liberapay.com/kdy/donate"
 
-= render template: "layouts/application"
+= render template: 'layouts/application'
