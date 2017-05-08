@@ -1,6 +1,6 @@
 /* Change app background */
 body {
-  background: $color1 url('../images/space-bg.jpg');
+  background: $classic-base-color url('../images/space-bg.jpg');
 }
 
 
@@ -64,11 +64,10 @@ body {
 }
 
 
-
 /* Header image is also a blurred background image */
 .pagination {
   a {
-    background: $color1;
+    background: $classic-base-color;
   }
 }
 
@@ -97,6 +96,10 @@ body {
   }
 }
 
+/* Fix background color toggle in column settings */
+body.app-body .setting-toggle {
+  background-color: transparent;
+}
 
 /* Wrapping this style in the body for the app only */
 /* https://userstyles.org/styles/140852/mastodon-flat-dark-and-colourful */
