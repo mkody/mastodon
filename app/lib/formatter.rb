@@ -25,6 +25,17 @@ class Formatter
     sanitize(html, Sanitize::Config::MASTODON_STRICT).html_safe # rubocop:disable Rails/OutputSafety
   end
 
+  def format_spoiler(status)
+    return reformat(status.spoiler_text) unless status.local?
+
+    html = status.spoiler_text
+    html = encode(html)
+    html = html.delete("\n")
+    html = link_hashtags(html)
+
+    html.html_safe # rubocop:disable Rails/OutputSafety
+  end
+
   def plaintext(status)
     return status.text if status.local?
     strip_tags(status.text)
@@ -92,6 +103,8 @@ class Formatter
       rel: 'nofollow noopener',
     }
     Twitter::Autolink.send(:link_to_text, entity, link_html(entity[:url]), normalized_url, html_attrs)
+  rescue Addressable::URI::InvalidURIError
+    encode(entity[:url])
   end
 
   def link_to_mention(entity, mentions)
