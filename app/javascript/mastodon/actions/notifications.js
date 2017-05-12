@@ -1,7 +1,6 @@
 import api, { getLinks } from '../api'
 import Immutable from 'immutable';
 import IntlMessageFormat from 'intl-messageformat';
-import { unescape } from 'lodash';
 import { fetchRelationships } from './accounts';
 
 export const NOTIFICATIONS_UPDATE = 'NOTIFICATIONS_UPDATE';
@@ -25,7 +24,11 @@ const fetchRelatedRelationships = (dispatch, notifications) => {
   }
 };
 
-const unescapeHTML = (html) => unescape(html).replace(/<\/?\w+(?:\s[^>]*)?>/g, '');
+const unescapeHTML = (html) => {
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = html;
+  return wrapper.textContent;
+}
 
 export function updateNotifications(notification, intlMessages, intlLocale) {
   return (dispatch, getState) => {
@@ -45,9 +48,13 @@ export function updateNotifications(notification, intlMessages, intlLocale) {
     // Desktop notifications
     if (typeof window.Notification !== 'undefined' && showAlert) {
       const title = new IntlMessageFormat(intlMessages[`notification.${notification.type}`], intlLocale).format({ name: notification.account.display_name.length > 0 ? notification.account.display_name : notification.account.username });
-      const body  = (notification.status && notification.status.spoiler_text.length > 0) ? notification.status.spoiler_text : unescapeHTML(notification.status ? notification.status.content : '');
+      const body  = (notification.status && notification.status.spoiler_text.length > 0) ? unescapeHTML(notification.status.spoiler_text) : unescapeHTML(notification.status ? notification.status.content : '');
 
-      new Notification(title, { body, icon: notification.account.avatar, tag: notification.id });
+      const notify = new Notification(title, { body, icon: notification.account.avatar, tag: notification.id });
+      notify.addEventListener('click', () => {
+        window.focus();
+        notify.close();
+      });
     }
   };
 };
