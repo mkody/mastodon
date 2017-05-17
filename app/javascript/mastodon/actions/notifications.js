@@ -2,6 +2,7 @@ import api, { getLinks } from '../api'
 import Immutable from 'immutable';
 import IntlMessageFormat from 'intl-messageformat';
 import { fetchRelationships } from './accounts';
+import { defineMessages } from 'react-intl';
 
 export const NOTIFICATIONS_UPDATE = 'NOTIFICATIONS_UPDATE';
 
@@ -15,6 +16,10 @@ export const NOTIFICATIONS_EXPAND_FAIL    = 'NOTIFICATIONS_EXPAND_FAIL';
 
 export const NOTIFICATIONS_CLEAR      = 'NOTIFICATIONS_CLEAR';
 export const NOTIFICATIONS_SCROLL_TOP = 'NOTIFICATIONS_SCROLL_TOP';
+
+const messages = defineMessages({
+  mention: { id: 'notification.mention', defaultMessage: '{name} mentioned you' },
+});
 
 const fetchRelatedRelationships = (dispatch, notifications) => {
   const accountIds = notifications.filter(item => item.type === 'follow').map(item => item.account.id);
@@ -48,7 +53,7 @@ export function updateNotifications(notification, intlMessages, intlLocale) {
     // Desktop notifications
     if (typeof window.Notification !== 'undefined' && showAlert) {
       const title = new IntlMessageFormat(intlMessages[`notification.${notification.type}`], intlLocale).format({ name: notification.account.display_name.length > 0 ? notification.account.display_name : notification.account.username });
-      const body  = (notification.status && notification.status.spoiler_text.length > 0) ? unescapeHTML(notification.status.spoiler_text) : unescapeHTML(notification.status ? notification.status.content : '');
+      const body  = (notification.status && notification.status.spoiler_text.length > 0) ? notification.status.spoiler_text : unescapeHTML(notification.status ? notification.status.content : '');
 
       const notify = new Notification(title, { body, icon: notification.account.avatar, tag: notification.id });
       notify.addEventListener('click', () => {

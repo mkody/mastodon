@@ -1,3 +1,7 @@
+// allow override variables here
+require.context('../../assets/stylesheets/', false, /variables.*\.scss$/);
+
+// import default stylesheet with variables
 require('font-awesome/css/font-awesome.css');
 require('../styles/application.scss');
 
@@ -13,12 +17,11 @@ function main() {
   const Mastodon = require('mastodon/containers/mastodon').default;
   const React = require('react');
   const ReactDOM = require('react-dom');
-  const Rails = require('rails-ujs');
   window.Perf = require('react-addons-perf');
 
-  Rails.start();
-
   require.context('../images/', true);
+
+  // import customization styles
   require.context('../../assets/stylesheets/', false, /custom.*\.scss$/);
 
   onDomContentLoaded(() => {

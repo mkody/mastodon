@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170507141759) do
+ActiveRecord::Schema.define(version: 20170516072309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20170507141759) do
     t.datetime "last_webfingered_at"
     t.index "(((setweight(to_tsvector('simple'::regconfig, (display_name)::text), 'A'::\"char\") || setweight(to_tsvector('simple'::regconfig, (username)::text), 'B'::\"char\")) || setweight(to_tsvector('simple'::regconfig, (COALESCE(domain, ''::character varying))::text), 'C'::\"char\")))", name: "search_index", using: :gin
     t.index "lower((username)::text), lower((domain)::text)", name: "index_accounts_on_username_and_domain_lower", using: :btree
+    t.index ["uri"], name: "index_accounts_on_uri", using: :btree
     t.index ["url"], name: "index_accounts_on_url", using: :btree
     t.index ["username", "domain"], name: "index_accounts_on_username_and_domain", unique: true, using: :btree
   end
@@ -60,6 +61,19 @@ ActiveRecord::Schema.define(version: 20170507141759) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.index ["account_id", "target_account_id"], name: "index_blocks_on_account_id_and_target_account_id", unique: true, using: :btree
+  end
+
+  create_table "conversation_mutes", force: :cascade do |t|
+    t.integer "account_id",      null: false
+    t.bigint  "conversation_id", null: false
+    t.index ["account_id", "conversation_id"], name: "index_conversation_mutes_on_account_id_and_conversation_id", unique: true, using: :btree
+  end
+
+  create_table "conversations", id: :bigserial, force: :cascade do |t|
+    t.string   "uri"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uri"], name: "index_conversations_on_uri", unique: true, using: :btree
   end
 
   create_table "domain_blocks", force: :cascade do |t|
@@ -255,7 +269,9 @@ ActiveRecord::Schema.define(version: 20170507141759) do
     t.integer  "favourites_count",       default: 0,     null: false
     t.integer  "reblogs_count",          default: 0,     null: false
     t.string   "language",               default: "en",  null: false
+    t.bigint   "conversation_id"
     t.index ["account_id"], name: "index_statuses_on_account_id", using: :btree
+    t.index ["conversation_id"], name: "index_statuses_on_conversation_id", using: :btree
     t.index ["in_reply_to_id"], name: "index_statuses_on_in_reply_to_id", using: :btree
     t.index ["reblog_of_id"], name: "index_statuses_on_reblog_of_id", using: :btree
     t.index ["uri"], name: "index_statuses_on_uri", unique: true, using: :btree

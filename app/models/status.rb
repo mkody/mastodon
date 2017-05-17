@@ -21,6 +21,7 @@
 #  favourites_count       :integer          default(0), not null
 #  reblogs_count          :integer          default(0), not null
 #  language               :string           default("en"), not null
+#  conversation_id        :integer
 #
 
 class Status < ApplicationRecord
@@ -34,6 +35,7 @@ class Status < ApplicationRecord
 
   belongs_to :account, inverse_of: :statuses, counter_cache: true, required: true
   belongs_to :in_reply_to_account, foreign_key: 'in_reply_to_account_id', class_name: 'Account'
+  belongs_to :conversation
 
   belongs_to :thread, foreign_key: 'in_reply_to_id', class_name: 'Status', inverse_of: :replies
   belongs_to :reblog, foreign_key: 'reblog_of_id', class_name: 'Status', inverse_of: :reblogs, counter_cache: :reblogs_count
@@ -53,7 +55,7 @@ class Status < ApplicationRecord
   validates_with StatusLengthValidator
   validates :reblog, uniqueness: { scope: :account }, if: 'reblog?'
 
-  default_scope { order('id desc') }
+  default_scope { order(id: :desc) }
 
   scope :remote, -> { where.not(uri: nil) }
   scope :local, -> { where(uri: nil) }
@@ -70,7 +72,7 @@ class Status < ApplicationRecord
   cache_associated :account, :application, :media_attachments, :tags, :stream_entry, mentions: :account, reblog: [:account, :application, :stream_entry, :tags, :media_attachments, mentions: :account], thread: :account
 
   def reply?
-    !in_reply_to_id.nil? || super
+    !in_reply_to_id.nil? || attributes['reply']
   end
 
   def local?
@@ -122,7 +124,7 @@ class Status < ApplicationRecord
   def ancestors(account = nil)
     ids      = Rails.cache.fetch("ancestors:#{id}") { (Status.find_by_sql(['WITH RECURSIVE search_tree(id, in_reply_to_id, path) AS (SELECT id, in_reply_to_id, ARRAY[id] FROM statuses WHERE id = ? UNION ALL SELECT statuses.id, statuses.in_reply_to_id, path || statuses.id FROM search_tree JOIN statuses ON statuses.id = search_tree.in_reply_to_id WHERE NOT statuses.id = ANY(path)) SELECT id FROM search_tree ORDER BY path DESC', id]) - [self]).pluck(:id) }
     statuses = Status.where(id: ids).group_by(&:id)
-    results  = ids.map { |id| statuses[id].first }
+    results  = ids.map { |id| statuses[id]&.first }.compact
     results  = results.reject { |status| filter_from_context?(status, account) }
 
     results
@@ -140,6 +142,11 @@ class Status < ApplicationRecord
   def non_sensitive_with_media?
     !sensitive? && media_attachments.any?
   end
+
+  before_validation :prepare_contents
+  before_validation :set_reblog
+  before_validation :set_visibility
+  before_validation :set_conversation
 
   class << self
     def in_allowed_languages(account)
@@ -174,6 +181,10 @@ class Status < ApplicationRecord
       select('reblog_of_id').where(reblog_of_id: status_ids).where(account_id: account_id).map { |s| [s.reblog_of_id, true] }.to_h
     end
 
+    def mutes_map(conversation_ids, account_id)
+      ConversationMute.select('conversation_id').where(conversation_id: conversation_ids).where(account_id: account_id).map { |m| [m.conversation_id, true] }.to_h
+    end
+
     def reload_stale_associations!(cached_items)
       account_ids = []
 
@@ -191,18 +202,22 @@ class Status < ApplicationRecord
     end
 
     def permitted_for(target_account, account)
-      return where.not(visibility: [:private, :direct]) if account.nil?
+      visibility = [:public, :unlisted]
 
-      if target_account.blocking?(account) # get rid of blocked peeps
+      if account.nil?
+        where(visibility: visibility)
+      elsif target_account.blocking?(account) # get rid of blocked peeps
         none
       elsif account.id == target_account.id # author can see own stuff
         all
-      elsif account.following?(target_account) # followers can see followers-only stuff, but also things they are mentioned in
-        joins('LEFT OUTER JOIN mentions ON statuses.id = mentions.status_id AND mentions.account_id = ' + account.id.to_s)
-          .where('statuses.visibility != ? OR mentions.id IS NOT NULL', Status.visibilities[:direct])
-      else # non-followers can see everything that isn't private/direct, but can see stuff they are mentioned in
-        joins('LEFT OUTER JOIN mentions ON statuses.id = mentions.status_id AND mentions.account_id = ' + account.id.to_s)
-          .where('statuses.visibility NOT IN (?) OR mentions.id IS NOT NULL', [Status.visibilities[:direct], Status.visibilities[:private]])
+      else
+        # followers can see followers-only stuff, but also things they are mentioned in.
+        # non-followers can see everything that isn't private/direct, but can see stuff they are mentioned in.
+        visibility.push(:private) if account.following?(target_account)
+
+        joins("LEFT OUTER JOIN mentions ON statuses.id = mentions.status_id AND mentions.account_id = #{account.id}")
+          .where(arel_table[:visibility].in(visibility).or(Mention.arel_table[:id].not_eq(nil)))
+          .order(visibility: :desc)
       end
     end
 
@@ -242,17 +257,39 @@ class Status < ApplicationRecord
     end
   end
 
-  before_validation do
+  private
+
+  def prepare_contents
     text&.strip!
     spoiler_text&.strip!
-
-    self.reply                  = !(in_reply_to_id.nil? && thread.nil?) unless reply
-    self.reblog                 = reblog.reblog if reblog? && reblog.reblog?
-    self.in_reply_to_account_id = (thread.account_id == account_id && thread.reply? ? thread.in_reply_to_account_id : thread.account_id) if reply? && !thread.nil?
-    self.visibility             = (account.locked? ? :private : :public) if visibility.nil?
   end
 
-  private
+  def set_reblog
+    self.reblog = reblog.reblog if reblog? && reblog.reblog?
+  end
+
+  def set_visibility
+    self.visibility = (account.locked? ? :private : :public) if visibility.nil?
+  end
+
+  def set_conversation
+    self.reply = !(in_reply_to_id.nil? && thread.nil?) unless reply
+
+    if reply? && !thread.nil?
+      self.in_reply_to_account_id = carried_over_reply_to_account_id
+      self.conversation_id        = thread.conversation_id if conversation_id.nil?
+    elsif conversation_id.nil?
+      create_conversation
+    end
+  end
+
+  def carried_over_reply_to_account_id
+    if thread.account_id == account_id && thread.reply?
+      thread.in_reply_to_account_id
+    else
+      thread.account_id
+    end
+  end
 
   def filter_from_context?(status, account)
     account&.blocking?(status.account_id) || account&.muting?(status.account_id) || (status.account.silenced? && !account&.following?(status.account_id)) || !status.permitted?(account)

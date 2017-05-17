@@ -17,12 +17,13 @@ const MODAL_COMPONENTS = {
 
 class ModalRoot extends React.PureComponent {
 
-  constructor (props, context) {
-    super(props, context);
-    this.handleKeyUp = this.handleKeyUp.bind(this);
-  }
+  static propTypes = {
+    type: PropTypes.string,
+    props: PropTypes.object,
+    onClose: PropTypes.func.isRequired
+  };
 
-  handleKeyUp (e) {
+  handleKeyUp = (e) => {
     if ((e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27)
          && !!this.props.type) {
       this.props.onClose();
@@ -47,9 +48,10 @@ class ModalRoot extends React.PureComponent {
 
   render () {
     const { type, props, onClose } = this.props;
+    const visible = !!type;
     const items = [];
 
-    if (!!type) {
+    if (visible) {
       items.push({
         key: type,
         data: { type, props },
@@ -68,7 +70,7 @@ class ModalRoot extends React.PureComponent {
               const SpecificComponent = MODAL_COMPONENTS[type];
 
               return (
-                <div key={key}>
+                <div key={key} style={{ pointerEvents: visible ? 'auto' : 'none' }}>
                   <div role='presentation' className='modal-root__overlay' style={{ opacity: style.opacity }} onClick={onClose} />
                   <div className='modal-root__container' style={{ opacity: style.opacity, transform: `translateZ(0px) scale(${style.scale})` }}>
                     <SpecificComponent {...props} onClose={onClose} />
@@ -83,11 +85,5 @@ class ModalRoot extends React.PureComponent {
   }
 
 }
-
-ModalRoot.propTypes = {
-  type: PropTypes.string,
-  props: PropTypes.object,
-  onClose: PropTypes.func.isRequired
-};
 
 export default ModalRoot;
