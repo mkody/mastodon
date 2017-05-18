@@ -57,6 +57,15 @@ body {
   }
 }
 
+/* Change more colors to go with the theme */
+.column-subheading,
+.status.status-direct {
+  background: #313543 !important;
+}
+body.app-body .status__content .status__content__spoiler-link {
+  color: #37aac0;
+}
+
 
 /* Revert margin to make the app scrollable horizontaly */
 .columns-area {
