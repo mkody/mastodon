@@ -55,8 +55,9 @@ class Status < ApplicationRecord
   validates_with StatusLengthValidator
   validates :reblog, uniqueness: { scope: :account }, if: :reblog?
 
-  default_scope { order(id: :desc) }
+  default_scope { recent }
 
+  scope :recent, -> { reorder(id: :desc) }
   scope :remote, -> { where.not(uri: nil) }
   scope :local, -> { where(uri: nil) }
 
@@ -68,7 +69,7 @@ class Status < ApplicationRecord
   scope :excluding_silenced_accounts, -> { left_outer_joins(:account).where(accounts: { silenced: false }) }
   scope :including_silenced_accounts, -> { left_outer_joins(:account).where(accounts: { silenced: true }) }
   scope :not_excluded_by_account, ->(account) { where.not(account_id: account.excluded_from_timeline_account_ids) }
-  scope :not_domain_blocked_by_account, ->(account) { left_outer_joins(:account).where('accounts.domain IS NULL OR accounts.domain NOT IN (?)', account.excluded_from_timeline_domains) }
+  scope :not_domain_blocked_by_account, ->(account) { account.excluded_from_timeline_domains.blank? ? left_outer_joins(:account) : left_outer_joins(:account).where('accounts.domain IS NULL OR accounts.domain NOT IN (?)', account.excluded_from_timeline_domains) }
 
   cache_associated :account, :application, :media_attachments, :tags, :stream_entry, mentions: :account, reblog: [:account, :application, :stream_entry, :tags, :media_attachments, mentions: :account], thread: :account
 
@@ -142,8 +143,8 @@ class Status < ApplicationRecord
   before_validation :set_conversation
 
   class << self
-    def in_allowed_languages(account)
-      where(language: account.allowed_languages)
+    def not_in_filtered_languages(account)
+      where.not(language: account.filtered_languages)
     end
 
     def as_home_timeline(account)
@@ -234,7 +235,7 @@ class Status < ApplicationRecord
     def filter_timeline_for_account(query, account, local_only)
       query = query.not_excluded_by_account(account)
       query = query.not_domain_blocked_by_account(account) unless local_only
-      query = query.in_allowed_languages(account) if account.allowed_languages.present?
+      query = query.not_in_filtered_languages(account) if account.filtered_languages.present?
       query.merge(account_silencing_filter(account))
     end
 

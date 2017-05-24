@@ -15,6 +15,7 @@ const messages = defineMessages({
   mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
   follow: { id: 'account.follow', defaultMessage: 'Follow' },
   report: { id: 'account.report', defaultMessage: 'Report @{name}' },
+  media: { id: 'account.media', defaultMessage: 'Media' },
   disclaimer: { id: 'account.disclaimer', defaultMessage: 'This user is from another instance. This number may be larger.' },
   blockDomain: { id: 'account.block_domain', defaultMessage: 'Hide everything from {domain}' },
   unblockDomain: { id: 'account.unblock_domain', defaultMessage: 'Unhide {domain}' },
@@ -32,7 +33,7 @@ class ActionBar extends React.PureComponent {
     onMute: PropTypes.func.isRequired,
     onBlockDomain: PropTypes.func.isRequired,
     onUnblockDomain: PropTypes.func.isRequired,
-    intl: PropTypes.object.isRequired
+    intl: PropTypes.object.isRequired,
   };
 
   render () {
@@ -42,6 +43,8 @@ class ActionBar extends React.PureComponent {
     let extraInfo = '';
 
     menu.push({ text: intl.formatMessage(messages.mention, { name: account.get('username') }), action: this.props.onMention });
+    menu.push(null);
+    menu.push({ text: intl.formatMessage(messages.media), to: `/accounts/${account.get('id')}/media` });
     menu.push(null);
 
     if (account.get('id') === me) {

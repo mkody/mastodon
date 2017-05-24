@@ -18,7 +18,7 @@ import ImmutablePureComponent from 'react-immutable-pure-component';
 class Status extends ImmutablePureComponent {
 
   static contextTypes = {
-    router: PropTypes.object
+    router: PropTypes.object,
   };
 
   static propTypes = {
@@ -35,7 +35,7 @@ class Status extends ImmutablePureComponent {
     me: PropTypes.number,
     boostModal: PropTypes.bool,
     autoPlayGif: PropTypes.bool,
-    muted: PropTypes.bool
+    muted: PropTypes.bool,
   };
 
   handleClick = () => {
@@ -100,9 +100,7 @@ class Status extends ImmutablePureComponent {
     return (
       <div className={`status ${this.props.muted ? 'muted' : ''} status-${status.get('visibility')}`}>
         <div className='status__info'>
-          <div className='status__info-time'>
-            <a href={status.get('url')} className='status__relative-time' target='_blank' rel='noopener'><RelativeTimestamp timestamp={status.get('created_at')} /></a>
-          </div>
+          <a href={status.get('url')} className='status__relative-time' target='_blank' rel='noopener'><RelativeTimestamp timestamp={status.get('created_at')} /></a>
 
           <a onClick={this.handleAccountClick} data-id={status.getIn(['account', 'id'])} href={status.getIn(['account', 'url'])} className='status__display-name'>
             <div className='status__avatar'>
