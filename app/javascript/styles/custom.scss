@@ -1,14 +1,18 @@
-/* Change app background */
+// Import default styles
+@import 'application';
+
+
+// Change app background
 body {
   background: $classic-base-color url('../images/space-bg.jpg');
 }
 
 
-/* Some changes to the about pages */
+// Some changes to the about pages
 .about-body .wrapper {
   background-color: rgba(0, 0, 0, 0.7);
   margin: 0 auto;
-  max-width: 700px;
+  max-width: 800px;
   padding: 50px;
 
   ol {
@@ -17,7 +21,7 @@ body {
 }
 
 
-/* Funny rotating Space Core */
+// Funny rotating Space Core
 .spacecore {
   animation: rotateCore 15s linear infinite;
   background: url('../images/spacecore.png') no-repeat;
@@ -49,31 +53,33 @@ body {
 }
 
 
-/* Make UI fluid for large width */
-/* 1338px, we failed by ONE pixel */
+// Make UI fluid for large width
+// 1338px, we failed by ONE pixel
 @media screen and (min-width: 1338px) {
-  body.app-body .column {
+  body.app-body .column, body.app-body .column__wrapper {
     flex: 1 1 0;
   }
 }
 
-/* Change more colors to go with the theme */
+
+// Change more colors to go with the theme
 .column-subheading,
 .status.status-direct {
   background: #313543 !important;
 }
+
 body.app-body .status__content .status__content__spoiler-link {
   color: #37aac0;
 }
 
 
-/* Revert margin to make the app scrollable horizontaly */
+// Revert margin to make the app scrollable horizontaly
 .columns-area {
   margin: 0;
 }
 
 
-/* Header image is also a blurred background image */
+// Header image is also a blurred background image
 .pagination {
   a {
     background: $classic-base-color;
@@ -105,8 +111,9 @@ body.app-body .status__content .status__content__spoiler-link {
   }
 }
 
-/* Wrapping this style in the body for the app only */
-/* https://userstyles.org/styles/140852/mastodon-flat-dark-and-colourful */
+
+// Wrapping this style in the body for the app only (v1.13)
+// https://userstyles.org/styles/140852/mastodon-flat-dark-and-colourful
 body.app-body {
 
 .button {
