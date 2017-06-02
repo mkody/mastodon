@@ -37,20 +37,32 @@ describe ApplicationController, type: :controller do
     end
   end
 
+  context 'forgery' do
+    subject do
+      ActionController::Base.allow_forgery_protection = true
+      routes.draw { post 'success' => 'anonymous#success' }
+      post 'success'
+    end
+
+    include_examples 'respond_with_error', 422
+  end
+
   it "does not force ssl if LOCAL_HTTPS is not 'true'" do
     routes.draw { get 'success' => 'anonymous#success' }
-    ENV['LOCAL_HTTPS'] = ''
-    allow(Rails.env).to receive(:production?).and_return(true)
-    get 'success'
-    expect(response).to have_http_status(:success)
+    ClimateControl.modify LOCAL_HTTPS: '' do
+      allow(Rails.env).to receive(:production?).and_return(true)
+      get 'success'
+      expect(response).to have_http_status(:success)
+    end
   end
 
   it "forces ssl if LOCAL_HTTPS is 'true'" do
     routes.draw { get 'success' => 'anonymous#success' }
-    ENV['LOCAL_HTTPS'] = 'true'
-    allow(Rails.env).to receive(:production?).and_return(true)
-    get 'success'
-    expect(response).to redirect_to('https://test.host/success')
+    ClimateControl.modify LOCAL_HTTPS: 'true' do
+      allow(Rails.env).to receive(:production?).and_return(true)
+      get 'success'
+      expect(response).to redirect_to('https://test.host/success')
+    end
   end
 
   describe 'helper_method :current_account' do
