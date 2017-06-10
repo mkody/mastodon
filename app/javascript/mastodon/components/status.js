@@ -88,9 +88,11 @@ class Status extends ImmutablePureComponent {
   }
 
   handleIntersection = (entry) => {
-    // Edge 15 doesn't support isIntersecting, but we can infer it from intersectionRatio
+    // Edge 15 doesn't support isIntersecting, but we can infer it
     // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12156111/
-    const isIntersecting = entry.intersectionRatio > 0;
+    // https://github.com/WICG/IntersectionObserver/issues/211
+    const isIntersecting = (typeof entry.isIntersecting === 'boolean') ?
+      entry.isIntersecting : entry.intersectionRect.height > 0;
     this.setState((prevState) => {
       if (prevState.isIntersecting && !isIntersecting) {
         scheduleIdleTask(this.hideIfNotIntersecting);
@@ -166,7 +168,7 @@ class Status extends ImmutablePureComponent {
             <FormattedMessage id='status.reblogged_by' defaultMessage='{name} boosted' values={{ name: <a onClick={this.handleAccountClick} data-id={status.getIn(['account', 'id'])} href={status.getIn(['account', 'url'])} className='status__display-name muted'><strong dangerouslySetInnerHTML={displayNameHTML} /></a> }} />
           </div>
 
-          <Status {...other} wrapped={true} status={status.get('reblog')} account={status.get('account')} />
+          <Status {...other} wrapped status={status.get('reblog')} account={status.get('account')} />
         </div>
       );
     }
@@ -182,7 +184,7 @@ class Status extends ImmutablePureComponent {
     }
 
     if (account === undefined || account === null) {
-      statusAvatar = <Avatar src={status.getIn(['account', 'avatar'])} staticSrc={status.getIn(['account', 'avatar_static'])} size={48}/>;
+      statusAvatar = <Avatar src={status.getIn(['account', 'avatar'])} staticSrc={status.getIn(['account', 'avatar_static'])} size={48} />;
     }else{
       statusAvatar = <AvatarOverlay staticSrc={status.getIn(['account', 'avatar_static'])} overlaySrc={account.get('avatar_static')} />;
     }
