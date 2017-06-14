@@ -130,7 +130,7 @@ body.app-body {
     background-color: #223;
   }
   
-  .drawer .drawer__header, .column-header, .column-icon {
+  .drawer .drawer__header, .column-header, [class^="column-header__"], .column-icon {
     background-color: #223;
   }
   
