@@ -15,7 +15,7 @@ module Mastodon
     end
 
     def patch
-      5
+      6
     end
 
     def pre
