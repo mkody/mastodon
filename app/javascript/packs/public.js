@@ -4,6 +4,7 @@ import { delegate } from 'rails-ujs';
 import emojify from '../mastodon/emoji';
 import { getLocale } from '../mastodon/locales';
 import loadPolyfills from '../mastodon/load_polyfills';
+import ready from '../mastodon/ready';
 
 require.context('../images/', true);
 
@@ -39,11 +40,7 @@ function loaded() {
 }
 
 function main() {
-  if (['interactive', 'complete'].includes(document.readyState)) {
-    loaded();
-  } else {
-    document.addEventListener('DOMContentLoaded', loaded);
-  }
+  ready(loaded);
 
   delegate(document, '.video-player video', 'click', ({ target }) => {
     if (target.paused) {
@@ -53,8 +50,12 @@ function main() {
     }
   });
 
-  delegate(document, '.media-spoiler', 'click', ({ target }) => {
-    target.style.display = 'none';
+  delegate(document, '.activity-stream .media-spoiler-wrapper .media-spoiler', 'click', function() {
+    this.parentNode.classList.add('media-spoiler-wrapper__visible');
+  });
+
+  delegate(document, '.activity-stream .media-spoiler-wrapper .spoiler-button', 'click', function() {
+    this.parentNode.classList.remove('media-spoiler-wrapper__visible');
   });
 
   delegate(document, '.webapp-btn', 'click', ({ target, button }) => {

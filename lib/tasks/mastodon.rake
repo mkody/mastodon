@@ -74,7 +74,7 @@ namespace :mastodon do
   end
 
   namespace :media do
-    desc 'Removes media attachments that have not been assigned to any status for longer than a day'
+    desc 'Removes media attachments that have not been assigned to any status for longer than a day (deprecated)'
     task clear: :environment do
       # No-op
       # This task is now executed via sidekiq-scheduler
@@ -85,9 +85,11 @@ namespace :mastodon do
       MediaAttachment.where(account: Account.silenced).find_each(&:destroy)
     end
 
-    desc 'Remove cached remote media attachments that are older than a week'
+    desc 'Remove cached remote media attachments that are older than NUM_DAYS. By default 7 (week)'
     task remove_remote: :environment do
-      MediaAttachment.where.not(remote_url: '').where('created_at < ?', 1.week.ago).find_each do |media|
+      time_ago = ENV.fetch('NUM_DAYS') { 7 }.to_i.days.ago
+
+      MediaAttachment.where.not(remote_url: '').where('created_at < ?', time_ago).find_each do |media|
         media.file.destroy
         media.type = :unknown
         media.save
@@ -100,6 +102,18 @@ namespace :mastodon do
       MediaAttachment.where(file_file_name: nil).where.not(type: :unknown).in_batches.update_all(type: :unknown)
       Rails.logger.debug 'Done!'
     end
+
+    desc 'Redownload avatars/headers of remote users. Optionally limit to a particular domain with DOMAIN'
+    task redownload_avatars: :environment do
+      accounts = Account.remote
+      accounts = accounts.where(domain: ENV['DOMAIN']) if ENV['DOMAIN'].present?
+
+      accounts.find_each do |account|
+        account.reset_avatar!
+        account.reset_header!
+        account.save
+      end
+    end
   end
 
   namespace :push do
@@ -111,7 +125,7 @@ namespace :mastodon do
       end
     end
 
-    desc 'Re-subscribes to soon expiring PuSH subscriptions'
+    desc 'Re-subscribes to soon expiring PuSH subscriptions (deprecated)'
     task refresh: :environment do
       # No-op
       # This task is now executed via sidekiq-scheduler
@@ -119,13 +133,13 @@ namespace :mastodon do
   end
 
   namespace :feeds do
-    desc 'Clear timelines of inactive users'
+    desc 'Clear timelines of inactive users (deprecated)'
     task clear: :environment do
       # No-op
       # This task is now executed via sidekiq-scheduler
     end
 
-    desc 'Clears all timelines'
+    desc 'Clear all timelines without regenerating them'
     task clear_all: :environment do
       Redis.current.keys('feed:*').each { |key| Redis.current.del(key) }
     end
@@ -151,7 +165,7 @@ namespace :mastodon do
       end
     end
 
-    desc 'List all admin users'
+    desc 'List e-mails of all admin users'
     task admins: :environment do
       puts 'Admin user emails:'
       puts User.admins.map(&:email).join("\n")
@@ -161,16 +175,21 @@ namespace :mastodon do
   namespace :settings do
     desc 'Open registrations on this instance'
     task open_registrations: :environment do
-      setting = Setting.where(var: 'open_registrations').first
-      setting.value = true
-      setting.save
+      Setting.open_registrations = true
     end
 
     desc 'Close registrations on this instance'
     task close_registrations: :environment do
-      setting = Setting.where(var: 'open_registrations').first
-      setting.value = false
-      setting.save
+      Setting.open_registrations = false
+    end
+  end
+
+  namespace :webpush do
+    desc 'Generate VAPID key'
+    task generate_vapid_key: :environment do
+      vapid_key = Webpush.generate_key
+      puts "VAPID_PRIVATE_KEY=#{vapid_key.private_key}"
+      puts "VAPID_PUBLIC_KEY=#{vapid_key.public_key}"
     end
   end
 
