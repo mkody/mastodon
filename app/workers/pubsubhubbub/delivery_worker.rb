@@ -23,7 +23,7 @@ class Pubsubhubbub::DeliveryWorker
   def process_delivery
     payload_delivery
 
-    raise "Delivery failed for #{subscription.callback_url}: HTTP #{payload_delivery.code}" unless response_successful?
+    raise Mastodon::UnexpectedResponseError, payload_delivery unless response_successful?
 
     subscription.touch(:last_successful_delivery_at)
   end
@@ -43,7 +43,7 @@ class Pubsubhubbub::DeliveryWorker
   end
 
   def host
-    Addressable::URI.parse(subscription.callback_url).normalize.host
+    Addressable::URI.parse(subscription.callback_url).normalized_host
   end
 
   def headers

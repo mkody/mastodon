@@ -74,6 +74,8 @@ Rails.application.routes.draw do
 
     resource :follower_domains, only: [:show, :update]
     resource :delete, only: [:show, :destroy]
+
+    resources :sessions, only: [:destroy]
   end
 
   resources :media, only: [:show]
@@ -86,10 +88,15 @@ Rails.application.routes.draw do
     resources :subscriptions, only: [:index]
     resources :domain_blocks, only: [:index, :new, :create, :show, :destroy]
     resource :settings, only: [:edit, :update]
-    resources :instances, only: [:index]
+    
+    resources :instances, only: [:index] do
+      collection do
+        post :resubscribe
+      end
+    end
 
     resources :reports, only: [:index, :show, :update] do
-      resources :reported_statuses, only: [:update, :destroy]
+      resources :reported_statuses, only: [:create, :update, :destroy]
     end
 
     resources :accounts, only: [:index, :show] do
@@ -103,6 +110,7 @@ Rails.application.routes.draw do
       resource :silence, only: [:create, :destroy]
       resource :suspension, only: [:create, :destroy]
       resource :confirmation, only: [:create]
+      resources :statuses, only: [:index, :create, :update, :destroy]
     end
 
     resources :users, only: [] do
