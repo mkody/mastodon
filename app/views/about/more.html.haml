@@ -65,5 +65,5 @@
       %p
         = link_to t('about.source_code'), 'https://github.com/tootsuite/mastodon'
         = " (#{@instance_presenter.version_number} - "
-        = link_to instance_presenter.git_hash, ('https://github.com/im-in-space/mastodon/commit/' + instance_presenter.git_hash)
+        = link_to @instance_presenter.git_hash, ('https://github.com/im-in-space/mastodon/commit/' + @instance_presenter.git_hash)
         = ")"
