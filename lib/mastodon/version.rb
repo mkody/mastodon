@@ -11,15 +11,19 @@ module Mastodon
     end
 
     def minor
-      4
+      5
     end
 
     def patch
-      7
+      0
     end
 
     def pre
       nil
+    end
+
+    def flags
+      'rc1'
     end
 
     def to_a
@@ -27,7 +31,7 @@ module Mastodon
     end
 
     def to_s
-      to_a.join('.')
+      [to_a.join('.'), flags].join
     end
   end
 end
