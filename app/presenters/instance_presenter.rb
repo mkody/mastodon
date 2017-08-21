@@ -31,8 +31,4 @@ class InstancePresenter
   def version_number
     Mastodon::Version
   end
-
-  def git_hash
-    Mastodon::Githash
-  end
 end

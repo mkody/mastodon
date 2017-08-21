@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module Mastodon
-  Githash = File.read(".git/refs/heads/im-in.space")[0..6]
-
   module Version
     module_function
 
