@@ -58,7 +58,7 @@ class ActivityPub::Activity
   end
 
   def object_uri
-    @object_uri ||= @object.is_a?(String) ? @object : @object['id']
+    @object_uri ||= value_or_id(@object)
   end
 
   def redis
@@ -97,14 +97,7 @@ class ActivityPub::Activity
   end
 
   def delete_arrived_first?(uri)
-    key = "delete_upon_arrival:#{@account.id}:#{uri}"
-
-    if redis.exists(key)
-      redis.del(key)
-      true
-    else
-      false
-    end
+    redis.exists("delete_upon_arrival:#{@account.id}:#{uri}")
   end
 
   def delete_later!(uri)

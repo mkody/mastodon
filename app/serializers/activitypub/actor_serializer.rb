@@ -4,12 +4,11 @@ class ActivityPub::ActorSerializer < ActiveModel::Serializer
   include RoutingHelper
 
   attributes :id, :type, :following, :followers,
-             :inbox, :outbox, :preferred_username,
-             :name, :summary, :url
+             :inbox, :outbox, :shared_inbox,
+             :preferred_username, :name, :summary,
+             :url, :manually_approves_followers
 
   has_one :public_key, serializer: ActivityPub::PublicKeySerializer
-
-  attribute :locked, key: '_:locked'
 
   class ImageSerializer < ActiveModel::Serializer
     include RoutingHelper
@@ -52,6 +51,10 @@ class ActivityPub::ActorSerializer < ActiveModel::Serializer
     account_outbox_url(object)
   end
 
+  def shared_inbox
+    inbox_url
+  end
+
   def preferred_username
     object.username
   end
@@ -86,5 +89,9 @@ class ActivityPub::ActorSerializer < ActiveModel::Serializer
 
   def header_exists?
     object.header.exists?
+  end
+
+  def manually_approves_followers
+    object.locked
   end
 end

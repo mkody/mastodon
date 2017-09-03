@@ -6,6 +6,8 @@ class ActivityPub::ProcessAccountService < BaseService
   # Should be called with confirmed valid JSON
   # and WebFinger-resolved username and domain
   def call(username, domain, json)
+    return unless json['inbox'].present?
+
     @json     = json
     @uri      = @json['id']
     @username = username
@@ -48,7 +50,7 @@ class ActivityPub::ProcessAccountService < BaseService
     @account.avatar_remote_url   = image_url('icon')
     @account.header_remote_url   = image_url('image')
     @account.public_key          = public_key || ''
-    @account.locked              = @json['_:locked'] || false
+    @account.locked              = @json['manuallyApprovesFollowers'] || false
     @account.save!
   end
 

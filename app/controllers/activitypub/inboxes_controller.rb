@@ -18,7 +18,7 @@ class ActivityPub::InboxesController < Api::BaseController
   private
 
   def set_account
-    @account = Account.find_local!(params[:account_username])
+    @account = Account.find_local!(params[:account_username]) if params[:account_username]
   end
 
   def body
@@ -26,8 +26,12 @@ class ActivityPub::InboxesController < Api::BaseController
   end
 
   def upgrade_account
-    return unless signed_request_account.subscribed?
-    Pubsubhubbub::UnsubscribeWorker.perform_async(signed_request_account.id)
+    if signed_request_account.ostatus?
+      signed_request_account.update(last_webfingered_at: nil)
+      ResolveRemoteAccountWorker.perform_async(signed_request_account.acct)
+    end
+
+    Pubsubhubbub::UnsubscribeWorker.perform_async(signed_request_account.id) if signed_request_account.subscribed?
   end
 
   def process_payload
