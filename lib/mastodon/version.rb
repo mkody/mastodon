@@ -21,7 +21,7 @@ module Mastodon
     end
 
     def flags
-      'rc1'
+      'rc5'
     end
 
     def to_a
