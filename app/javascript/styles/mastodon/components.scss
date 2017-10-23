@@ -511,6 +511,14 @@
   overflow: hidden;
   white-space: pre-wrap;
 
+  &.status__content--with-spoiler {
+    white-space: normal;
+
+    .status__content__text {
+      white-space: pre-wrap;
+    }
+  }
+
   .emojione {
     width: 18px;
     height: 18px;
@@ -3000,21 +3008,21 @@ button.icon-button.active i.fa-retweet {
   }
 
   .fa-search {
-    transform: translateZ(0) rotate(90deg);
+    transform: rotate(90deg);
 
     &.active {
       pointer-events: none;
-      transform: translateZ(0) rotate(0deg);
+      transform: rotate(0deg);
     }
   }
 
   .fa-times-circle {
     top: 11px;
-    transform: translateZ(0) rotate(0deg);
+    transform: rotate(0deg);
     cursor: pointer;
 
     &.active {
-      transform: translateZ(0) rotate(90deg);
+      transform: rotate(90deg);
     }
 
     &:hover {
