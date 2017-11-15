@@ -1,8 +1,8 @@
 ![Mastodon](https://i.imgur.com/NhZc40l.png)
 ========
 
-[![Build Status](http://img.shields.io/travis/im-in-space/mastodon.svg)][travis]
-[![Code Climate](https://img.shields.io/codeclimate/github/im-in-space/mastodon.svg)][code_climate]
+[![Build Status](https://img.shields.io/travis/im-in-space/mastodon.svg)][travis]
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/im-in-space/mastodon.svg)][code_climate]
 
 [travis]: https://travis-ci.org/im-in-space/mastodon
 [code_climate]: https://codeclimate.com/github/im-in-space/mastodon
