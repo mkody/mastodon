@@ -53,11 +53,7 @@
   "compose_form.lock_disclaimer": "Votre compte n’est pas {locked}. Tout le monde peut vous suivre et voir vos pouets privés.",
   "compose_form.lock_disclaimer.lock": "verrouillé",
   "compose_form.placeholder": "Qu’avez-vous en tête ?",
-<<<<<<< HEAD
   "compose_form.publish": "Décollage ",
-=======
-  "compose_form.publish": "Pouet",
->>>>>>> master
   "compose_form.publish_loud": "{publish} !",
   "compose_form.sensitive": "Marquer le média comme sensible",
   "compose_form.spoiler": "Masquer le texte derrière un avertissement",
