@@ -1758,7 +1758,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: lighten($ui-base-color, 13%) url('../images/wave-drawer.png') no-repeat bottom / 100% auto;
+  background: lighten($ui-base-color, 13%) url('~images/wave-drawer.png') no-repeat bottom / 100% auto;
   box-sizing: border-box;
   padding: 0;
   display: flex;
@@ -1773,7 +1773,7 @@
   }
 
   > .mastodon {
-    background: url('../images/mastodon-ui.png') no-repeat left bottom / contain;
+    background: url('~images/mastodon-ui.png') no-repeat left bottom / contain;
     flex: 1;
   }
 }
@@ -2312,7 +2312,7 @@
   justify-content: center;
 
   & > div {
-    background: url('../images/mastodon-not-found.png') no-repeat center -50px;
+    background: url('~images/mastodon-not-found.png') no-repeat center -50px;
     padding-top: 210px;
     width: 100%;
   }
@@ -3204,7 +3204,7 @@
   img,
   canvas {
     display: block;
-    background: url('../images/void.png') repeat;
+    background: url('~images/void.png') repeat;
     object-fit: contain;
   }
 
@@ -3457,7 +3457,7 @@
 }
 
 .onboarding-modal__page-one__elephant-friend {
-  background: url('../images/elephant-friend-1.png') no-repeat center center / contain;
+  background: url('~images/elephant-friend-1.png') no-repeat center center / contain;
   width: 155px;
   height: 193px;
   margin-right: 15px;

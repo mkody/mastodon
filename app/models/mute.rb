@@ -6,9 +6,9 @@
 #  id                 :integer          not null, primary key
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  hide_notifications :boolean          default(TRUE), not null
 #  account_id         :integer          not null
 #  target_account_id  :integer          not null
-#  hide_notifications :boolean          default(TRUE), not null
 #
 
 class Mute < ApplicationRecord

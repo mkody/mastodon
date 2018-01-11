@@ -26,11 +26,9 @@
   %h4= t 'preferences.web'
 
   .fields-group
-    - if Themes.instance.names.size > 1
-      = f.input :setting_theme, collection: Themes.instance.names, label_method: lambda { |theme| I18n.t("themes.#{theme}", default: theme) }, wrapper: :with_label, include_blank: false
-
     = f.input :setting_unfollow_modal, as: :boolean, wrapper: :with_label
     = f.input :setting_boost_modal, as: :boolean, wrapper: :with_label
+    = f.input :setting_favourite_modal, as: :boolean, wrapper: :with_label
     = f.input :setting_delete_modal, as: :boolean, wrapper: :with_label
 
   .fields-group

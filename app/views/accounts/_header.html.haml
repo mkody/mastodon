@@ -1,3 +1,5 @@
+- processed_bio = FrontmatterHandler.instance.process_bio Formatter.instance.simplified_format account
+
 .bg-profile
   .bg-profile-img{ style: "background-image: url(#{@account.header_static_url})" }
 
@@ -29,7 +31,6 @@
       %small
         %span @#{account.local_username_and_domain}
         = fa_icon('lock') if account.locked?
-
     - if Setting.show_staff_badge
       - if account.user_admin?
         .roles
@@ -39,9 +40,14 @@
         .roles
           .account-role.moderator
             = t 'accounts.roles.moderator'
-
     .bio
-      .account__header__content.p-note.emojify= Formatter.instance.simplified_format(account)
+      .account__header__content.p-note.emojify!=processed_bio[:text]
+      - if processed_bio[:metadata].length > 0
+        %table.metadata<
+          - processed_bio[:metadata].each do |i|
+            %tr.metadata-item><
+              %th.emojify>!=i[0]
+              %td.emojify>!=i[1]
 
     .details-counters
       .counter{ class: active_nav_class(short_account_url(account)) }

@@ -197,6 +197,43 @@ RSpec.describe Status, type: :model do
     end
   end
 
+  describe 'on create' do
+    let(:local_account) { Fabricate(:account, username: 'local', domain: nil) }
+    let(:remote_account) { Fabricate(:account, username: 'remote', domain: 'example.com') }
+
+    subject { Status.new }
+
+    describe 'on a status that ends with the local-only emoji' do
+      before do
+        subject.text = 'A toot ' + subject.local_only_emoji
+      end
+
+      context 'if the status originates from this instance' do
+        before do
+          subject.account = local_account
+        end
+
+        it 'is marked local-only' do
+          subject.save!
+
+          expect(subject).to be_local_only
+        end
+      end
+
+      context 'if the status is remote' do
+        before do
+          subject.account = remote_account
+        end
+
+        it 'is not marked local-only' do
+          subject.save!
+
+          expect(subject).to_not be_local_only
+        end
+      end
+    end
+  end
+
   describe '.mutes_map' do
     let(:status)  { Fabricate(:status) }
     let(:account) { Fabricate(:account) }
@@ -302,6 +339,55 @@ RSpec.describe Status, type: :model do
     it 'does not include statuses from non-followed' do
       expect(@results).not_to include(@not_followed_status)
     end
+  end
+
+  describe '.as_direct_timeline' do
+    let(:account) { Fabricate(:account) }
+    let(:followed) { Fabricate(:account) }
+    let(:not_followed) { Fabricate(:account) }
+
+    before do
+      Fabricate(:follow, account: account, target_account: followed)
+
+      @self_public_status = Fabricate(:status, account: account, visibility: :public)
+      @self_direct_status = Fabricate(:status, account: account, visibility: :direct)
+      @followed_public_status = Fabricate(:status, account: followed, visibility: :public)
+      @followed_direct_status = Fabricate(:status, account: followed, visibility: :direct)
+      @not_followed_direct_status = Fabricate(:status, account: not_followed, visibility: :direct)
+
+      @results = Status.as_direct_timeline(account)
+    end
+
+    it 'does not include public statuses from self' do
+      expect(@results).to_not include(@self_public_status)
+    end
+
+    it 'includes direct statuses from self' do
+      expect(@results).to include(@self_direct_status)
+    end
+
+    it 'does not include public statuses from followed' do
+      expect(@results).to_not include(@followed_public_status)
+    end
+
+    it 'includes direct statuses mentioning recipient from followed' do
+      Fabricate(:mention, account: account, status: @followed_direct_status)
+      expect(@results).to include(@followed_direct_status)
+    end
+
+    it 'does not include direct statuses not mentioning recipient from followed' do
+      expect(@results).to_not include(@followed_direct_status)
+    end
+
+    it 'includes direct statuses mentioning recipient from non-followed' do
+      Fabricate(:mention, account: account, status: @not_followed_direct_status)
+      expect(@results).to include(@not_followed_direct_status)
+    end
+
+    it 'does not include direct statuses not mentioning recipient from non-followed' do
+      expect(@results).to_not include(@not_followed_direct_status)
+    end
+
   end
 
   describe '.as_public_timeline' do
@@ -500,6 +586,32 @@ RSpec.describe Status, type: :model do
         end
       end
     end
+
+    context 'with local-only statuses' do
+      let(:status) { Fabricate(:status, local_only: true) }
+
+      subject { Status.as_public_timeline(viewer) }
+
+      context 'without a viewer' do
+        let(:viewer) { nil }
+
+        it 'excludes local-only statuses' do
+          expect(subject).to_not include(status)
+        end
+      end
+
+      context 'with a viewer' do
+        let(:viewer) { Fabricate(:account, username: 'viewer') }
+
+        it 'includes local-only statuses' do
+          expect(subject).to include(status)
+        end
+      end
+
+      # TODO: What happens if the viewer is remote?
+      # Can the viewer be remote?
+      # What prevents the viewer from being remote?
+    end
   end
 
   describe '.as_tag_timeline' do
@@ -520,6 +632,27 @@ RSpec.describe Status, type: :model do
 
       results = Status.as_tag_timeline(tag)
       expect(results).to include(status)
+    end
+
+    context 'on a local-only status' do
+      let(:tag) { Fabricate(:tag) }
+      let(:status) { Fabricate(:status, local_only: true, tags: [tag]) }
+
+      context 'without a viewer' do
+        let(:viewer) { nil }
+
+        it 'filters the local-only status out of the result set' do
+          expect(Status.as_tag_timeline(tag, viewer)).not_to include(status)
+        end
+      end
+
+      context 'with a viewer' do
+        let(:viewer) { Fabricate(:account, username: 'viewer', domain: nil) }
+
+        it 'keeps the local-only status in the result set' do
+          expect(Status.as_tag_timeline(tag, viewer)).to include(status)
+        end
+      end
     end
   end
 

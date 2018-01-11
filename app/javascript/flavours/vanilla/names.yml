@@ -1,0 +1,16 @@
+en:
+  flavours:
+    vanilla:
+      description: The theme used by vanilla Mastodon instances. This theme might not support all of the features of GlitchSoc.
+      name: Vanilla Mastodon
+  skins:
+    vanilla:
+      default: Default
+pl:
+  flavours:
+    vanilla:
+      description: Motyw używany przez instancje czystego Mastodona. Może nie obsługiwać wszystkich funkcji GlitchSoc.
+      name: Mastodon Vanilla
+  skins:
+    vanilla:
+      default: Domyślny

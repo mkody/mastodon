@@ -12,9 +12,16 @@ describe AccountInteractions do
     subject { Account.following_map(target_account_ids, account_id) }
 
     context 'account with Follow' do
-      it 'returns { target_account_id => true }' do
+      it 'returns { target_account_id => { reblogs: true } }' do
         Fabricate(:follow, account: account, target_account: target_account)
         is_expected.to eq(target_account_id => { reblogs: true })
+      end
+    end
+
+    context 'account with Follow but with reblogs disabled' do
+      it 'returns { target_account_id => { reblogs: false } }' do
+        Fabricate(:follow, account: account, target_account: target_account, show_reblogs: false)
+        is_expected.to eq(target_account_id => { reblogs: false })
       end
     end
 
@@ -579,7 +586,44 @@ describe AccountInteractions do
       end
 
       it 'does mute notifications' do
-        expect(me.muting_notifications?(you)).to be true
+        expect(me.muting_notifications?(you)).to be true 
+      end
+    end
+  end
+
+  describe 'ignoring reblogs from an account' do
+    before do
+      @me = Fabricate(:account, username: 'Me')
+      @you = Fabricate(:account, username: 'You')
+    end
+
+    context 'with the reblogs option unspecified' do
+      before do
+        @me.follow!(@you)
+      end
+
+      it 'defaults to showing reblogs' do
+        expect(@me.muting_reblogs?(@you)).to be(false)
+      end
+    end
+
+    context 'with the reblogs option set to false' do
+      before do
+        @me.follow!(@you, reblogs: false)
+      end
+
+      it 'does mute reblogs' do
+        expect(@me.muting_reblogs?(@you)).to be(true)
+      end
+    end
+
+    context 'with the reblogs option set to true' do
+      before do
+        @me.follow!(@you, reblogs: true)
+      end
+
+      it 'does not mute reblogs' do
+        expect(@me.muting_reblogs?(@you)).to be(false)
       end
     end
   end

@@ -21,12 +21,14 @@ class UserSettingsDecorator
     user.settings['default_sensitive']   = default_sensitive_preference if change?('setting_default_sensitive')
     user.settings['unfollow_modal']      = unfollow_modal_preference if change?('setting_unfollow_modal')
     user.settings['boost_modal']         = boost_modal_preference if change?('setting_boost_modal')
+    user.settings['favourite_modal']         = favourite_modal_preference if change?('setting_favourite_modal')
     user.settings['delete_modal']        = delete_modal_preference if change?('setting_delete_modal')
     user.settings['auto_play_gif']       = auto_play_gif_preference if change?('setting_auto_play_gif')
     user.settings['reduce_motion']       = reduce_motion_preference if change?('setting_reduce_motion')
     user.settings['system_font_ui']      = system_font_ui_preference if change?('setting_system_font_ui')
     user.settings['noindex']             = noindex_preference if change?('setting_noindex')
-    user.settings['theme']               = theme_preference if change?('setting_theme')
+    user.settings['flavour']             = flavour_preference if change?('setting_flavour')
+    user.settings['skin']                = skin_preference if change?('setting_skin')
   end
 
   def merged_notification_emails
@@ -52,6 +54,10 @@ class UserSettingsDecorator
   def boost_modal_preference
     boolean_cast_setting 'setting_boost_modal'
   end
+  
+  def favourite_modal_preference
+    boolean_cast_setting 'setting_favourite_modal'
+  end
 
   def delete_modal_preference
     boolean_cast_setting 'setting_delete_modal'
@@ -73,8 +79,12 @@ class UserSettingsDecorator
     boolean_cast_setting 'setting_noindex'
   end
 
-  def theme_preference
-    settings['setting_theme']
+  def flavour_preference
+    settings['setting_flavour']
+  end
+
+  def skin_preference
+    settings['setting_skin']
   end
 
   def boolean_cast_setting(key)

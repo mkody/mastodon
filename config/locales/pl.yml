@@ -467,6 +467,14 @@ pl:
       expires_at: Wygaśnie po
       uses: Użycia
     title: Zaproś użytkowników
+  keyword_mutes:
+    add_keyword: Dodaj słowo kluczowe
+    edit: Edytuj
+    edit_keyword: Edytuj słowo kluczowe
+    keyword: Słowo kluczowe
+    match_whole_word: Uwzględniaj całe słowo
+    remove: Usuń
+    remove_all: Usuń wszystkie
   landing_strip_html: "<strong>%{name}</strong> ma konto na %{link_to_root_path}. Możesz je śledzić i wejść z nim w interakcję jeśli masz konto gdziekolwiek w Fediwersum."
   landing_strip_signup_html: Jeśli jeszcze go nie masz, możesz <a href="%{sign_up_path}">stworzyć konto</a>.
   lists:
@@ -597,8 +605,10 @@ pl:
     development: Tworzenie aplikacji
     edit_profile: Edytuj profil
     export: Eksportowanie danych
+    flavours: Motywy
     followers: Autoryzowani śledzący
     import: Importowanie danych
+    keyword_mutes: Wyciszone słowa
     migrate: Migracja konta
     notifications: Powiadomienia
     preferences: Preferencje
@@ -697,8 +707,6 @@ pl:
 
       <p>Tekst bazuje na <a href="https://github.com/discourse/discourse">polityce prywatności Discourse</a>.</p>
     title: Zasady korzystania i polityka prywatności %{instance}
-  themes:
-    default: Mastodon
   time:
     formats:
       default: "%b %d, %Y, %H:%M"
