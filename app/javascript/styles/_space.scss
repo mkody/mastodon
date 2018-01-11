@@ -1,6 +1,5 @@
-// Import default styles
-//@import 'application';
-
+// Might be missing
+$classic-base-color: #282c37;
 
 // Change app background
 body {
@@ -111,6 +110,13 @@ body.app-body .status__content .status__content__spoiler-link {
   }
 }
 
+// Removing some background
+.drawer {
+  .drawer--header,
+  .contents {
+    background: transparent;
+  }
+}
 
 // Wrapping this style in the body for the app only (v1.16)
 // https://userstyles.org/styles/140852/mastodon-flat-dark-and-colourful

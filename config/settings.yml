@@ -7,7 +7,7 @@
 # For more information, see docs/Running-Mastodon/Administration-guide.md
 #
 defaults: &defaults
-  site_title: 'dev.glitch.social'
+  site_title: 'im-in.space'
   site_description: ''
   site_extended_description: ''
   site_terms: ''
@@ -29,7 +29,7 @@ defaults: &defaults
   system_font_ui: false
   noindex: false
   flavour: 'glitch'
-  skin: 'default'
+  skin: 'space'
   notification_emails:
     follow: false
     reblog: false
