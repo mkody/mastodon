@@ -9,4 +9,4 @@ im-in.space is running on the [glitch social's fork of Mastodon](https://github.
 - You can view documentation for this project at [glitch-soc.github.io/docs/](https://glitch-soc.github.io/docs/).
 - And contributing guidelines are available [here](CONTRIBUTING.md) and [here](https://glitch-soc.github.io/docs/contributing/).
 
-[Screenshot](https://i.imgur.com/LPtJJtR.png)
+![Screenshot](https://i.imgur.com/LPtJJtR.png)
