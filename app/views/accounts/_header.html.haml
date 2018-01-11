@@ -1,4 +1,8 @@
 - processed_bio = FrontmatterHandler.instance.process_bio Formatter.instance.simplified_format account
+
+.bg-profile
+  .bg-profile-img{ style: "background-image: url(#{@account.header_static_url})" }
+
 .card.h-card.p-author{ style: "background-image: url(#{account.header.url(:original)})" }
   .card__illustration
     - unless account.memorial? || account.moved?
