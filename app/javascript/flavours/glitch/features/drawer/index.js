@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import classNames from 'classnames';
 
 //  Actions.
 import { openModal } from 'flavours/glitch/actions/modal';
@@ -11,6 +12,7 @@ import {
   showSearch,
   submitSearch,
 } from 'flavours/glitch/actions/search';
+import { cycleElefriendCompose } from 'flavours/glitch/actions/compose';
 
 //  Components.
 import Composer from 'flavours/glitch/features/composer';
@@ -27,6 +29,7 @@ import { wrap } from 'flavours/glitch/util/redux_helpers';
 const mapStateToProps = state => ({
   account: state.getIn(['accounts', me]),
   columns: state.getIn(['settings', 'columns']),
+  elefriend: state.getIn(['compose', 'elefriend']),
   results: state.getIn(['search', 'results']),
   searchHidden: state.getIn(['search', 'hidden']),
   searchValue: state.getIn(['search', 'value']),
@@ -37,6 +40,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   onChange: changeSearch,
   onClear: clearSearch,
+  onClickElefriend: cycleElefriendCompose,
   onShow: showSearch,
   onSubmit: submitSearch,
   onOpenSettings: openModal.bind(null, 'SETTINGS', {}),
@@ -55,10 +59,12 @@ class Drawer extends React.Component {
     const {
       account,
       columns,
+      elefriend,
       intl,
       multiColumn,
       onChange,
       onClear,
+      onClickElefriend,
       onOpenSettings,
       onShow,
       onSubmit,
@@ -67,10 +73,11 @@ class Drawer extends React.Component {
       searchValue,
       submitted,
     } = this.props;
+    const computedClass = classNames('drawer', `mbstobon-${elefriend}`);
 
     //  The result.
     return (
-      <div className='drawer'>
+      <div className={computedClass}>
         {multiColumn ? (
           <DrawerHeader
             columns={columns}
@@ -90,6 +97,7 @@ class Drawer extends React.Component {
         <div className='contents'>
           <DrawerAccount account={account} />
           <Composer />
+          {multiColumn && <button className='mastodon' onClick={onClickElefriend} />}
           <DrawerResults
             results={results}
             visible={submitted && !searchHidden}
@@ -110,6 +118,7 @@ Drawer.propTypes = {
   account: ImmutablePropTypes.map,
   columns: ImmutablePropTypes.list,
   results: ImmutablePropTypes.map,
+  elefriend: PropTypes.number,
   searchHidden: PropTypes.bool,
   searchValue: PropTypes.string,
   submitted: PropTypes.bool,
@@ -117,6 +126,7 @@ Drawer.propTypes = {
   //  Dispatch props.
   onChange: PropTypes.func,
   onClear: PropTypes.func,
+  onClickElefriend: PropTypes.func,
   onShow: PropTypes.func,
   onSubmit: PropTypes.func,
   onOpenSettings: PropTypes.func,

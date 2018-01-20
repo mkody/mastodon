@@ -1613,6 +1613,10 @@
   justify-content: flex-start;
   overflow-x: auto;
   position: relative;
+
+  &.unscrollable {
+    overflow-x: hidden;
+  }
 }
 
 @media screen and (min-width: 360px) {
@@ -2299,7 +2303,7 @@
   }
 }
 
-.missing-indicator {
+.regeneration-indicator {
   text-align: center;
   font-size: 16px;
   font-weight: 500;
@@ -2310,11 +2314,46 @@
   flex: 1 1 auto;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 
   & > div {
-    background: url('~images/mastodon-not-found.png') no-repeat center -50px;
-    padding-top: 210px;
     width: 100%;
+    background: transparent;
+    padding-top: 0;
+  }
+
+  &__figure {
+    background: url('~images/elephant_ui_working.svg') no-repeat center 0;
+    width: 100%;
+    height: 160px;
+    background-size: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.missing-indicator {
+    padding-top: 20px + 48px;
+
+    .regeneration-indicator__figure {
+      background-image: url('~images/elephant_ui_disappointed.svg');
+    }
+  }
+
+  &__label {
+    margin-top: 200px;
+
+    strong {
+      display: block;
+      margin-bottom: 10px;
+      color: lighten($ui-base-color, 34%);
+    }
+
+    span {
+      font-size: 15px;
+      font-weight: 400;
+    }
   }
 }
 
@@ -2350,6 +2389,19 @@
   position: relative;
   z-index: 2;
   outline: 0;
+  overflow: hidden;
+
+  & > button {
+    display: flex;
+    flex: auto;
+    margin: 0;
+    border: none;
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+  }
 
   &.active {
     box-shadow: 0 1px 0 rgba($ui-highlight-color, 0.3);
@@ -2732,7 +2784,6 @@
 @keyframes heartbeat {
   from {
     transform: scale(1);
-    transform-origin: center center;
     animation-timing-function: ease-out;
   }
 
@@ -2758,6 +2809,7 @@
 }
 
 .pulse-loading {
+  transform-origin: center center;
   animation: heartbeat 1.5s ease-in-out infinite both;
 }
 
