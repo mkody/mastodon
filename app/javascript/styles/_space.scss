@@ -114,14 +114,25 @@ body.app-body .status__content .status__content__spoiler-link {
 .drawer {
   .drawer--header,
   .contents {
-    background: transparent;
+    background: transparent !important;
+
+    // Remove that outline when clicked
+    .mastodon {
+      outline: 0;
+
+      &::-moz-focus-inner {
+        border: none;
+      }
+    }
   }
+}
+.getting-started {
+  background: transparent;
 }
 
 // Wrapping this style in the body for the app only (v1.16)
 // https://userstyles.org/styles/140852/mastodon-flat-dark-and-colourful
 body.app-body {
-
 .button {
     background-color: #ff9800;
   }
