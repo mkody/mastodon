@@ -23,7 +23,7 @@ namespace :mastodon do
       prompt.say('Single user mode disables registrations and redirects the landing page to your public profile.')
       env['SINGLE_USER_MODE'] = prompt.yes?('Do you want to enable single user mode?', default: false)
 
-      %w(SECRET_KEY_BASE PAPERCLIP_SECRET OTP_SECRET).each do |key|
+      %w(SECRET_KEY_BASE OTP_SECRET).each do |key|
         env[key] = SecureRandom.hex(64)
       end
 
@@ -286,6 +286,14 @@ namespace :mastodon do
 
         File.write(Rails.root.join('.env.production'), "# Generated with mastodon:setup on #{Time.now.utc}\n\n" + env.each_pair.map { |key, value| "#{key}=#{value}" }.join("\n") + "\n")
 
+        if using_docker
+          prompt.ok 'Below is your configuration, save it to an .env.production file outside Docker:'
+          prompt.say "\n"
+          prompt.say File.read(Rails.root.join('.env.production'))
+          prompt.say "\n"
+          prompt.ok 'It is also saved within this container so you can proceed with this wizard.'
+        end
+
         prompt.say "\n"
         prompt.say 'Now that configuration is saved, the database schema must be loaded.'
         prompt.warn 'If the database already exists, this will erase its contents.'
@@ -476,6 +484,8 @@ namespace :mastodon do
       time_ago = ENV.fetch('NUM_DAYS') { 7 }.to_i.days.ago
 
       MediaAttachment.where.not(remote_url: '').where.not(file_file_name: nil).where('created_at < ?', time_ago).find_each do |media|
+        next unless media.file.exists?
+
         media.file.destroy
         media.save
       end
@@ -494,9 +504,13 @@ namespace :mastodon do
       accounts = accounts.where(domain: ENV['DOMAIN']) if ENV['DOMAIN'].present?
 
       accounts.find_each do |account|
-        account.reset_avatar!
-        account.reset_header!
-        account.save
+        begin
+          account.reset_avatar!
+          account.reset_header!
+          account.save
+        rescue Paperclip::Error
+          puts "Error resetting avatar and header for account #{username}@#{domain}"
+        end
       end
     end
   end
