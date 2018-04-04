@@ -3,8 +3,10 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import StatusPrepend from './status_prepend';
 import StatusHeader from './status_header';
+import StatusIcons from './status_icons';
 import StatusContent from './status_content';
 import StatusActionBar from './status_action_bar';
+import AttachmentList from './attachment_list';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 import { MediaGallery, Video } from 'flavours/glitch/util/async-components';
 import { HotKeys } from 'react-hotkeys';
@@ -300,17 +302,22 @@ export default class Status extends ImmutablePureComponent {
       background = status.getIn(['account', 'header']);
     }
 
-    //  This handles our media attachments. Note that we don't show media on
-    //  muted (notification) statuses. If the media type is unknown, then we
-    //  simply ignore it.
+    //  This handles our media attachments.
+    //  If a media file is of unknwon type or if the status is muted
+    //  (notification), we show a list of links instead of embedded media.
 
     //  After we have generated our appropriate media element and stored it in
     //  `media`, we snatch the thumbnail to use as our `background` if media
     //  backgrounds for collapsed statuses are enabled.
     attachments = status.get('media_attachments');
-    if (attachments.size > 0 && !muted) {
-      if (attachments.some(item => item.get('type') === 'unknown')) {  //  Media type is 'unknown'
-        /*  Do nothing  */
+    if (attachments.size > 0) {
+      if (muted || attachments.some(item => item.get('type') === 'unknown')) {
+        media = (
+          <AttachmentList
+            compact
+            media={status.get('media_attachments')}
+          />
+        );
       } else if (attachments.getIn([0, 'type']) === 'video') {  //  Media type is 'video'
         const video = status.getIn(['media_attachments', 0]);
 
@@ -392,23 +399,33 @@ export default class Status extends ImmutablePureComponent {
           ref={handleRef}
           tabIndex='0'
         >
-          {prepend && account ? (
-            <StatusPrepend
-              type={prepend}
-              account={account}
-              parseClick={parseClick}
-              notificationId={this.props.notificationId}
+          <header className='status__info'>
+            <span>
+              {prepend && account ? (
+                <StatusPrepend
+                  type={prepend}
+                  account={account}
+                  parseClick={parseClick}
+                  notificationId={this.props.notificationId}
+                />
+              ) : null}
+              {!muted || isExpanded !== false ? (
+                <StatusHeader
+                  status={status}
+                  friend={account}
+                  collapsed={isExpanded === false}
+                  parseClick={parseClick}
+                />
+              ) : null}
+            </span>
+            <StatusIcons
+              status={status}
+              mediaIcon={mediaIcon}
+              collapsible={settings.getIn(['collapsed', 'enabled'])}
+              collapsed={isExpanded === false}
+              setExpansion={setExpansion}
             />
-          ) : null}
-          <StatusHeader
-            status={status}
-            friend={account}
-            mediaIcon={mediaIcon}
-            collapsible={settings.getIn(['collapsed', 'enabled'])}
-            collapsed={isExpanded === false}
-            parseClick={parseClick}
-            setExpansion={setExpansion}
-          />
+          </header>
           <StatusContent
             status={status}
             media={media}
@@ -418,7 +435,7 @@ export default class Status extends ImmutablePureComponent {
             parseClick={parseClick}
             disabled={!router}
           />
-          {isExpanded !== false ? (
+          {isExpanded !== false || !muted ? (
             <StatusActionBar
               {...other}
               status={status}

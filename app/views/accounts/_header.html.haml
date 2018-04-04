@@ -1,4 +1,4 @@
-- processed_bio = FrontmatterHandler.instance.process_bio Formatter.instance.simplified_format account
+- processed_bio = FrontmatterHandler.instance.process_bio Formatter.instance.simplified_format(account, custom_emojify: true)
 
 .bg-profile
   .bg-profile-img{ style: "background-image: url(#{@account.header_static_url})" }

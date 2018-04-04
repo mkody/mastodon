@@ -73,6 +73,7 @@ function mapStateToProps (state) {
     suggestionToken: state.getIn(['compose', 'suggestion_token']),
     suggestions: state.getIn(['compose', 'suggestions']),
     text: state.getIn(['compose', 'text']),
+    anyMedia: state.getIn(['compose', 'media_attachments']).size > 0,
   };
 };
 
@@ -149,6 +150,9 @@ const handlers = {
     const {
       onChangeText,
       onSubmit,
+      isSubmitting,
+      isUploading,
+      anyMedia,
       text,
     } = this.props;
 
@@ -156,6 +160,11 @@ const handlers = {
     //  state before submitting.
     if (onChangeText && text !== value) {
       onChangeText(value);
+    }
+
+    // Submit disabled:
+    if (isSubmitting || isUploading || (!!text.length && !text.trim().length && !anyMedia)) {
+      return;
     }
 
     //  Submits the status.
@@ -272,6 +281,7 @@ class Composer extends React.Component {
       acceptContentTypes,
       advancedOptions,
       amUnlocked,
+      anyMedia,
       intl,
       isSubmitting,
       isUploading,
@@ -304,6 +314,8 @@ class Composer extends React.Component {
       suggestions,
       text,
     } = this.props;
+
+    let disabledButton = isSubmitting || isUploading || (!!text.length && !text.trim().length && !anyMedia);
 
     return (
       <div className='composer'>
@@ -374,7 +386,7 @@ class Composer extends React.Component {
         />
         <ComposerPublisher
           countText={`${spoilerText}${countableText(text)}${advancedOptions && advancedOptions.get('do_not_federate') ? ' 👁️' : ''}`}
-          disabled={isSubmitting || isUploading || !!text.length && !text.trim().length}
+          disabled={disabledButton}
           intl={intl}
           onSecondarySubmit={handleSecondarySubmit}
           onSubmit={handleSubmit}
@@ -436,6 +448,7 @@ Composer.propTypes = {
   onUndoUpload: PropTypes.func,
   onUnmount: PropTypes.func,
   onUpload: PropTypes.func,
+  anyMedia: PropTypes.bool,
 };
 
 //  Connecting and export.

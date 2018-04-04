@@ -1,4 +1,5 @@
 import api from 'flavours/glitch/util/api';
+import { CancelToken } from 'axios';
 import { throttle } from 'lodash';
 import { search as emojiSearch } from 'flavours/glitch/util/emoji/emoji_mart_search_light';
 import { useEmoji } from './emojis';
@@ -10,6 +11,8 @@ import {
   refreshPublicTimeline,
   refreshDirectTimeline,
 } from './timelines';
+
+let cancelFetchComposeSuggestionsAccounts;
 
 export const COMPOSE_CHANGE          = 'COMPOSE_CHANGE';
 export const COMPOSE_CYCLE_ELEFRIEND = 'COMPOSE_CYCLE_ELEFRIEND';
@@ -102,8 +105,9 @@ export function mentionCompose(account, router) {
 export function submitCompose() {
   return function (dispatch, getState) {
     let status = getState().getIn(['compose', 'text'], '');
+    let media  = getState().getIn(['compose', 'media_attachments']);
 
-    if (!status || !status.length) {
+    if ((!status || !status.length) && media.size === 0) {
       return;
     }
 
@@ -114,7 +118,7 @@ export function submitCompose() {
     api(getState).post('/api/v1/statuses', {
       status,
       in_reply_to_id: getState().getIn(['compose', 'in_reply_to'], null),
-      media_ids: getState().getIn(['compose', 'media_attachments']).map(item => item.get('id')),
+      media_ids: media.map(item => item.get('id')),
       sensitive: getState().getIn(['compose', 'sensitive']),
       spoiler_text: getState().getIn(['compose', 'spoiler_text'], ''),
       visibility: getState().getIn(['compose', 'privacy']),
@@ -277,13 +281,22 @@ export function undoUploadCompose(media_id) {
 };
 
 export function clearComposeSuggestions() {
+  if (cancelFetchComposeSuggestionsAccounts) {
+    cancelFetchComposeSuggestionsAccounts();
+  }
   return {
     type: COMPOSE_SUGGESTIONS_CLEAR,
   };
 };
 
 const fetchComposeSuggestionsAccounts = throttle((dispatch, getState, token) => {
+  if (cancelFetchComposeSuggestionsAccounts) {
+    cancelFetchComposeSuggestionsAccounts();
+  }
   api(getState).get('/api/v1/accounts/search', {
+    cancelToken: new CancelToken(cancel => {
+      cancelFetchComposeSuggestionsAccounts = cancel;
+    }),
     params: {
       q: token.slice(1),
       resolve: false,
