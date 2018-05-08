@@ -100,7 +100,7 @@
     small {
       display: block;
       font-size: 14px;
-      color: $ui-highlight-color;
+      color: $highlight-text-color;
       font-weight: 400;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -141,7 +141,7 @@
     width: 33.3%;
     box-sizing: border-box;
     flex: 0 0 auto;
-    color: $ui-primary-color;
+    color: $darker-text-color;
     padding: 5px 10px 0;
     margin-bottom: 10px;
     border-right: 1px solid lighten($ui-base-color, 4%);
@@ -171,7 +171,7 @@
 
     &.active {
       &::after {
-        border-bottom: 4px solid $ui-highlight-color;
+        border-bottom: 4px solid $highlight-text-color;
         opacity: 1;
       }
     }
@@ -207,7 +207,7 @@
     line-height: 18px;
     padding: 0 15px;
     text-align: center;
-    color: $ui-secondary-color;
+    color: $secondary-text-color;
   }
 
   @media screen and (max-width: 480px) {
@@ -285,7 +285,7 @@
   .current {
     background: $simple-background-color;
     border-radius: 100px;
-    color: $ui-base-color;
+    color: $inverted-text-color;
     cursor: default;
     margin: 0 10px;
   }
@@ -297,7 +297,7 @@
   .older,
   .newer {
     text-transform: uppercase;
-    color: $ui-secondary-color;
+    color: $secondary-text-color;
   }
 
   .older {
@@ -322,7 +322,7 @@
 
   .disabled {
     cursor: default;
-    color: lighten($ui-base-color, 10%);
+    color: lighten($inverted-text-color, 10%);
   }
 
   @media screen and (max-width: 700px) {
@@ -361,7 +361,7 @@
     width: 335px;
     background: $simple-background-color;
     border-radius: 4px;
-    color: $ui-base-color;
+    color: $inverted-text-color;
     margin: 0 5px 10px;
     position: relative;
 
@@ -373,7 +373,7 @@
       overflow: hidden;
       height: 100px;
       border-radius: 4px 4px 0 0;
-      background-color: lighten($ui-base-color, 4%);
+      background-color: lighten($inverted-text-color, 4%);
       background-size: cover;
       background-position: center;
       position: relative;
@@ -424,7 +424,7 @@
 
       a {
         display: block;
-        color: $ui-base-color;
+        color: $inverted-text-color;
         text-decoration: none;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -446,7 +446,7 @@
     }
 
     .username {
-      color: lighten($ui-base-color, 34%);
+      color: $lighter-text-color;
       font-size: 14px;
       font-weight: 400;
     }
@@ -454,7 +454,7 @@
     .account__header__content {
       padding: 10px 15px;
       padding-top: 15px;
-      color: lighten($ui-base-color, 26%);
+      color: $lighter-text-color;
       word-wrap: break-word;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -466,7 +466,7 @@
 .nothing-here {
   width: 100%;
   display: block;
-  color: $ui-primary-color;
+  color: $light-text-color;
   font-size: 14px;
   font-weight: 500;
   text-align: center;
@@ -527,7 +527,7 @@
 
       span {
         font-size: 14px;
-        color: $ui-primary-color;
+        color: $light-text-color;
       }
     }
 
@@ -542,7 +542,7 @@
 
   .account__header__content {
     font-size: 14px;
-    color: $ui-base-color;
+    color: $inverted-text-color;
   }
 }
 
@@ -556,18 +556,18 @@
     display: inline-block;
     padding: 15px;
     text-decoration: none;
-    color: $ui-highlight-color;
+    color: $highlight-text-color;
     text-transform: uppercase;
     font-weight: 500;
 
     &:hover,
     &:active,
     &:focus {
-      color: lighten($ui-highlight-color, 8%);
+      color: lighten($highlight-text-color, 8%);
     }
 
     &.active {
-      color: $ui-base-color;
+      color: $inverted-text-color;
       cursor: default;
     }
   }
