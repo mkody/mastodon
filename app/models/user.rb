@@ -41,7 +41,7 @@ class User < ApplicationRecord
   include Settings::Extend
   include Omniauthable
 
-  ACTIVE_DURATION = 14.days
+  ACTIVE_DURATION = 7.days
 
   devise :two_factor_authenticatable,
          otp_secret_encryption_key: Rails.configuration.x.otp_secret
@@ -245,7 +245,7 @@ class User < ApplicationRecord
   end
 
   def web_push_subscription(session)
-    session.web_push_subscription.nil? ? nil : session.web_push_subscription.as_payload
+    session.web_push_subscription.nil? ? nil : session.web_push_subscription
   end
 
   def invite_code=(code)
