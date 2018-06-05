@@ -5,7 +5,7 @@ RSpec.describe Api::V1::StatusesController, type: :controller do
 
   let(:user)  { Fabricate(:user, account: Fabricate(:account, username: 'alice')) }
   let(:app)   { Fabricate(:application, name: 'Test app', website: 'http://testapp.com') }
-  let(:token) { double acceptable?: true, resource_owner_id: user.id, application: app }
+  let(:token) { Fabricate(:accessible_access_token, resource_owner_id: user.id, application: app, scopes: 'write') }
 
   context 'with an oauth token' do
     before do
@@ -17,7 +17,7 @@ RSpec.describe Api::V1::StatusesController, type: :controller do
 
       it 'returns http success' do
         get :show, params: { id: status.id }
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(200)
       end
     end
 
@@ -30,33 +30,7 @@ RSpec.describe Api::V1::StatusesController, type: :controller do
 
       it 'returns http success' do
         get :context, params: { id: status.id }
-        expect(response).to have_http_status(:success)
-      end
-    end
-
-    describe 'GET #reblogged_by' do
-      let(:status) { Fabricate(:status, account: user.account) }
-
-      before do
-        post :reblog, params: { id: status.id }
-      end
-
-      it 'returns http success' do
-        get :reblogged_by, params: { id: status.id }
-        expect(response).to have_http_status(:success)
-      end
-    end
-
-    describe 'GET #favourited_by' do
-      let(:status) { Fabricate(:status, account: user.account) }
-
-      before do
-        post :favourite, params: { id: status.id }
-      end
-
-      it 'returns http success' do
-        get :favourited_by, params: { id: status.id }
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(200)
       end
     end
 
@@ -66,7 +40,7 @@ RSpec.describe Api::V1::StatusesController, type: :controller do
       end
 
       it 'returns http success' do
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(200)
       end
     end
 
@@ -78,109 +52,11 @@ RSpec.describe Api::V1::StatusesController, type: :controller do
       end
 
       it 'returns http success' do
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(200)
       end
 
       it 'removes the status' do
         expect(Status.find_by(id: status.id)).to be nil
-      end
-    end
-
-    describe 'POST #reblog' do
-      let(:status) { Fabricate(:status, account: user.account) }
-
-      before do
-        post :reblog, params: { id: status.id }
-      end
-
-      it 'returns http success' do
-        expect(response).to have_http_status(:success)
-      end
-
-      it 'updates the reblogs count' do
-        expect(status.reblogs.count).to eq 1
-      end
-
-      it 'updates the reblogged attribute' do
-        expect(user.account.reblogged?(status)).to be true
-      end
-
-      it 'return json with updated attributes' do
-        hash_body = body_as_json
-
-        expect(hash_body[:reblog][:id]).to eq status.id
-        expect(hash_body[:reblog][:reblogs_count]).to eq 1
-        expect(hash_body[:reblog][:reblogged]).to be true
-      end
-    end
-
-    describe 'POST #unreblog' do
-      let(:status) { Fabricate(:status, account: user.account) }
-
-      before do
-        post :reblog,   params: { id: status.id }
-        post :unreblog, params: { id: status.id }
-      end
-
-      it 'returns http success' do
-        expect(response).to have_http_status(:success)
-      end
-
-      it 'updates the reblogs count' do
-        expect(status.reblogs.count).to eq 0
-      end
-
-      it 'updates the reblogged attribute' do
-        expect(user.account.reblogged?(status)).to be false
-      end
-    end
-
-    describe 'POST #favourite' do
-      let(:status) { Fabricate(:status, account: user.account) }
-
-      before do
-        post :favourite, params: { id: status.id }
-      end
-
-      it 'returns http success' do
-        expect(response).to have_http_status(:success)
-      end
-
-      it 'updates the favourites count' do
-        expect(status.favourites.count).to eq 1
-      end
-
-      it 'updates the favourited attribute' do
-        expect(user.account.favourited?(status)).to be true
-      end
-
-      it 'return json with updated attributes' do
-        hash_body = body_as_json
-
-        expect(hash_body[:id]).to eq status.id
-        expect(hash_body[:favourites_count]).to eq 1
-        expect(hash_body[:favourited]).to be true
-      end
-    end
-
-    describe 'POST #unfavourite' do
-      let(:status) { Fabricate(:status, account: user.account) }
-
-      before do
-        post :favourite,   params: { id: status.id }
-        post :unfavourite, params: { id: status.id }
-      end
-
-      it 'returns http success' do
-        expect(response).to have_http_status(:success)
-      end
-
-      it 'updates the favourites count' do
-        expect(status.favourites.count).to eq 0
-      end
-
-      it 'updates the favourited attribute' do
-        expect(user.account.favourited?(status)).to be false
       end
     end
   end
@@ -196,7 +72,7 @@ RSpec.describe Api::V1::StatusesController, type: :controller do
       describe 'GET #show' do
         it 'returns http unautharized' do
           get :show, params: { id: status.id }
-          expect(response).to have_http_status(:missing)
+          expect(response).to have_http_status(404)
         end
       end
 
@@ -207,36 +83,14 @@ RSpec.describe Api::V1::StatusesController, type: :controller do
 
         it 'returns http unautharized' do
           get :context, params: { id: status.id }
-          expect(response).to have_http_status(:missing)
+          expect(response).to have_http_status(404)
         end
       end
 
       describe 'GET #card' do
         it 'returns http unautharized' do
           get :card, params: { id: status.id }
-          expect(response).to have_http_status(:missing)
-        end
-      end
-
-      describe 'GET #reblogged_by' do
-        before do
-          post :reblog, params: { id: status.id }
-        end
-
-        it 'returns http unautharized' do
-          get :reblogged_by, params: { id: status.id }
-          expect(response).to have_http_status(:missing)
-        end
-      end
-
-      describe 'GET #favourited_by' do
-        before do
-          post :favourite, params: { id: status.id }
-        end
-
-        it 'returns http unautharized' do
-          get :favourited_by, params: { id: status.id }
-          expect(response).to have_http_status(:missing)
+          expect(response).to have_http_status(404)
         end
       end
     end
@@ -247,7 +101,7 @@ RSpec.describe Api::V1::StatusesController, type: :controller do
       describe 'GET #show' do
         it 'returns http success' do
           get :show, params: { id: status.id }
-          expect(response).to have_http_status(:success)
+          expect(response).to have_http_status(200)
         end
       end
 
@@ -258,36 +112,14 @@ RSpec.describe Api::V1::StatusesController, type: :controller do
 
         it 'returns http success' do
           get :context, params: { id: status.id }
-          expect(response).to have_http_status(:success)
+          expect(response).to have_http_status(200)
         end
       end
 
       describe 'GET #card' do
         it 'returns http success' do
           get :card, params: { id: status.id }
-          expect(response).to have_http_status(:success)
-        end
-      end
-
-      describe 'GET #reblogged_by' do
-        before do
-          post :reblog, params: { id: status.id }
-        end
-
-        it 'returns http success' do
-          get :reblogged_by, params: { id: status.id }
-          expect(response).to have_http_status(:success)
-        end
-      end
-
-      describe 'GET #favourited_by' do
-        before do
-          post :favourite, params: { id: status.id }
-        end
-
-        it 'returns http success' do
-          get :favourited_by, params: { id: status.id }
-          expect(response).to have_http_status(:success)
+          expect(response).to have_http_status(200)
         end
       end
     end

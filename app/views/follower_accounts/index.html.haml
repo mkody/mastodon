@@ -2,8 +2,12 @@
   = t('accounts.people_who_follow', name: display_name(@account))
 
 - content_for :header_tags do
-  = render 'accounts/og', account: @account
+  %meta{ name: 'robots', content: 'noindex' }/
+  = render 'accounts/og', account: @account, url: account_followers_url(@account, only_path: false)
 
 = render 'accounts/header', account: @account
 
-= render 'accounts/follow_grid', accounts: @accounts
+- if @account.user_hides_network?
+  = render 'accounts/follow_grid_hidden'
+- else
+  = render 'accounts/follow_grid', follows: @follows, accounts: @follows.map(&:account)

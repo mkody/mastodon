@@ -2,7 +2,7 @@
   "name": "Mastodon",
   "description": "A GNU Social-compatible microblogging server",
   "repository": "https://github.com/tootsuite/mastodon",
-  "logo": "https://github.com/tootsuite/mastodon/raw/master/app/assets/images/logo.png",
+  "logo": "https://github.com/tootsuite.png",
   "env": {
     "LOCAL_DOMAIN": {
       "description": "The domain that your Mastodon instance will run on (this can be appname.scalingo.io or a custom domain)",
@@ -19,6 +19,10 @@
     },
     "SECRET_KEY_BASE": {
       "description": "The secret key base",
+      "generator": "secret"
+    },
+    "OTP_SECRET": {
+      "description": "One-time password secret",
       "generator": "secret"
     },
     "SINGLE_USER_MODE": {
