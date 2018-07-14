@@ -33,12 +33,12 @@ module Mastodon
     end
 
     def source_base_url
-      'https://github.com/glitch-soc/mastodon'
+      'https://github.com/im-in-space/mastodon'
     end
 
     # specify git tag or commit hash here
     def source_tag
-      nil
+      'im-in.space'
     end
 
     def source_url
