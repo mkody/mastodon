@@ -42,7 +42,6 @@ sl:
     people_who_follow: Ljudje, ki sledijo %{name}
     posts: Tuti
     posts_with_replies: Tuti in odgovori
-    remote_follow: Oddaljeno sledenje
     reserved_username: Uporabniško ime je zasedeno
     roles:
       admin: Skrbnik
@@ -103,3 +102,4 @@ sl:
         alphabetic: Po abecedi
         most_recent: Najnovejše
         title: Red
+      promote: Spodbujanje
