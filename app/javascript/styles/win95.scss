@@ -477,6 +477,7 @@ body.admin {
 }
 
 .status__content {
+  color: #000;
   font-size:13px;
 }
 
@@ -773,6 +774,10 @@ body.admin {
 
 .drawer__tab:first-child {
 
+}
+
+.drawer__inner__mastodon {
+  display: none;
 }
 
 .search {
