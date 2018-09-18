@@ -146,7 +146,7 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
   onMount() {
     dispatch(mountCompose());
   },
-  onOpenActionModal(props) {
+  onOpenActionsModal(props) {
     dispatch(openModal('ACTIONS', props));
   },
   onOpenDoodleModal() {
@@ -485,8 +485,8 @@ class Composer extends React.Component {
           onUpload={onUpload}
           privacy={privacy}
           resetFileKey={resetFileKey}
-          sensitive={sensitive}
-          spoiler={spoiler}
+          sensitive={sensitive || (spoilersAlwaysOn && spoilerText && spoilerText.length > 0)}
+          spoiler={spoilersAlwaysOn ? (spoilerText && spoilerText.length > 0) : spoiler}
         />
         <ComposerPublisher
           countText={`${spoilerText}${countableText(text)}${advancedOptions && advancedOptions.get('do_not_federate') ? ' 👁️' : ''}`}
