@@ -801,7 +801,7 @@
   padding: 8px 10px;
   padding-left: 68px;
   position: relative;
-  min-height: 48px;
+  min-height: 54px;
   border-bottom: 1px solid lighten($ui-base-color, 8%);
   cursor: default;
 
@@ -823,7 +823,7 @@
     margin-top: 8px;
   }
 
-  &.status-direct {
+  &.status-direct:not(.read) {
     background: lighten($ui-base-color, 8%);
     border-bottom-color: lighten($ui-base-color, 12%);
   }
@@ -1132,6 +1132,18 @@
     display: inline-block;
     vertical-align: middle;
     margin-right: 5px;
+  }
+
+  &-composite {
+    @include avatar-radius();
+    overflow: hidden;
+
+    & > div {
+      @include avatar-radius();
+      float: left;
+      position: relative;
+      box-sizing: border-box;
+    }
   }
 }
 
@@ -1657,6 +1669,7 @@ a.account__display-name {
   padding: 4px 0;
   border-radius: 4px;
   box-shadow: 2px 4px 15px rgba($base-shadow-color, 0.4);
+  z-index: 9999;
 
   ul {
     list-style: none;
@@ -2548,6 +2561,9 @@ a.status-card {
   display: block;
   margin-top: 5px;
   font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .status-card__image {
@@ -2570,6 +2586,31 @@ a.status-card {
   .status-card__title {
     white-space: inherit;
   }
+}
+
+.status-card.compact {
+  border-color: lighten($ui-base-color, 4%);
+
+  &.interactive {
+    border: 0;
+  }
+
+  .status-card__content {
+    padding: 8px;
+    padding-top: 10px;
+  }
+
+  .status-card__title {
+    white-space: nowrap;
+  }
+
+  .status-card__image {
+    flex: 0 0 60px;
+  }
+}
+
+a.status-card.compact:hover {
+  background-color: lighten($ui-base-color, 4%);
 }
 
 .status-card__image-image {
@@ -5495,46 +5536,5 @@ noscript {
         stroke: lighten($highlight-text-color, 6%) !important;
       }
     }
-  }
-}
-
-.conversation {
-  padding: 14px 10px;
-  border-bottom: 1px solid lighten($ui-base-color, 8%);
-  cursor: pointer;
-
-  &__header {
-    display: flex;
-    margin-bottom: 15px;
-  }
-
-  &__avatars {
-    overflow: hidden;
-    flex: 1 1 auto;
-
-    & > div {
-      display: flex;
-      flex-wrap: none;
-      width: 900px;
-    }
-
-    .account__avatar {
-      margin-right: 10px;
-    }
-  }
-
-  &__time {
-    flex: 0 0 auto;
-    font-size: 14px;
-    color: $darker-text-color;
-    text-align: right;
-
-    .display-name {
-      color: $secondary-text-color;
-    }
-  }
-
-  .attachment-list.compact {
-    margin-top: 15px;
   }
 }
