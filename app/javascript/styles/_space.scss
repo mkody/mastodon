@@ -67,7 +67,7 @@ body {
 }
 
 // Make spoiler link button readable
-body.app-body .status__content .status__content__spoiler-link {
+.status__content .status__content__spoiler-link {
   color: #37aac0;
 }
 
@@ -130,9 +130,7 @@ body.app-body .status__content .status__content__spoiler-link {
   background: transparent;
 }
 
-// Wrapping this style in the body for the app only (v1.16)
-// https://userstyles.org/styles/140852/mastodon-flat-dark-and-colourful
-body.app-body {
+// (v1.16) https://userstyles.org/styles/140852/mastodon-flat-dark-and-colourful
 .button {
     background-color: #ff9800;
   }
@@ -398,6 +396,4 @@ color: #3aaacf;
 }
 .column-header__back-button:hover {
     color: #ffa51f;
-}
-
 }
