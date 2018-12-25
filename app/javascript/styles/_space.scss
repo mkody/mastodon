@@ -202,7 +202,7 @@ body {
     background-color: #223;
   }
   .drawer__inner__mastodon {
-    background-color: #223;
+    background-color: #223 !important;
   }
   .navigation-bar {
     color: #eee;
@@ -245,6 +245,12 @@ body {
   .notification__message {
     color: #ccc;
   }
+
+  .notification__filter-bar,
+  .notification__filter-bar button,
+  .account__section-headline button {
+    background: #223;
+  }
   
   .status .status__relative-time {
     color: #ccc;
@@ -284,6 +290,10 @@ body {
   .account__action-bar__tab,
   .detailed-status__action-bar {
     border: 0;
+    background: #223;
+  }
+
+  .account__section-headline {
     background: #223;
   }
   
