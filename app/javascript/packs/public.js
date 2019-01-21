@@ -66,6 +66,12 @@ function main() {
     if (reactComponents.length > 0) {
       import(/* webpackChunkName: "containers/media_container" */ '../mastodon/containers/media_container')
         .then(({ default: MediaContainer }) => {
+          [].forEach.call(reactComponents, (component) => {
+            [].forEach.call(component.children, (child) => {
+              component.removeChild(child);
+            });
+          });
+
           const content = document.createElement('div');
 
           ReactDOM.render(<MediaContainer locale={locale} components={reactComponents} />, content);
@@ -84,6 +90,14 @@ function main() {
 
     if (parallaxComponents.length > 0 ) {
       new Rellax('.parallax', { speed: -1 });
+    }
+
+    if (document.body.classList.contains('with-modals')) {
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      const scrollbarWidthStyle = document.createElement('style');
+      scrollbarWidthStyle.id = 'scrollbar-width';
+      document.head.appendChild(scrollbarWidthStyle);
+      scrollbarWidthStyle.sheet.insertRule(`body.with-modals--active { margin-right: ${scrollbarWidth}px; }`, 0);
     }
   });
 }
