@@ -132,12 +132,8 @@
   "empty_column.lists": "Vous n’avez pas encore de liste. Lorsque vous en créerez une, elle apparaîtra ici.",
   "empty_column.mutes": "Vous n’avez pas encore mis d'utilisateur·rice·s en silence.",
   "empty_column.notifications": "Vous n’avez pas encore de notification. Interagissez avec d’autres personnes pour débuter la conversation.",
-<<<<<<< HEAD
   "empty_column.public": "Il n’y a rien ici ! Écrivez quelque chose publiquement, ou bien suivez manuellement des personnes d’autres instances pour remplir le fil galactique.",
-=======
-  "empty_column.public": "Il n’y a rien ici ! Écrivez quelque chose publiquement, ou bien suivez manuellement des personnes d’autres instances pour remplir le fil public",
   "error_boundary.it_crashed": "It crashed!",
->>>>>>> glitch-soc
   "follow_request.authorize": "Accepter",
   "follow_request.reject": "Rejeter",
   "getting_started.developers": "Développeur·euse·s",
