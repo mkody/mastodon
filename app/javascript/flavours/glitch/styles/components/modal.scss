@@ -488,14 +488,6 @@
   font-size: 14px;
 }
 
-.confirmation-modal {
-  max-width: 85vw;
-
-  @media screen and (min-width: 480px) {
-    max-width: 380px;
-  }
-}
-
 .mute-modal {
   line-height: 24px;
 }
@@ -629,6 +621,11 @@
   ul {
     overflow-y: auto;
     flex-shrink: 0;
+    max-height: 80vh;
+
+    &.with-status {
+      max-height: calc(80vh - 75px);
+    }
 
     li:empty {
       margin: 0;
@@ -684,6 +681,10 @@
     &:active {
       color: darken($lighter-text-color, 4%);
     }
+  }
+
+  .confirmation-modal__secondary-button {
+    flex-shrink: 1;
   }
 }
 
