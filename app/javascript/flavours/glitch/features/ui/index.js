@@ -98,6 +98,8 @@ const keyMap = {
   goToMuted: 'g m',
   goToRequests: 'g r',
   toggleSpoiler: 'x',
+  bookmark: 'd',
+  toggleCollapse: 'shift+x',
 };
 
 @connect(mapStateToProps)

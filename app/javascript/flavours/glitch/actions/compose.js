@@ -227,8 +227,8 @@ export function uploadCompose(files) {
   return function (dispatch, getState) {
     const uploadLimit = 4;
     const media  = getState().getIn(['compose', 'media_attachments']);
-    const total = Array.from(files).reduce((a, v) => a + v.size, 0);
     const progress = new Array(files.length).fill(0);
+    let total = Array.from(files).reduce((a, v) => a + v.size, 0);
 
     if (files.length + media.size > uploadLimit) {
       dispatch(showAlert(undefined, messages.uploadErrorLimit));
@@ -248,6 +248,8 @@ export function uploadCompose(files) {
       resizeImage(f).then(file => {
         const data = new FormData();
         data.append('file', file);
+        // Account for disparity in size of original image and resized data
+        total += file.size - f.size;
 
         return api(getState).post('/api/v1/media', data, {
           onUploadProgress: function({ loaded }){
@@ -405,7 +407,7 @@ export function readyComposeSuggestionsAccounts(token, accounts) {
   };
 };
 
-export function selectComposeSuggestion(position, token, suggestion) {
+export function selectComposeSuggestion(position, token, suggestion, path) {
   return (dispatch, getState) => {
     let completion;
     if (typeof suggestion === 'object' && suggestion.id) {
@@ -422,6 +424,7 @@ export function selectComposeSuggestion(position, token, suggestion) {
       position,
       token,
       completion,
+      path,
     });
   };
 };
