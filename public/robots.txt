@@ -4,6 +4,5 @@ Disallow: /media_proxy/
 Disallow:
 
 User-agent: *
-Allow: /about
-Allow: /about/more
-Disallow: /
+Disallow: /media_proxy/
+Disallow: /interact/

@@ -270,6 +270,7 @@ en:
       created_msg: Domain block is now being processed
       destroyed_msg: Domain block has been undone
       domain: Domain
+      existing_domain_block_html: You have already imposed stricter limits on %{name}, you need to <a href="%{unblock_url}">unblock it</a> first.
       new:
         create: Create block
         hint: The domain block will not prevent creation of account entries in the database, but will retroactively and automatically apply specific moderation methods on those accounts.
@@ -438,6 +439,12 @@ en:
       show_known_fediverse_at_about_page:
         desc_html: When toggled, it will show toots from all the known fediverse on preview. Otherwise it will only show local toots.
         title: Show known fediverse on timeline preview
+      show_reblogs_in_public_timelines:
+        desc_html: Show public boosts of public toots in local and public timelines.
+        title: Show boosts in public timelines
+      show_replies_in_public_timelines:
+        desc_html: In addition to public self-replies (threads), show public replies in local and public timelines.
+        title: Show replies in public timelines
       show_staff_badge:
         desc_html: Show a staff badge on a user page
         title: Show staff badge

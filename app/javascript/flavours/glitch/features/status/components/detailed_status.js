@@ -112,7 +112,7 @@ export default class DetailedStatus extends ImmutablePureComponent {
       return null;
     }
 
-    let media           = '';
+    let media           = null;
     let mediaIcon       = null;
     let applicationLink = '';
     let reblogLink = '';
@@ -125,6 +125,7 @@ export default class DetailedStatus extends ImmutablePureComponent {
 
     if (status.get('poll')) {
       media = <PollContainer pollId={status.get('poll')} />;
+      mediaIcon = 'tasks';
     } else if (status.get('media_attachments').size > 0) {
       if (status.get('media_attachments').some(item => item.get('type') === 'unknown')) {
         media = <AttachmentList media={status.get('media_attachments')} />;
@@ -133,6 +134,7 @@ export default class DetailedStatus extends ImmutablePureComponent {
         media = (
           <Video
             preview={video.get('preview_url')}
+            blurhash={video.get('blurhash')}
             src={video.get('url')}
             alt={video.get('description')}
             inline
@@ -161,7 +163,10 @@ export default class DetailedStatus extends ImmutablePureComponent {
         );
         mediaIcon = 'picture-o';
       }
-    } else media = <Card onOpenMedia={this.props.onOpenMedia} card={status.get('card', null)} />;
+    } else if (status.get('card')) {
+      media = <Card onOpenMedia={this.props.onOpenMedia} card={status.get('card')} />;
+      mediaIcon = 'link';
+    }
 
     if (status.get('application')) {
       applicationLink = <span> · <a className='detailed-status__application' href={status.getIn(['application', 'website'])} target='_blank' rel='noopener'>{status.getIn(['application', 'name'])}</a></span>;
