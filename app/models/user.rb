@@ -88,7 +88,7 @@ class User < ApplicationRecord
   scope :confirmed, -> { where.not(confirmed_at: nil) }
   scope :enabled, -> { where(disabled: false) }
   scope :inactive, -> { where(arel_table[:current_sign_in_at].lt(ACTIVE_DURATION.ago)) }
-  scope :active, -> { confirmed.where(arel_table[:current_sign_in_at].gteq(ACTIVE_DURATION.ago)).joins(:account).where(accounts: { suspended: false }) }
+  scope :active, -> { confirmed.where(arel_table[:current_sign_in_at].gteq(ACTIVE_DURATION.ago)).joins(:account).where.not(accounts: { suspended_at: nil }) }
   scope :matches_email, ->(value) { where(arel_table[:email].matches("#{value}%")) }
   scope :emailable, -> { confirmed.enabled.joins(:account).merge(Account.searchable) }
 
@@ -104,7 +104,7 @@ class User < ApplicationRecord
 
   delegate :auto_play_gif, :default_sensitive, :unfollow_modal, :boost_modal, :favourite_modal, :delete_modal,
            :reduce_motion, :system_font_ui, :noindex, :flavour, :skin, :display_media, :hide_network, :hide_followers_count,
-           :expand_spoilers, :default_language, :aggregate_reblogs, :show_application, to: :settings, prefix: :setting, allow_nil: false
+           :expand_spoilers, :default_language, :aggregate_reblogs, :show_application, :default_content_type, to: :settings, prefix: :setting, allow_nil: false
 
   attr_reader :invite_code
   attr_writer :external
@@ -114,6 +114,10 @@ class User < ApplicationRecord
   end
 
   def invited?
+    invite_id.present?
+  end
+
+  def valid_invitation?
     invite_id.present? && invite.valid_for_use?
   end
 
@@ -274,7 +278,7 @@ class User < ApplicationRecord
   private
 
   def set_approved
-    self.approved = open_registrations? || invited? || external?
+    self.approved = open_registrations? || valid_invitation? || external?
   end
 
   def open_registrations?

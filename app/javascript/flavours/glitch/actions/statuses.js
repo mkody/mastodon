@@ -71,10 +71,12 @@ export function fetchStatusFail(id, error, skipLoading) {
   };
 };
 
-export function redraft(status) {
+export function redraft(status, raw_text, content_type) {
   return {
     type: REDRAFT,
     status,
+    raw_text,
+    content_type,
   };
 };
 
@@ -88,12 +90,12 @@ export function deleteStatus(id, router, withRedraft = false) {
 
     dispatch(deleteStatusRequest(id));
 
-    api(getState).delete(`/api/v1/statuses/${id}`).then(() => {
+    api(getState).delete(`/api/v1/statuses/${id}`).then(response => {
       dispatch(deleteStatusSuccess(id));
       dispatch(deleteFromTimelines(id));
 
       if (withRedraft) {
-        dispatch(redraft(status));
+        dispatch(redraft(status, response.data.text, response.data.content_type));
 
         if (!getState().getIn(['compose', 'mounted'])) {
           router.push('/statuses/new');
