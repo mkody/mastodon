@@ -299,7 +299,6 @@ Rails.application.routes.draw do
 
         member do
           get :context
-          get :card
         end
       end
 
@@ -362,7 +361,6 @@ Rails.application.routes.draw do
       resources :notifications, only: [:index, :show, :destroy] do
         collection do
           post :clear
-          post :dismiss # Deprecated
           delete :destroy_multiple
         end
 
@@ -408,6 +406,29 @@ Rails.application.routes.draw do
 
       namespace :push do
         resource :subscription, only: [:create, :show, :update, :destroy]
+      end
+
+      namespace :admin do
+        resources :accounts, only: [:index, :show] do
+          member do
+            post :enable
+            post :unsilence
+            post :unsuspend
+            post :approve
+            post :reject
+          end
+
+          resource :action, only: [:create], controller: 'account_actions'
+        end
+
+        resources :reports, only: [:index, :show] do
+          member do
+            post :assign_to_self
+            post :unassign
+            post :reopen
+            post :resolve
+          end
+        end
       end
     end
 
