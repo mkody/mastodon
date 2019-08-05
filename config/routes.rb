@@ -34,7 +34,10 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get '/invite/:invite_code', to: 'auth/registrations#new', as: :public_invite
-    match '/auth/finish_signup' => 'auth/confirmations#finish_signup', via: [:get, :patch], as: :finish_signup
+
+    namespace :auth do
+      resource :setup, only: [:show, :update], controller: :setup
+    end
   end
 
   devise_for :users, path: 'auth', controllers: {
@@ -153,6 +156,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/dashboard', to: 'dashboard#index'
 
+    resources :domain_allows, only: [:new, :create, :show, :destroy]
     resources :domain_blocks, only: [:new, :create, :show, :destroy]
     resources :email_domain_blocks, only: [:index, :new, :create, :destroy]
     resources :action_logs, only: [:index]

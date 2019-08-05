@@ -73,6 +73,7 @@ class User < ApplicationRecord
 
   has_many :applications, class_name: 'Doorkeeper::Application', as: :owner
   has_many :backups, inverse_of: :user
+  has_many :invites, inverse_of: :user
 
   has_one :invite_request, class_name: 'UserInviteRequest', inverse_of: :user, dependent: :destroy
   accepts_nested_attributes_for :invite_request, reject_if: ->(attributes) { attributes['text'].blank? }
@@ -161,7 +162,11 @@ class User < ApplicationRecord
   end
 
   def active_for_authentication?
-    super && approved?
+    true
+  end
+
+  def functional?
+    confirmed? && approved? && !disabled? && !account.suspended?
   end
 
   def inactive_message

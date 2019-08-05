@@ -186,6 +186,7 @@ en:
       username: Username
       warn: Warn
       web: Web
+      whitelisted: Whitelisted
     action_logs:
       actions:
         assigned_to_self_report: "%{name} assigned report %{target} to themselves"
@@ -270,6 +271,11 @@ en:
       week_interactions: interactions this week
       week_users_active: active this week
       week_users_new: users this week
+    domain_allows:
+      add_new: Whitelist domain
+      created_msg: Domain has been successfully whitelisted
+      destroyed_msg: Domain has been removed from the whitelist
+      undo: Remove from whitelist
     domain_blocks:
       add_new: Add new domain block
       created_msg: Domain block is now being processed
@@ -537,7 +543,7 @@ en:
     apply_for_account: Request an invite
     change_password: Password
     checkbox_agreement_html: I agree to the <a href="%{rules_path}" target="_blank">server rules</a> and <a href="%{terms_path}" target="_blank">terms of service</a>
-    confirm_email: Confirm email
+    checkbox_agreement_without_rules_html: I agree to the <a href="%{terms_path}" target="_blank">terms of service</a>
     delete_account: Delete account
     delete_account_html: If you wish to delete your account, you can <a href="%{path}">proceed here</a>. You will be asked for confirmation.
     didnt_get_confirmation: Didn't receive confirmation instructions?
@@ -557,6 +563,14 @@ en:
     reset_password: Reset password
     security: Security
     set_new_password: Set new password
+    setup:
+      email_below_hint_html: If the below e-mail address is incorrect, you can change it here and receive a new confirmation e-mail.
+      email_settings_hint_html: The confirmation e-mail was sent to %{email}. If that e-mail address is not correct, you can change it in account settings.
+      title: Setup
+    status:
+      account_status: Account status
+      confirming: Waiting for e-mail confirmation to be completed.
+      pending: Your application is pending review by our staff. This may take some time. You will receive an e-mail if your application is approved.
     trouble_logging_in: Trouble logging in?
   authorize_follow:
     already_following: You are already following this account
