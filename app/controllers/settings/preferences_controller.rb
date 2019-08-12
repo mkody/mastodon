@@ -58,7 +58,8 @@ class Settings::PreferencesController < Settings::BaseController
       :setting_default_content_type,
       :setting_use_blurhash,
       :setting_use_pending_items,
-      notification_emails: %i(follow follow_request reblog favourite mention digest report pending_account),
+      :setting_trends,
+      notification_emails: %i(follow follow_request reblog favourite mention digest report pending_account trending_tag),
       interactions: %i(must_be_follower must_be_following must_be_following_dm)
     )
   end

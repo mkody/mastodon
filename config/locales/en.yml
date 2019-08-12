@@ -247,6 +247,7 @@ en:
       updated_msg: Emoji successfully updated!
       upload: Upload
     dashboard:
+      authorized_fetch_mode: Authorized fetch mode
       backlog: backlogged jobs
       config: Configuration
       feature_deletions: Account deletions
@@ -260,6 +261,8 @@ en:
       hidden_service: Federation with hidden services
       keybase: Keybase integration
       open_reports: open reports
+      pending_tags: hashtags waiting for review
+      pending_users: users waiting for review
       recent_users: Recent users
       search: Full-text search
       single_user_mode: Single user mode
@@ -271,6 +274,7 @@ en:
       week_interactions: interactions this week
       week_users_active: active this week
       week_users_new: users this week
+      whitelist_mode: Whitelist mode
     domain_allows:
       add_new: Whitelist domain
       created_msg: Domain has been successfully whitelisted
@@ -281,6 +285,7 @@ en:
       created_msg: Domain block is now being processed
       destroyed_msg: Domain block has been undone
       domain: Domain
+      edit: Edit domain block
       existing_domain_block_html: You have already imposed stricter limits on %{name}, you need to <a href="%{unblock_url}">unblock it</a> first.
       new:
         create: Create block
@@ -291,6 +296,10 @@ en:
           silence: Silence
           suspend: Suspend
         title: New domain block
+      private_comment: Private comment
+      private_comment_hint: Comment about this domain limitation for internal use by the moderators.
+      public_comment: Public comment
+      public_comment_hint: Comment about this domain limitation for the general public, if advertising the list of domain limitations is enabled.
       reject_media: Reject media files
       reject_media_hint: Removes locally stored media files and refuses to download any in the future. Irrelevant for suspensions
       reject_reports: Reject reports
@@ -310,6 +319,7 @@ en:
         title: Undo domain block for %{domain}
         undo: Undo
       undo: Undo domain block
+      view: View domain block
     email_domain_blocks:
       add_new: Add new
       created_msg: Successfully added e-mail domain to blacklist
@@ -333,6 +343,8 @@ en:
         all: All
         limited: Limited
         title: Moderation
+      private_comment: Private comment
+      public_comment: Public comment
       title: Federation
       total_blocked_by_us: Blocked by us
       total_followed_by_them: Followed by them
@@ -473,8 +485,8 @@ en:
         title: Custom terms of service
       site_title: Server name
       spam_check_enabled:
-        desc_html: Mastodon can auto-silence and auto-report accounts based on measures such as detecting accounts who send repeated unsolicited messages. There may be false positives.
-        title: Anti-spam
+        desc_html: Mastodon can auto-silence and auto-report accounts that send repeated unsolicited messages. There may be false positives.
+        title: Anti-spam automation
       thumbnail:
         desc_html: Used for previews via OpenGraph and API. 1200x630px recommended
         title: Server thumbnail
@@ -482,6 +494,9 @@ en:
         desc_html: Display public timeline on landing page
         title: Timeline preview
       title: Site settings
+      trends:
+        desc_html: Publicly display previously reviewed hashtags that are currently trending
+        title: Trending hashtags
     statuses:
       back_to_account: Back to account page
       batch:
@@ -496,13 +511,19 @@ en:
       title: Account statuses
       with_media: With media
     tags:
-      accounts: Accounts
-      hidden: Hidden
-      hide: Hide from directory
-      name: Hashtag
+      accounts_today: Unique uses today
+      accounts_week: Unique uses this week
+      breakdown: Breakdown of today's usage by source
+      context: Context
+      directory: In directory
+      in_directory: "%{count} in directory"
+      review: Review status
+      reviewed: Reviewed
       title: Hashtags
-      unhide: Show in directory
-      visible: Visible
+      trending_right_now: Trending right now
+      unique_uses_today: "%{count} posting today"
+      unreviewed: Not reviewed
+      updated_msg: Hashtag settings updated successfully
     title: Administration
     warning_presets:
       add_new: Add new
@@ -518,11 +539,15 @@ en:
       body: "%{reporter} has reported %{target}"
       body_remote: Someone from %{domain} has reported %{target}
       subject: New report for %{instance} (#%{id})
+    new_trending_tag:
+      body: 'The hashtag #%{name} is trending today, but has not been previously reviewed. It will not be displayed publicly unless you allow it to, or just save the form as it is to never hear about it again.'
+      subject: New hashtag up for review on %{instance} (#%{name})
   appearance:
     advanced_web_interface: Advanced web interface
     advanced_web_interface_hint: 'If you want to make use of your entire screen width, the advanced web interface allows you to configure many different columns to see as much information at the same time as you want: Home, notifications, federated timeline, any number of lists and hashtags.'
     animations_and_accessibility: Animations and accessibility
     confirmation_dialogs: Confirmation dialogs
+    discovery: Discovery
     sensitive_content: Sensitive content
   application_mailer:
     notification_preferences: Change e-mail preferences
@@ -570,6 +595,7 @@ en:
     status:
       account_status: Account status
       confirming: Waiting for e-mail confirmation to be completed.
+      functional: Your account is fully operational.
       pending: Your application is pending review by our staff. This may take some time. You will receive an e-mail if your application is approved.
     trouble_logging_in: Trouble logging in?
   authorize_follow:
@@ -954,6 +980,8 @@ en:
     pinned: Pinned toot
     reblogged: boosted
     sensitive_content: Sensitive content
+  tags:
+    does_not_match_previous_name: does not match the previous name
   terms:
     body_html: |
       <h2>Privacy Policy</h2>

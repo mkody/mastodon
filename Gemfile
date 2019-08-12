@@ -113,9 +113,9 @@ group :production, :test do
 end
 
 group :test do
-  gem 'capybara', '~> 3.27'
+  gem 'capybara', '~> 3.28'
   gem 'climate_control', '~> 0.2'
-  gem 'faker', '~> 1.9'
+  gem 'faker', '~> 2.1'
   gem 'microformats', '~> 4.1'
   gem 'rails-controller-testing', '~> 1.0'
   gem 'rspec-sidekiq', '~> 3.0'
@@ -133,7 +133,7 @@ group :development do
   gem 'letter_opener', '~> 1.7'
   gem 'letter_opener_web', '~> 1.3'
   gem 'memory_profiler'
-  gem 'rubocop', '~> 0.73', require: false
+  gem 'rubocop', '~> 0.74', require: false
   gem 'rubocop-rails', '~> 2.2', require: false
   gem 'brakeman', '~> 4.6', require: false
   gem 'bundler-audit', '~> 0.6', require: false
