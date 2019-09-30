@@ -43,6 +43,7 @@ import { boostModal, favouriteModal, deleteModal } from 'flavours/glitch/util/in
 import { attachFullscreenListener, detachFullscreenListener, isFullscreen } from 'flavours/glitch/util/fullscreen';
 import { autoUnfoldCW } from 'flavours/glitch/util/content_warning';
 import { textForScreenReader, defaultMediaVisibility } from 'flavours/glitch/components/status';
+import Icon from 'flavours/glitch/components/icon';
 
 const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },
@@ -82,28 +83,38 @@ const makeMapStateToProps = () => {
   const getDescendantsIds = createSelector([
     (_, { id }) => id,
     state => state.getIn(['contexts', 'replies']),
-  ], (statusId, contextReplies) => {
-    let descendantsIds = Immutable.List();
-    descendantsIds = descendantsIds.withMutations(mutable => {
-      const ids = [statusId];
+    state => state.get('statuses'),
+  ], (statusId, contextReplies, statuses) => {
+    let descendantsIds = [];
+    const ids = [statusId];
 
-      while (ids.length > 0) {
-        let id        = ids.shift();
-        const replies = contextReplies.get(id);
+    while (ids.length > 0) {
+      let id        = ids.shift();
+      const replies = contextReplies.get(id);
 
-        if (statusId !== id) {
-          mutable.push(id);
-        }
-
-        if (replies) {
-          replies.reverse().forEach(reply => {
-            ids.unshift(reply);
-          });
-        }
+      if (statusId !== id) {
+        descendantsIds.push(id);
       }
-    });
 
-    return descendantsIds;
+      if (replies) {
+        replies.reverse().forEach(reply => {
+          ids.unshift(reply);
+        });
+      }
+    }
+
+    let insertAt = descendantsIds.findIndex((id) => statuses.get(id).get('in_reply_to_account_id') !== statuses.get(id).get('account'));
+    if (insertAt !== -1) {
+      descendantsIds.forEach((id, idx) => {
+        if (idx > insertAt && statuses.get(id).get('in_reply_to_account_id') === statuses.get(id).get('account')) {
+          descendantsIds.splice(idx, 1);
+          descendantsIds.splice(insertAt, 0, id);
+          insertAt += 1;
+        }
+      });
+    }
+
+    return Immutable.List(descendantsIds);
   });
 
   const mapStateToProps = (state, props) => {
@@ -129,9 +140,9 @@ const makeMapStateToProps = () => {
   return mapStateToProps;
 };
 
-@injectIntl
+export default @injectIntl
 @connect(makeMapStateToProps)
-export default class Status extends ImmutablePureComponent {
+class Status extends ImmutablePureComponent {
 
   static contextTypes = {
     router: PropTypes.object,
@@ -539,7 +550,7 @@ export default class Status extends ImmutablePureComponent {
           onClick={this.handleHeaderClick}
           showBackButton
           extraButton={(
-            <button className='column-header__button' title={intl.formatMessage(!isExpanded ? messages.revealAll : messages.hideAll)} aria-label={intl.formatMessage(!isExpanded ? messages.revealAll : messages.hideAll)} onClick={this.handleToggleAll} aria-pressed={!isExpanded ? 'false' : 'true'}><i className={`fa fa-${!isExpanded ? 'eye-slash' : 'eye'}`} /></button>
+            <button className='column-header__button' title={intl.formatMessage(!isExpanded ? messages.revealAll : messages.hideAll)} aria-label={intl.formatMessage(!isExpanded ? messages.revealAll : messages.hideAll)} onClick={this.handleToggleAll} aria-pressed={!isExpanded ? 'false' : 'true'}><Icon id={status.get('hidden') ? 'eye-slash' : 'eye'} /></button>
           )}
         />
 

@@ -4,6 +4,12 @@ class RemoveStatusService < BaseService
   include Redisable
   include Payloadable
 
+  # Delete a status
+  # @param   [Status] status
+  # @param   [Hash] options
+  # @option  [Boolean] :redraft
+  # @option  [Boolean] :immediate
+  # @option [Boolean] :original_removed
   def call(status, **options)
     @payload  = Oj.dump(event: :delete, payload: status.id.to_s)
     @status   = status
@@ -25,8 +31,9 @@ class RemoveStatusService < BaseService
         remove_from_media if status.media_attachments.any?
         remove_from_direct if status.direct_visibility?
         remove_from_spam_check
+        remove_media
 
-        @status.destroy!
+        @status.destroy! if @options[:immediate] || !@status.reported?
       else
         raise Mastodon::RaceConditionError
       end
@@ -149,6 +156,12 @@ class RemoveStatusService < BaseService
     @mentions.each do |mention|
       FeedManager.instance.unpush_from_direct(mention.account, @status) if mention.account.local?
     end
+  end
+
+  def remove_media
+    return if @options[:redraft] || (!@options[:immediate] && @status.reported?)
+
+    @status.media_attachments.destroy_all
   end
 
   def remove_from_spam_check

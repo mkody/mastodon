@@ -5,6 +5,7 @@ en:
       account_warning_preset:
         text: You can use toot syntax, such as URLs, hashtags and mentions
       admin_account_action:
+        include_statuses: The user will see which toots have caused the moderation action or warning
         send_email_notification: The user will receive an explanation of what happened with their account
         text_html: Optional. You can use toot syntax. You can <a href="%{path}">add warning presets</a> to save time
         type_html: Choose what to do with <strong>%{acct}</strong>
@@ -15,7 +16,7 @@ en:
         bot: This account mainly performs automated actions and might not be monitored
         context: One or multiple contexts where the filter should apply
         digest: Only sent after a long period of inactivity and only if you have received any personal messages in your absence
-        discoverable_html: The <a href="%{path}" target="_blank">directory</a> lets people find accounts based on interests and activity. Requires at least %{min_followers} followers
+        discoverable: The profile directory is another way by which your account can reach a wider audience
         email: You will be sent a confirmation e-mail
         fields: You can have up to 4 items displayed as a table on your profile
         header: PNG, GIF or JPG. At most %{size}. Will be downscaled to %{dimensions}px
@@ -65,6 +66,7 @@ en:
       account_warning_preset:
         text: Preset text
       admin_account_action:
+        include_statuses: Include reported toots in the e-mail
         send_email_notification: Notify the user per e-mail
         text: Custom warning
         type: Action
@@ -124,6 +126,7 @@ en:
         setting_reduce_motion: Reduce motion in animations
         setting_show_application: Disclose application used to send toots
         setting_skin: Skin
+        setting_system_emoji_font: Use system's default font for emojis (applies to Glitch flavour only)
         setting_system_font_ui: Use system's default font
         setting_theme: Site theme
         setting_trends: Show today's trends
@@ -141,6 +144,8 @@ en:
         must_be_follower: Block notifications from non-followers
         must_be_following: Block notifications from people you don't follow
         must_be_following_dm: Block direct messages from people you don't follow
+      invite:
+        comment: Comment
       invite_request:
         text: Why do you want to join?
       notification_emails:
@@ -154,7 +159,8 @@ en:
         report: Send e-mail when a new report is submitted
         trending_tag: Send e-mail when an unreviewed hashtag is trending
       tag:
-        listable: Allow this hashtag to appear on the profile directory
+        listable: Allow this hashtag to appear in searches and on the profile directory
+        name: Hashtag
         trendable: Allow this hashtag to appear under trends
         usable: Allow toots to use this hashtag
     'no': 'No'

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ImmutablePureComponent from 'react-immutable-pure-component';
+import Icon from 'flavours/glitch/components/icon';
 import { autoPlayGif, displayMedia } from 'flavours/glitch/util/initial_state';
 import classNames from 'classnames';
 import { decode } from 'blurhash';
@@ -94,6 +95,12 @@ export default class MediaItem extends ImmutablePureComponent {
 
     if (attachment.get('type') === 'unknown') {
       // Skip
+    } else if (attachment.get('type') === 'audio') {
+      thumbnail = (
+        <span className='account-gallery__item__icons'>
+          <Icon id='music' />
+        </span>
+      );
     } else if (attachment.get('type') === 'image') {
       const focusX = attachment.getIn(['meta', 'focus', 'x']) || 0;
       const focusY = attachment.getIn(['meta', 'focus', 'y']) || 0;
@@ -133,7 +140,7 @@ export default class MediaItem extends ImmutablePureComponent {
 
     const icon = (
       <span className='account-gallery__item__icons'>
-        <i className='fa fa-eye-slash' />
+        <Icon id='eye-slash' />
       </span>
     );
 

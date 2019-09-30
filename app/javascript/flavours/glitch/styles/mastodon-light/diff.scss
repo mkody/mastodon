@@ -135,13 +135,12 @@
     }
   }
 
-  .composer--options {
+  .composer--options-wrapper {
     background: lighten($ui-base-color, 10%);
-    box-shadow: unset;
+  }
 
-    & > hr {
-      display: none;
-    }
+  .composer--options > hr {
+    display: none;
   }
 
   .composer--options--dropdown--content--item {
@@ -372,4 +371,11 @@
 .directory__tag > a,
 .directory__tag > div {
   box-shadow: none;
+}
+
+.audio-player .video-player__controls button,
+.audio-player .video-player__time-sep,
+.audio-player .video-player__time-current,
+.audio-player .video-player__time-total {
+  color: $primary-text-color;
 }

@@ -45,8 +45,8 @@ class LoadMoreMedia extends ImmutablePureComponent {
 
 }
 
-@connect(mapStateToProps)
-export default class AccountGallery extends ImmutablePureComponent {
+export default @connect(mapStateToProps)
+class AccountGallery extends ImmutablePureComponent {
 
   static propTypes = {
     params: PropTypes.object.isRequired,
@@ -111,7 +111,7 @@ export default class AccountGallery extends ImmutablePureComponent {
   }
 
   handleOpenMedia = attachment => {
-    if (attachment.get('type') === 'video') {
+    if (['video', 'audio'].includes(attachment.get('type'))) {
       this.props.dispatch(openModal('VIDEO', { media: attachment, status: attachment.get('status') }));
     } else {
       const media = attachment.getIn(['status', 'media_attachments']);
