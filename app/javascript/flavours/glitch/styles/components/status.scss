@@ -640,6 +640,10 @@ a.status__display-name,
   color: inherit;
 }
 
+.detailed-status .button.logo-button {
+  margin-bottom: 15px;
+}
+
 .detailed-status__display-name {
   color: $secondary-text-color;
   display: block;
@@ -673,6 +677,7 @@ a.status__display-name,
 }
 
 .muted {
+  .status__content,
   .status__content p,
   .status__content a,
   .status__content__text {
