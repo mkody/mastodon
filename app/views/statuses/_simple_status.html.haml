@@ -1,11 +1,11 @@
 .status
   .status__info
-    = link_to ActivityPub::TagManager.instance.url_for(status), class: 'status__relative-time u-url u-uid', target: stream_link_target, rel: 'noopener' do
+    = link_to ActivityPub::TagManager.instance.url_for(status), class: 'status__relative-time u-url u-uid', target: stream_link_target, rel: 'noopener noreferrer' do
       %time.time-ago{ datetime: status.created_at.iso8601, title: l(status.created_at) }= l(status.created_at)
     %data.dt-published{ value: status.created_at.to_time.iso8601 }
 
     .p-author.h-card
-      = link_to ActivityPub::TagManager.instance.url_for(status.account), class: 'status__display-name u-url', target: stream_link_target, rel: 'noopener' do
+      = link_to ActivityPub::TagManager.instance.url_for(status.account), class: 'status__display-name u-url', target: stream_link_target, rel: 'noopener noreferrer' do
         .status__avatar
           %div
             - if current_account&.user&.setting_auto_play_gif || autoplay
@@ -24,7 +24,7 @@
       %p{ :style => ('margin-bottom: 0' unless current_account&.user&.setting_expand_spoilers) }<
         %span.p-summary> #{Formatter.instance.format_spoiler(status, autoplay: autoplay)}&nbsp;
         %button.status__content__spoiler-link= t('statuses.show_more')
-    .e-content{ lang: status.language, style: "display: #{!current_account&.user&.setting_expand_spoilers && status.spoiler_text? ? 'none' : 'block'}; direction: #{rtl_status?(status) ? 'rtl' : 'ltr'}" }<
+    .e-content{ style: "display: #{!current_account&.user&.setting_expand_spoilers && status.spoiler_text? ? 'none' : 'block'}; direction: #{rtl_status?(status) ? 'rtl' : 'ltr'}" }<
       = Formatter.instance.format(status, custom_emojify: true, autoplay: autoplay)
       - if status.preloadable_poll
         = react_component :poll, disabled: true, poll: ActiveModelSerializers::SerializableResource.new(status.preloadable_poll, serializer: REST::PollSerializer, scope: current_user, scope_name: :current_user).as_json do
