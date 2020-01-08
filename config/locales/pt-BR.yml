@@ -107,9 +107,7 @@ pt-BR:
       email_status: Estado do e-mail
       enable: Ativar
       enabled: Ativado
-      feed_url: URL do feed
       followers: Seguidores
-      followers_url: URL de seguidores
       follows: Segue
       header: Cabeçalho
       inbox_url: URL da caixa de entrada
@@ -137,10 +135,8 @@ pt-BR:
       no_account_selected: Nenhuma conta foi modificada, pois nenhuma conta foi selecionada
       no_limits_imposed: Nenhum limite imposto
       not_subscribed: Não está inscrito
-      outbox_url: URL da caixa de saída
       pending: Esperando revisão
       perform_full_suspension: Suspender
-      profile_url: URL do perfil
       promote: Promover
       protocol: Protocolo
       public: Público
@@ -163,7 +159,6 @@ pt-BR:
         moderator: Moderador
         staff: Equipe
         user: Usuário
-      salmon_url: URL Salmon
       search: Pesquisar
       shared_inbox_url: URL da caixa de entrada compartilhada
       show:
@@ -368,9 +363,6 @@ pt-BR:
       created_msg: Nota de denúncia criada com sucesso!
       destroyed_msg: Nota de denúncia excluída com sucesso!
     reports:
-      account:
-        note: nota
-        report: denúncia
       action_taken_by: Ação realizada por
       are_you_sure: Você tem certeza?
       assign_to_self: Designar para mim
@@ -519,10 +511,13 @@ pt-BR:
       body_remote: Alguém da instância %{domain} reportou %{target}
       subject: Nova denúncia sobre %{instance} (#%{id})
   appearance:
+    advanced_web_interface: Interface web avançada
+    advanced_web_interface_hint: 'Se você deseja usar toda a sua largura de tela, a interface web avançada permite que você configure muitas colunas diferentes para ver tantas informações ao mesmo tempo quanto você deseja: Início, notificações, linha do tempo federada, qualquer número de listas e hashtags.'
     animations_and_accessibility: Animações e acessibilidade
     confirmation_dialogs: Popups de confirmação
     discovery: Descobrir
     sensitive_content: Conteúdo sensível
+    toot_layout: Layout do Toot
   application_mailer:
     notification_preferences: Mudar preferências de e-mail
     salutation: "%{name},"
@@ -566,6 +561,11 @@ pt-BR:
     reset_password: Redefinir senha
     security: Segurança
     set_new_password: Definir uma nova senha
+    setup:
+      email_below_hint_html: Se o endereço de e-mail abaixo estiver incorreto, você pode alterá-lo aqui e receber um novo e-mail de confirmação.
+      email_settings_hint_html: O e-mail de confirmação foi enviado para %{email}. Se esse endereço de e-mail não estiver correto, você pode alterá-lo nas configurações da conta.
+    status:
+      redirecting_to: Sua conta está inativa porque atualmente está redirecionando para %{acct}.
     trouble_logging_in: Problemas para se conectar?
   authorize_follow:
     already_following: Você já está seguindo esta conta

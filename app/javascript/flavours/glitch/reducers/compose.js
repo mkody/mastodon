@@ -387,7 +387,7 @@ export default function compose(state = initialState, action) {
 
       if (action.status.get('spoiler_text').length > 0) {
         let spoiler_text = action.status.get('spoiler_text');
-        if (!spoiler_text.match(/^re[: ]/i)) {
+        if (action.prependCWRe && !spoiler_text.match(/^re[: ]/i)) {
           spoiler_text = 're: '.concat(spoiler_text);
         }
         map.set('spoiler', true);
@@ -429,7 +429,7 @@ export default function compose(state = initialState, action) {
   case COMPOSE_UPLOAD_SUCCESS:
     return appendMedia(state, fromJS(action.media), action.file);
   case COMPOSE_UPLOAD_FAIL:
-    return state.set('is_uploading', false).update('pending_media_attachments', n => action.decrement ? n - 1 : n);
+    return state.set('is_uploading', false).update('pending_media_attachments', n => n - 1);
   case COMPOSE_UPLOAD_UNDO:
     return removeMedia(state, action.media_id);
   case COMPOSE_UPLOAD_PROGRESS:

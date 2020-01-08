@@ -11,6 +11,7 @@ de:
     apps: Mobile Apps
     apps_platforms: Benutze Mastodon auf iOS, Android und anderen Plattformen
     browse_directory: Durchsuche das Profilverzeichnis und filtere nach Interessen
+    browse_local_posts: Durchsuche einen Live-Stream von öffentlichen Beiträgen von diesem Server
     browse_public_posts: Stöbere durch öffentliche Beiträge auf Mastodon
     contact: Kontakt
     contact_missing: Nicht angegeben
@@ -117,9 +118,7 @@ de:
       email_status: E-Mail-Status
       enable: Freischalten
       enabled: Freigegeben
-      feed_url: Feed-URL
       followers: Folgende
-      followers_url: URL des Folgenden
       follows: Folgt
       header: Titelbild
       inbox_url: Posteingangs-URL
@@ -147,10 +146,8 @@ de:
       no_account_selected: Keine Konten wurden geändert, da keine ausgewählt wurden
       no_limits_imposed: Keine Beschränkungen
       not_subscribed: Nicht abonniert
-      outbox_url: Postausgangs-URL
       pending: In Warteschlange
       perform_full_suspension: Verbannen
-      profile_url: Profil-URL
       promote: Befördern
       protocol: Protokoll
       public: Öffentlich
@@ -173,8 +170,8 @@ de:
         moderator: Moderator_in
         staff: Mitarbeiter
         user: Nutzer
-      salmon_url: Salmon-URL
       search: Suche
+      search_same_ip: Andere Benutzer mit derselben IP
       shared_inbox_url: Geteilte Posteingang-URL
       show:
         created_reports: Erstellte Meldungen
@@ -394,9 +391,6 @@ de:
       created_msg: Meldungs-Kommentar erfolgreich erstellt!
       destroyed_msg: Meldungs-Kommentar erfolgreich gelöscht!
     reports:
-      account:
-        note: Notiz
-        report: Meldung
       action_taken_by: Maßnahme ergriffen durch
       are_you_sure: Bist du dir sicher?
       assign_to_self: Mir zuweisen
@@ -575,6 +569,7 @@ de:
     confirmation_dialogs: Bestätigungsfenster
     discovery: Entdecken
     sensitive_content: Heikle Inhalte
+    toot_layout: Beitragslayout
   application_mailer:
     notification_preferences: Ändere E-Mail-Einstellungen
     salutation: "%{name},"

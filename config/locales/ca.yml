@@ -11,6 +11,7 @@ ca:
     apps: Apps mòbils
     apps_platforms: Utilitza Mastodon des de iOS, Android i altres plataformes
     browse_directory: Navega per el directori de perfils i filtra segons interessos
+    browse_local_posts: Navega un flux en directe de publicacions d’aquest servidor
     browse_public_posts: Navega per una transmissió en directe de publicacions públiques a Mastodon
     contact: Contacte
     contact_missing: No configurat
@@ -117,9 +118,7 @@ ca:
       email_status: Estat del correu electrònic
       enable: Habilita
       enabled: Habilitat
-      feed_url: URL del canal
       followers: Seguidors
-      followers_url: URL dels seguidors
       follows: Segueix
       header: Capçalera
       inbox_url: URL de la safata d'entrada
@@ -147,10 +146,8 @@ ca:
       no_account_selected: No s'han canviat els comptes perque no s'han seleccionat
       no_limits_imposed: Sense límits imposats
       not_subscribed: No subscrit
-      outbox_url: URL de la bústia de sortida
       pending: Revisió pendent
       perform_full_suspension: Suspèn
-      profile_url: URL del perfil
       promote: Promociona
       protocol: Protocol
       public: Públic
@@ -173,8 +170,8 @@ ca:
         moderator: Moderador
         staff: Personal
         user: Usuari
-      salmon_url: URL Salmon
       search: Cerca
+      search_same_ip: Altres usuaris amb la mateixa IP
       shared_inbox_url: URL de la safata d'entrada compartida
       show:
         created_reports: Informes creats
@@ -201,10 +198,12 @@ ca:
         confirm_user: "%{name} ha confirmat l'adreça de correu electrònic de l'usuari %{target}"
         create_account_warning: "%{name} ha enviat un avís a %{target}"
         create_custom_emoji: "%{name} ha pujat un nou emoji %{target}"
+        create_domain_allow: "%{name} ha afegit a la llista blanca el domini %{target}"
         create_domain_block: "%{name} ha blocat el domini %{target}"
         create_email_domain_block: "%{name} ha afegit a la llista negra el domini del correu electrònic %{target}"
         demote_user: "%{name} ha degradat l'usuari %{target}"
         destroy_custom_emoji: "%{name} ha destruït l'emoji %{target}"
+        destroy_domain_allow: "%{name} ha eliminat el domini %{target} de la llista blanca"
         destroy_domain_block: "%{name} ha desblocat el domini %{target}"
         destroy_email_domain_block: "%{name} ha afegit a la llista negra el domini de correu electrònic %{target}"
         destroy_status: "%{name} eliminat l'estat per %{target}"
@@ -394,9 +393,6 @@ ca:
       created_msg: La nota del informe s'ha creat correctament!
       destroyed_msg: La nota del informe s'ha esborrat correctament!
     reports:
-      account:
-        note: nota
-        report: informe
       action_taken_by: Mesures adoptades per
       are_you_sure: N'estàs segur?
       assign_to_self: Assignar-me
@@ -575,6 +571,7 @@ ca:
     confirmation_dialogs: Diàlegs de confirmació
     discovery: Descobriment
     sensitive_content: Contingut sensible
+    toot_layout: Disseny del tut
   application_mailer:
     notification_preferences: Canvia les preferències de correu
     salutation: "%{name},"
@@ -1007,6 +1004,8 @@ ca:
     profile: Perfil
     relationships: Seguits i seguidors
     two_factor_authentication: Autenticació de dos factors
+  spam_check:
+    spam_detected: Aquest és un informe automàtic. S'ha detectat spam.
   statuses:
     attached:
       description: 'Adjunt: %{attached}'

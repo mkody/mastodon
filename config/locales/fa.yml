@@ -11,6 +11,7 @@ fa:
     apps: اپ‌های موبایل
     apps_platforms: ماستدون را در iOS، اندروید، و سایر سیستم‌ها داشته باشید
     browse_directory: کاربران این سرور را بر اساس علاقه‌مندی‌هایشان پیدا کنید
+    browse_local_posts: فهرست لحظه‌ای نوشته‌های عمومی در ماستدون را ببینید
     browse_public_posts: فهرست لحظه‌ای نوشته‌های عمومی در ماستدون را ببینید
     contact: تماس
     contact_missing: تعیین نشده
@@ -117,9 +118,7 @@ fa:
       email_status: وضعیت ایمیل
       enable: فعال
       enabled: فعال
-      feed_url: نشانی فید
       followers: پیگیران
-      followers_url: نشانی پیگیران
       follows: پی می‌گیرد
       header: زمینه
       inbox_url: نشانی صندوق ورودی
@@ -147,10 +146,8 @@ fa:
       no_account_selected: هیچ حسابی تغییر نکرد زیرا حسابی انتخاب نشده بود
       no_limits_imposed: بدون محدودیت
       not_subscribed: عضو نیست
-      outbox_url: نشانی صندوق خروجی
       pending: در انتظار بررسی
       perform_full_suspension: تعلیق
-      profile_url: نشانی نمایه
       promote: ترفیع‌دادن
       protocol: پروتکل
       public: عمومی
@@ -173,8 +170,8 @@ fa:
         moderator: ناظم
         staff: کارمند
         user: کاربر
-      salmon_url: نشانی Salmon
       search: جستجو
+      search_same_ip: دیگر کاربران با همان IP
       shared_inbox_url: نشانی صندوق ورودی مشترک
       show:
         created_reports: گزارش‌های ثبت کرده
@@ -394,9 +391,6 @@ fa:
       created_msg: یادداشت گزارش با موفقیت ساخته شد!
       destroyed_msg: یادداشت گزارش با موفقیت حذف شد!
     reports:
-      account:
-        note: یادداشت
-        report: گزارش
       action_taken_by: انجام‌دهنده
       are_you_sure: آیا مطمئن هستید؟
       assign_to_self: به عهدهٔ من بگذار
@@ -575,6 +569,7 @@ fa:
     confirmation_dialogs: پیغام‌های تأیید
     discovery: کاوش
     sensitive_content: محتوای حساس
+    toot_layout: آرایش بوق
   application_mailer:
     notification_preferences: تغییر ترجیحات ایمیل
     salutation: "%{name}،"
@@ -997,7 +992,7 @@ fa:
     development: فرابری
     edit_profile: ویرایش نمایه
     export: برون‌سپاری داده‌ها
-    featured_tags: برچسب‌های منتخب
+    featured_tags: برچسب‌های برگزیده
     identity_proofs: مدرک شناسه‌ها
     import: درون‌ریزی
     import_and_export: درون‌ریزی و برون‌بری

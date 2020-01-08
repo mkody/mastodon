@@ -11,6 +11,7 @@ uk:
     apps: Мобільні додатки
     apps_platforms: Користуйтесь Mastodon на iOS, Android та інших платформах
     browse_directory: Переглядайте каталог профілів та фільтруйте за інтересами
+    browse_local_posts: Переглядайте потік публічних постів з цього сервера
     browse_public_posts: Переглядайте потік публічних постів на Mastodon
     contact: Зв'язатися
     contact_missing: Не зазначено
@@ -119,9 +120,7 @@ uk:
       email_status: Статус електронної пошти
       enable: Увімкнути
       enabled: Увімкнено
-      feed_url: URL-адреса каналу
       followers: Підписники
-      followers_url: URL підписників
       follows: Підписки
       header: Заголовок
       inbox_url: URL вхідних повідомлень
@@ -149,10 +148,8 @@ uk:
       no_account_selected: Жоден обліковий запис не було змінено, оскільки жоден не було вибрано
       no_limits_imposed: Жодних обмежень не накладено
       not_subscribed: Не підписані
-      outbox_url: URL вихідних повідомлень
       pending: Відгук в очікуванні
       perform_full_suspension: Призупинити
-      profile_url: URL профілю
       promote: Просунути
       protocol: Протокол
       public: Публічний
@@ -175,7 +172,6 @@ uk:
         moderator: Модератор
         staff: Персонал
         user: Користувач
-      salmon_url: Salmon URL
       search: Пошук
       shared_inbox_url: URL спільного вхідного кошика
       show:
@@ -231,10 +227,12 @@ uk:
       deleted_status: "(видалений статус)"
       title: Журнал подій
     custom_emojis:
+      assign_category: Призначити категорію
       by_domain: Домен
       copied_msg: Локальна копія емодзі успішно створена
       copy: Копіювати
       copy_failed_msg: Не вийшло створити локальну копію емодзі
+      create_new_category: Створити нову категорію
       created_msg: Емодзі успішно створене!
       delete: Видалити
       destroyed_msg: Емодзі усіпішно видалене!
@@ -260,6 +258,7 @@ uk:
       updated_msg: Емодзі успішно оновлене!
       upload: Вивантажити
     dashboard:
+      authorized_fetch_mode: Безпечний режим
       backlog: відкладені завдання
       config: Налаштування
       feature_deletions: Видалення облікових записів
@@ -396,9 +395,6 @@ uk:
       created_msg: Скарга успішно створена!
       destroyed_msg: Скарга успішно видалена!
     reports:
-      account:
-        note: нотатка
-        report: скарга
       action_taken_by: Дія виконана
       are_you_sure: Ви впевнені?
       assign_to_self: Призначити мені
@@ -530,6 +526,9 @@ uk:
       context: Контекст
       directory: У каталозі
       in_directory: "%{count} у каталозі"
+      last_active: За активністю
+      most_popular: За популярністю
+      most_recent: За часом створення
       name: Хештеґ
       review: Переглянути статус
       reviewed: Переглянуто
@@ -618,6 +617,7 @@ uk:
       confirming: Очікуємо на завершення підтвердження за допомогою електронної пошти.
       functional: Ваш обліковий запис повністю робочій.
       pending: Ваша заява очікує на розгляд нашим персоналом. Це може зайняти деякий час. Ви отримаєте електронний лист, якщо ваша заява буде схвалена.
+      redirecting_to: Ваш обліковий запис наразі неактивний, тому що він перенаправлений до %{acct}.
     trouble_logging_in: Проблема під час входу?
   authorize_follow:
     already_following: Ви вже слідкуєте за цим обліковим записом
@@ -630,6 +630,11 @@ uk:
       return: Перейти до профілю користувача
       web: Перейти до вебу
     title: Підписатися на %{acct}
+  challenge:
+    confirm: Далі
+    hint_html: "<strong>Підказка:</strong> ми не будемо запитувати ваш пароль впродовж наступної години."
+    invalid_password: Невірний пароль
+    prompt: Підтвердіть пароль для продовження
   datetime:
     distance_in_words:
       about_x_hours: "%{count}г"
@@ -645,7 +650,9 @@ uk:
       x_months: "%{count}міс"
       x_seconds: "%{count}сек"
   deletes:
+    challenge_not_passed: Невірна інформація
     confirm_password: Введіть актуальний пароль, щоб перевірити що ви це ви
+    confirm_username: Введіть ваше ім'я користувача, щоб підтвердити процедуру
     proceed: Видалити обліковий запис
     success_msg: Ваш обліковий запис було успішно видалено
     warning:
@@ -799,6 +806,19 @@ uk:
   migrations:
     acct: username@domain нового облікового запису
     cancel: Скасувати перенаправлення
+    errors:
+      not_found: не знайдено
+    followers_count: Підписників на час міграції
+    incoming_migrations: Переїзд з іншого облікового запису
+    incoming_migrations_html: Щоб переїхати з іншого облікового запису на цей, ви маєте <a href="%{path}">створити псевдонім облікового запису</a>.
+    not_redirecting: Наразі ваш обліковий запис не перенаправлений до іншого облікового запису.
+    proceed_with_move: Перемістити підписників
+    redirecting_to: Ваш обліковий запис перенаправляється до %{acct}.
+    set_redirect: Встановити перенаправлення
+    warning:
+      backreference_required: Спочатку має бути налаштовано зворотне посилання поточного облікового запису на новий обліковий запис
+      before: 'Перш ніж продовжити, уважно прочитайте ці нотатки:'
+      cooldown: Після переїзду ви деякий час не можете переїжджати знову
   moderation:
     title: Модерація
   notification_mailer:
@@ -947,6 +967,7 @@ uk:
   settings:
     account: Обліковий запис
     account_settings: Налаштування облікового запису
+    aliases: Псевдоніми облікового запису
     appearance: Вигляд
     authorized_apps: Авторизовані застосунки
     back: Назад до Mastodon
@@ -964,6 +985,8 @@ uk:
     profile: Профіль
     relationships: Підписки та підписники
     two_factor_authentication: Двофакторна авторизація
+  spam_check:
+    spam_detected: Це автоматична скарга. Було виявлено спам.
   statuses:
     attached:
       description: 'Прикріплено: %{attached}'
@@ -993,6 +1016,11 @@ uk:
       private: Не можна закріпити непублічний пост
       reblog: Не можна закріпити просунутий пост
     poll:
+      total_people:
+        few: "%{count} людей"
+        many: "%{count} людей"
+        one: "%{count} людина"
+        other: "%{count} людей"
       total_votes:
         few: "%{count} голоса"
         many: "%{count} голосів"
