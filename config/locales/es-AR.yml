@@ -198,11 +198,13 @@ es-AR:
         change_email_user: "%{name} cambió la dirección de correo electrónico del usuario %{target}"
         confirm_user: "%{name} confirmó la dirección de correo del usuario %{target}"
         create_account_warning: "%{name} envió una advertencia a %{target}"
+        create_announcement: "%{name} creó el nuevo anuncio %{target}"
         create_custom_emoji: "%{name} subió nuevo emoji %{target}"
         create_domain_allow: "%{name} aprobó el dominio %{target}"
         create_domain_block: "%{name} bloqueó el dominio %{target}"
         create_email_domain_block: "%{name} desaprobó el dominio de correo electrónico %{target}"
         demote_user: "%{name} bajó de nivel al usuario %{target}"
+        destroy_announcement: "%{name} eliminó el anuncio %{target}"
         destroy_custom_emoji: "%{name} destruyó el emoji %{target}"
         destroy_domain_allow: "%{name} quitó el dominio %{target} de los permitidos"
         destroy_domain_block: "%{name} desbloqueó el dominio %{target}"
@@ -224,10 +226,26 @@ es-AR:
         unassigned_report: "%{name} desasignó la denuncia %{target}"
         unsilence_account: "%{name} quitó el silenciado de la cuenta de %{target}"
         unsuspend_account: "%{name} quitó la suspensión de la cuenta de %{target}"
+        update_announcement: "%{name} actualizó el anuncio %{target}"
         update_custom_emoji: "%{name} actualizó el emoji %{target}"
         update_status: "%{name} actualizó el estado de %{target}"
       deleted_status: "(estado borrado)"
       title: Registro de auditoría
+    announcements:
+      destroyed_msg: "¡Anuncio eliminado exitosamente!"
+      edit:
+        title: Editar anuncio
+      empty: No se encontraron anuncios.
+      live: En vivo
+      new:
+        create: Crear anuncio
+        title: Nuevo anuncio
+      published_msg: "¡Anuncio publicado exitosamente!"
+      scheduled_for: Programado para %{time}
+      scheduled_msg: "¡Anuncio programado para su publicación!"
+      title: Anuncios
+      unpublished_msg: "¡Anuncio dejado de publicar exitosamente!"
+      updated_msg: "¡Anuncio actualizado exitosamente!"
     custom_emojis:
       assign_category: Asignar categoría
       by_domain: Dominio
@@ -344,9 +362,6 @@ es-AR:
         create: Agregar dominio
         title: Nueva desaprobación de correo electrónico
       title: Desaprobación de correo electrónico
-    followers:
-      back_to_account: Volver a la cuenta
-      title: Seguidores de %{acct}
     instances:
       by_domain: Dominio
       delivery_available: La entrega está disponible
@@ -375,6 +390,8 @@ es-AR:
       title: Invitaciones
     pending_accounts:
       title: Cuentas pendientes (%{count})
+    relationships:
+      title: Relaciones de %{acct}
     relays:
       add_new: Agregar nuevo relé
       delete: Eliminar
@@ -658,6 +675,9 @@ es-AR:
     hint_html: "<strong>Dato:</strong> No volveremos a preguntarte por la contraseña durante la siguiente hora."
     invalid_password: Contraseña no válida
     prompt: Confirmar contraseña para seguir
+  date:
+    formats:
+      default: "%Y.%b.%d"
   datetime:
     distance_in_words:
       about_x_hours: "%{count}h"
@@ -734,6 +754,7 @@ es-AR:
     hint_html: "<strong>¿Qué son las etiquetas destacadas?</strong> Se muestran de forma prominente en tu perfil público y permiten a los usuarios navegar por tus toots públicos específicamente bajo esas etiquetas. Son una gran herramienta para hacer un seguimiento de trabajos creativos o proyectos a largo plazo."
   filters:
     contexts:
+      account: Perfiles
       home: Línea temporal principal
       notifications: Notificaciones
       public: Líneas temporales públicas
@@ -758,6 +779,7 @@ es-AR:
     all: Todas
     changes_saved_msg: "¡Cambios guardados exitosamente!"
     copy: Copiar
+    delete: Eliminar
     no_batch_actions_available: No hay acciones por lotes disponibles en esta página
     order_by: Ordenar por
     save_changes: Guardar cambios
@@ -929,11 +951,16 @@ es-AR:
     other: Otros
     posting_defaults: Configuración predeterminada de publicaciones
     public_timelines: Líneas temporales públicas
+  reactions:
+    errors:
+      limit_reached: Se alcanzó el límite de reacciones diferentes
+      unrecognized_emoji: no es un emoji conocido
   relationships:
     activity: Actividad de la cuenta
     dormant: Inactivas
     followers: Seguidores
     following: Siguiendo
+    invited: Invitado
     last_active: Última actividad
     most_recent: Más reciente
     moved: Mudada
@@ -1060,6 +1087,7 @@ es-AR:
         other: "%{count} votos"
       vote: Votar
     show_more: Mostrar más
+    show_thread: Mostrar hilo
     sign_in_to_participate: Iniciá sesión para participar en la conversación
     title: '%{name}: "%{quote}"'
     visibilities:

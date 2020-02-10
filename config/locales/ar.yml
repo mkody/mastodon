@@ -11,6 +11,7 @@ ar:
     apps: تطبيقات الأجهزة المحمولة
     apps_platforms: استخدم ماستدون على iOS وأندرويد وأنظمة أخرى
     browse_directory: تصفح دليل الصفحات التعريفية وصفّي بحسب الإهتمام
+    browse_local_posts: تصفح تيارًا مباشرًا مِن منشورات للعامة على هذا الخادم
     browse_public_posts: تصفح تيارًا مباشرًا مِن منشورات عامة على ماستدون
     contact: للتواصل معنا
     contact_missing: لم يتم تعيينه
@@ -86,6 +87,7 @@ ar:
     roles:
       admin: المدير
       bot: روبوت
+      group: فريق
       moderator: مُشرِف
     unavailable: الصفحة التعريفية غير متوفرة
     unfollow: إلغاء المتابعة
@@ -205,11 +207,13 @@ ar:
         change_email_user: غيّر %{name} عنوان البريد الإلكتروني للمستخدم %{target}
         confirm_user: "%{name} قد قام بتأكيد عنوان البريد الإلكتروني لـ %{target}"
         create_account_warning: قام %{name} بإرسال تحذير إلى %{target}
+        create_announcement: قام %{name} بإنشاء إعلان جديد %{target}
         create_custom_emoji: "%{name} قام برفع إيموجي جديد %{target}"
         create_domain_allow: قام %{name} بإضافة النطاق %{target} إلى القائمة البيضاء
         create_domain_block: "%{name} قام بحجب نطاق %{target}"
         create_email_domain_block: "%{name} قد قام بحظر نطاق البريد الإلكتروني %{target}"
         demote_user: "%{name} قد قام بإنزال الرتبة الوظيفية لـ %{target}"
+        destroy_announcement: قام %{name} بحذف الإعلان %{target}
         destroy_custom_emoji: قام %{name} بحذف الإيموجي %{target}
         destroy_domain_allow: قام %{name} بإزالة النطاق %{target} مِن القائمة البيضاء
         destroy_domain_block: "%{name} قام بإلغاء الحجب عن النطاق %{target}"
@@ -231,10 +235,26 @@ ar:
         unassigned_report: "%{name} تقرير غير معتمد %{target}"
         unsilence_account: لقد قام %{name} بإلغاء الكتم عن حساب %{target}
         unsuspend_account: لقد قام %{name} بإلغاء التعليق المفروض على حساب %{target}
+        update_announcement: قام %{name} بتحديث الإعلان %{target}
         update_custom_emoji: "%{name} قام بتحديث الإيموجي %{target}"
         update_status: لقد قام %{name} بتحديث منشور %{target}
       deleted_status: "(منشور محذوف)"
       title: سِجلّ التفتيش و المعاينة
+    announcements:
+      destroyed_msg: تم حذف الإعلان بنجاح!
+      edit:
+        title: تعديل الإعلان
+      empty: لم يتم العثور على أية إعلانات.
+      live: على المباشر
+      new:
+        create: إنشاء إعلان
+        title: إعلان جديد
+      published_msg: تم نشر الإعلان بنجاح!
+      scheduled_for: بُرمِج على %{time}
+      scheduled_msg: تمت جدولة نشر الإعلان!
+      title: الإعلانات
+      unpublished_msg: تم إلغاء نشر الإعلان بنجاح!
+      updated_msg: تم تحديث الإعلان بنجاح!
     custom_emojis:
       assign_category: اسند فئة
       by_domain: النطاق
@@ -262,6 +282,7 @@ ar:
       shortcode_hint: على الأقل حرفين، و فقط رموز أبجدية عددية و أسطر سفلية
       title: الإيموجي الخاصة
       uncategorized: غير مصنّف
+      unlist: تنحية مِن القائمة
       unlisted: غير مدرج
       update_failed_msg: تعذرت عملية تحديث ذاك الإيموجي
       updated_msg: تم تحديث الإيموجي بنجاح!
@@ -347,9 +368,6 @@ ar:
         create: إضافة نطاق
         title: إضافة نطاق بريد جديد إلى اللائحة السوداء
       title: القائمة السوداء للبريد الإلكتروني
-    followers:
-      back_to_account: العودة إلى الحساب
-      title: "%{acct} مُتابِعون"
     instances:
       by_domain: النطاق
       delivery_available: التسليم متوفر
@@ -382,6 +400,8 @@ ar:
       title: الدعوات
     pending_accounts:
       title: الحسابات المعلقة (%{count})
+    relationships:
+      title: علاقات %{acct}
     relays:
       add_new: إضافة مُرحّل جديد
       delete: حذف
@@ -612,6 +632,7 @@ ar:
     set_new_password: إدخال كلمة مرور جديدة
     setup:
       email_below_hint_html: إذا كان عنوان البريد الإلكتروني التالي غير صحيح، فيمكنك تغييره هنا واستلام بريد إلكتروني جديد للتأكيد.
+      email_settings_hint_html: لقد تم إرسال رسالة بريد إلكترونية للتأكيد إلى %{email}. إن كان عنوان البريد الإلكتروني غير صحيح ، يمكنك تغييره في إعدادات حسابك.
       title: الضبط
     status:
       account_status: حالة الحساب
@@ -635,6 +656,9 @@ ar:
     hint_html: "<strong>توصية:</strong> لن نطلب منك ثانية كلمتك السرية في غضون الساعة اللاحقة."
     invalid_password: الكلمة السرية خاطئة
     prompt: أكِّد الكلمة السرية للمواصلة
+  date:
+    formats:
+      default: "%d %b %Y"
   datetime:
     distance_in_words:
       about_x_hours: "%{count}سا"
@@ -659,6 +683,7 @@ ar:
       before: 'يرجى قراءة هذه الملاحظات بتأنّي قبل المواصلة:'
       data_removal: سوف تُحذَف منشوراتك والبيانات الأخرى نهائيا
       email_change_html: بإمكانك <a href="%{path}">تغيير عنوان بريدك الإلكتروني</a> دون أن يُحذف حسابك
+      email_contact_html: إن لم تتلقّ أي شيء ، يمكنك مراسلة <a href="mailto:%{email}">%{email}</a> لطلب المساعدة
       irreversible: لن يكون بإمكانك استرجاع أو إعادة تنشيط حسابك
       more_details_html: للمزيد مِن التفاصيل ، يرجى الإطلاع على <a href="%{terms_path}">سياسة الخصوصية</a>.
       username_available: سيصبح اسم مستخدمك متوفرا ثانية
@@ -705,6 +730,7 @@ ar:
     add_new: أضف واحدًا جديدا
   filters:
     contexts:
+      account: الملفات التعريفية
       home: الخيط الزمني الرئيسي
       notifications: الإخطارات
       public: الخيوط الزمنية العامة
@@ -716,6 +742,7 @@ ar:
       invalid_irreversible: إلّا مجالات الإشعارات و الخيط الرئيسي معنية بالتصفية اللارجعية
     index:
       delete: إزالة
+      empty: ليست لديك أية عوامل تصفية.
       title: عوامل التصفية
     new:
       title: إضافة عامل تصفية جديد
@@ -728,6 +755,7 @@ ar:
     all: الكل
     changes_saved_msg: تم حفظ التعديلات بنجاح!
     copy: نسخ
+    delete: احذف
     order_by: ترتيب بحسب
     save_changes: حفظ التغييرات
     validation_errors:
@@ -815,6 +843,7 @@ ar:
     set_redirect: تعين إعادة التوجيه
     warning:
       before: 'يرجى قراءة هذه الملاحظات بتأنّي قبل المواصلة:'
+      followers: تقوم هذه العملية بنقل كافة المُتابِعين مِن الحساب الحالي إلى الحساب الجديد
       other_data: لن يتم نقل أية بيانات أخرى تلقائيا
   moderation:
     title: الإشراف
@@ -887,16 +916,21 @@ ar:
       duration_too_long: بعيد جدا في المستقبَل
       duration_too_short: مبكّر جدا
       expired: لقد انتهى استطلاع الرأي
+      invalid_choice: خيار التصويت الذي قُمتَ يتحديده غير موجود
       too_many_options: لا يمكنه أن يحتوي أكثر مِن %{max} عناصر
   preferences:
     other: إعدادات أخرى
     posting_defaults: التفضيلات الافتراضية لنشر التبويقات
     public_timelines: الخيوط الزمنية العامة
+  reactions:
+    errors:
+      unrecognized_emoji: لم يتم التعرف على أنه إيموجي
   relationships:
     activity: نشاط الحساب
     dormant: في سبات
     followers: المتابِعون
     following: يُتابِع
+    invited: مَدعُوّ
     last_active: آخر نشاط
     most_recent: الأحدث
     moved: هاجر
@@ -1041,6 +1075,7 @@ ar:
         zero: بدون صوت %{count}
       vote: صوّت
     show_more: أظهر المزيد
+    show_thread: اعرض خيط المحادثة
     sign_in_to_participate: قم بتسجيل الدخول للمشاركة في هذه المحادثة
     title: '%{name}: "%{quote}"'
     visibilities:

@@ -198,11 +198,13 @@ pt-BR:
         change_email_user: "%{name} alterou o endereço de e-mail do usuário %{target}"
         confirm_user: "%{name} confirmou o endereço de e-mail do usuário %{target}"
         create_account_warning: "%{name} enviou um aviso para %{target}"
+        create_announcement: "%{name} criou um novo anúncio %{target}"
         create_custom_emoji: "%{name} enviou o novo emoji %{target}"
         create_domain_allow: "%{name} permitiu %{target}"
         create_domain_block: "%{name} bloqueou o domínio %{target}"
         create_email_domain_block: "%{name} bloqueou o domínio de e-mail %{target}"
         demote_user: "%{name} rebaixou o usuário %{target}"
+        destroy_announcement: "%{name} excluiu o anúncio %{target}"
         destroy_custom_emoji: "%{name} excluiu emoji %{target}"
         destroy_domain_allow: "%{name} bloqueou %{target}"
         destroy_domain_block: "%{name} desbloqueou o domínio %{target}"
@@ -224,10 +226,26 @@ pt-BR:
         unassigned_report: "%{name} largou a denúncia %{target}"
         unsilence_account: "%{name} desativou o silêncio de %{target}"
         unsuspend_account: "%{name} desbaniu %{target}"
+        update_announcement: "%{name} atualizou o anúncio %{target}"
         update_custom_emoji: "%{name} atualizou o emoji %{target}"
         update_status: "%{name} atualizou o status de %{target}"
       deleted_status: "(status excluído)"
       title: Auditar histórico
+    announcements:
+      destroyed_msg: Anúncio excluído com sucesso!
+      edit:
+        title: Editar anúncio
+      empty: Nenhum anúncio encontrado.
+      live: Em exibição
+      new:
+        create: Criar anúncio
+        title: Novo anúncio
+      published_msg: Anúncio publicado com sucesso!
+      scheduled_for: Agendado para %{time}
+      scheduled_msg: Anúncio agendado para publicação!
+      title: Anúncios
+      unpublished_msg: Anúncio retirado de exibição com sucesso!
+      updated_msg: Anúncio atualizado com sucesso!
     custom_emojis:
       assign_category: Atribuir categoria
       by_domain: Domínio
@@ -344,9 +362,6 @@ pt-BR:
         create: Adicionar domínio
         title: Novo domínio de e-mail bloqueado
       title: Lista de bloqueio de domínios de e-mail
-    followers:
-      back_to_account: Voltar para a conta
-      title: Seguidores de %{acct}
     instances:
       by_domain: Domínio
       delivery_available: Envio disponível
@@ -375,6 +390,8 @@ pt-BR:
       title: Convites
     pending_accounts:
       title: Contas pendentes (%{count})
+    relationships:
+      title: Relações de %{acct}
     relays:
       add_new: Adicionar novo repetidor
       delete: Excluir
@@ -658,6 +675,9 @@ pt-BR:
     hint_html: "<strong>Dica:</strong> Não pediremos novamente sua senha pela próxima hora."
     invalid_password: Senha inválida
     prompt: Confirme sua senha para continuar
+  date:
+    formats:
+      default: "%d %b %Y"
   datetime:
     distance_in_words:
       about_x_hours: "%{count}h"
@@ -734,6 +754,7 @@ pt-BR:
     hint_html: "<strong>O que são hashtags em destaque?</strong> Elas são mostradas no seu perfil público e permitem que as pessoas acessem seus toots públicos que contenham especificamente essas hashtags. São uma excelente ferramenta para acompanhar os trabalhos criativos ou os projetos de longo prazo."
   filters:
     contexts:
+      account: Perfis
       home: Página inicial
       notifications: Notificações
       public: Linhas públicas
@@ -758,6 +779,7 @@ pt-BR:
     all: Tudo
     changes_saved_msg: Alterações foram salvas com sucesso!
     copy: Copiar
+    delete: Eliminar
     no_batch_actions_available: Nenhuma ação em lote disponível nesta página
     order_by: Ordenar por
     save_changes: Salvar alterações
@@ -929,11 +951,16 @@ pt-BR:
     other: Outro
     posting_defaults: Padrões de publicação
     public_timelines: Linhas públicas
+  reactions:
+    errors:
+      limit_reached: Limite de reações diferentes atingido
+      unrecognized_emoji: não é um emoji reconhecido
   relationships:
     activity: Atividade da conta
     dormant: Inativo
     followers: Seguidores
     following: Seguindo
+    invited: Convidado
     last_active: Última atividade
     most_recent: Mais recente
     moved: Mudou-se
@@ -1060,6 +1087,7 @@ pt-BR:
         other: "%{count} votos"
       vote: Votar
     show_more: Mostrar mais
+    show_thread: Mostrar conversa
     sign_in_to_participate: Entre para participar dessa conversa
     title: '%{name}: "%{quote}"'
     visibilities:

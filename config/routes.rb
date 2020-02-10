@@ -175,9 +175,18 @@ Rails.application.routes.draw do
         get :edit
       end
     end
+
     resources :email_domain_blocks, only: [:index, :new, :create, :destroy]
     resources :action_logs, only: [:index]
     resources :warning_presets, except: [:new]
+
+    resources :announcements, except: [:show] do
+      member do
+        post :publish
+        post :unpublish
+      end
+    end
+
     resource :settings, only: [:edit, :update]
 
     resources :invites, only: [:index, :create, :destroy] do
@@ -225,7 +234,7 @@ Rails.application.routes.draw do
       resource :reset, only: [:create]
       resource :action, only: [:new, :create], controller: 'account_actions'
       resources :statuses, only: [:index, :show, :create, :update, :destroy]
-      resources :followers, only: [:index]
+      resources :relationships, only: [:index]
 
       resource :confirmation, only: [:create] do
         collection do
@@ -233,7 +242,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resource :role do
+      resource :role, only: [] do
         member do
           post :promote
           post :demote
@@ -319,6 +328,16 @@ Rails.application.routes.draw do
       resources :suggestions, only: [:index, :destroy]
       resources :scheduled_statuses, only: [:index, :show, :update, :destroy]
       resources :preferences, only: [:index]
+
+      resources :announcements, only: [:index] do
+        scope module: :announcements do
+          resources :reactions, only: [:update, :destroy]
+        end
+
+        member do
+          post :dismiss
+        end
+      end
 
       resources :conversations, only: [:index, :destroy] do
         member do

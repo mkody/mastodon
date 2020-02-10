@@ -38,6 +38,7 @@ ru:
         application: Приложение
         callback_url: Callback URL
         delete: Удалить
+        empty: У вас нет созданных приложений.
         name: Название
         new: Новое приложение
         scopes: Разрешения
@@ -143,7 +144,7 @@ ru:
       write:filters: создавать фильтры
       write:follows: подписываться на людей
       write:lists: создавать списки
-      write:media: загружать файлы
+      write:media: загружать медиафайлы
       write:mutes: добавлять в игнорируемое людей и обсуждения
       write:notifications: очищать список уведомлений
       write:reports: отправлять жалобы на других

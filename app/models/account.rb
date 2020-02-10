@@ -74,14 +74,13 @@ class Account < ApplicationRecord
   enum protocol: [:ostatus, :activitypub]
 
   validates :username, presence: true
+  validates_with UniqueUsernameValidator, if: -> { will_save_change_to_username? }
 
   # Remote user validations
-  validates :username, uniqueness: { scope: :domain, case_sensitive: true }, if: -> { !local? && will_save_change_to_username? }
   validates :username, format: { with: /\A#{USERNAME_RE}\z/i }, if: -> { !local? && will_save_change_to_username? }
 
   # Local user validations
   validates :username, format: { with: /\A[a-z0-9_]+\z/i }, length: { maximum: 30 }, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
-  validates_with UniqueUsernameValidator, if: -> { local? && will_save_change_to_username? }
   validates_with UnreservedUsernameValidator, if: -> { local? && will_save_change_to_username? }
   validates :display_name, length: { maximum: MAX_DISPLAY_NAME_LENGTH }, if: -> { local? && will_save_change_to_display_name? }
   validates :note, note_length: { maximum: MAX_NOTE_LENGTH }, if: -> { local? && will_save_change_to_note? }
@@ -476,6 +475,12 @@ class Account < ApplicationRecord
 
       ActiveRecord::Associations::Preloader.new.preload(records, :account_stat)
       records
+    end
+
+    def from_text(text)
+      return [] if text.blank?
+
+      text.scan(MENTION_RE).map { |match| match.first.split('@', 2) }.uniq.map { |(username, domain)| EntityCache.instance.mention(username, domain) }
     end
 
     private

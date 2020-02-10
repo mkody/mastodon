@@ -66,7 +66,7 @@ ru:
     joined: 'Дата регистрации: %{date}'
     last_active: последняя активность
     link_verified_on: Владение этой ссылкой было проверено %{date}
-    media: Медиа
+    media: Медиафайлы
     moved_html: "%{name} переехал(а) на %{new_profile_link}:"
     network_hidden: Эта информация недоступна
     never_active: Никогда
@@ -140,7 +140,7 @@ ru:
         remote: Удаленные
         title: Размещение
       login_status: Статус учётной записи
-      media_attachments: Мультимедийные вложения
+      media_attachments: Файлы мультимедиа
       memorialize: Сделать мемориалом
       moderation:
         active: Действующие
@@ -206,11 +206,13 @@ ru:
         change_email_user: "%{name} сменил(а) e-mail пользователя %{target}"
         confirm_user: "%{name} подтвердил(а) e-mail адрес пользователя %{target}"
         create_account_warning: "%{name} выдал(а) предупреждение %{target}"
+        create_announcement: "%{name} создал(а) новое объявление %{target}"
         create_custom_emoji: "%{name} загрузил(а) новый эмодзи %{target}"
         create_domain_allow: "%{name} внес(ла) домен %{target} в белый список"
         create_domain_block: "%{name} заблокировал(а) домен %{target}"
         create_email_domain_block: "%{name} добавил(а) e-mail домен %{target} в чёрный список"
         demote_user: "%{name} разжаловал(а) пользователя %{target}"
+        destroy_announcement: "%{name} удалил объявление %{target}"
         destroy_custom_emoji: "%{name} измельчил(а) эмодзи %{target} в пыль"
         destroy_domain_allow: "%{name} убрал домен %{target} из белого списка"
         destroy_domain_block: "%{name} разблокировал(а) домен %{target}"
@@ -232,10 +234,26 @@ ru:
         unassigned_report: "%{name} сняла назначение жалобы %{target}"
         unsilence_account: "%{name} снял ограничения видимости постов пользователя %{target}"
         unsuspend_account: "%{name} снял(а) блокировку с пользователя %{target}"
+        update_announcement: "%{name} обновил объявление %{target}"
         update_custom_emoji: "%{name} обновил(а) эмодзи %{target}"
         update_status: "%{name} изменил(а) пост пользователя %{target}"
       deleted_status: "(удалённый пост)"
       title: Журнал событий
+    announcements:
+      destroyed_msg: Объявление удалено.
+      edit:
+        title: Редактировать объявление
+      empty: Объявления не найдены.
+      live: В эфире
+      new:
+        create: Создать объявление
+        title: Новое объявление
+      published_msg: Объявление опубликовано.
+      scheduled_for: Запланировано на %{time}
+      scheduled_msg: Объявление добавлено в очередь публикации.
+      title: Объявления
+      unpublished_msg: Объявление скрыто.
+      updated_msg: Объявление обновлено.
     custom_emojis:
       assign_category: Задать категорию
       by_domain: Домен
@@ -359,9 +377,6 @@ ru:
         create: Создать блокировку
         title: Новая блокировка по домену
       title: Блокировка e-mail доменов
-    followers:
-      back_to_account: Вернуться к учётной записи
-      title: Подписчики пользователя %{acct}
     instances:
       by_domain: Домен
       delivery_available: Доставка возможна
@@ -392,6 +407,8 @@ ru:
       title: Приглашения
     pending_accounts:
       title: Ожидающие учетные записи (%{count})
+    relationships:
+      title: Связи %{acct}
     relays:
       add_new: Добавить ретранслятор
       delete: Удалить
@@ -550,11 +567,11 @@ ru:
       deleted: Удалено
       failed_to_execute: Не удалось выполнить
       media:
-        title: Файлы медиа
-      no_media: Без медиа
+        title: Файлы мультимедиа
+      no_media: Без файлов
       no_status_selected: Ничего не изменилось, так как ни один пост не был выделен
       title: Посты пользователя
-      with_media: С медиа
+      with_media: С файлами
     tags:
       accounts_today: Уникальных использований за сегодня
       accounts_week: Уникальных использований за эту неделю
@@ -679,6 +696,9 @@ ru:
     hint_html: "<strong>Подсказка</strong>: мы не будем спрашивать пароль повторно в течение часа."
     invalid_password: Неверный пароль
     prompt: Введите пароль для продолжения
+  date:
+    formats:
+      default: "%d %b %Y"
   datetime:
     distance_in_words:
       about_x_hours: "%{count}ч"
@@ -755,6 +775,7 @@ ru:
     hint_html: "<strong>Особенные хэштеги</strong> отображаются в вашем профиле и позволяют людям просматривать ваши посты, отмеченные ими. Это отличный инструмент для отслеживания долгосрочных проектов и творческих работ."
   filters:
     contexts:
+      account: Посты в профилях
       home: Домашняя лента
       notifications: Уведомления
       public: Публичные ленты
@@ -779,6 +800,7 @@ ru:
     all: Любой
     changes_saved_msg: Изменения успешно сохранены!
     copy: Копировать
+    delete: Удалить
     no_batch_actions_available: На этой странице нет запланированных действий
     order_by: Сортировка
     save_changes: Сохранить изменения
@@ -958,11 +980,16 @@ ru:
     other: Всё остальное
     posting_defaults: Настройки отправки по умолчанию
     public_timelines: Публичные ленты
+  reactions:
+    errors:
+      limit_reached: Достигнут лимит разных реакций
+      unrecognized_emoji: не является распознанным эмодзи
   relationships:
     activity: Активность учётной записи
     dormant: Заброшенная
     followers: Подписчики
     following: Подписки
+    invited: Приглашённые
     last_active: По последней активности
     most_recent: По недавности
     moved: Мигрировавшая
@@ -1099,6 +1126,7 @@ ru:
         other: "%{count} голосов"
       vote: Голосовать
     show_more: Развернуть
+    show_thread: Открыть обсуждение
     sign_in_to_participate: Войдите, чтобы принять участие в дискуссии
     title: '%{name}: "%{quote}"'
     visibilities:
