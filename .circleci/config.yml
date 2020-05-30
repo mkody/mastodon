@@ -218,7 +218,11 @@ workflows:
   version: 2
   build-and-test:
     jobs:
-      - install
+      - install:
+          branches:
+            ignore:
+              - master
+              - glitch-soc
       - install-ruby2.7:
           requires:
             - install
