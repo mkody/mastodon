@@ -116,10 +116,6 @@ jobs:
   install:
     <<: *defaults
     <<: *install_steps
-    branches:
-      ignore:
-         - master
-         - glitch-soc
 
   install-ruby2.7:
     <<: *defaults
@@ -222,7 +218,12 @@ workflows:
   version: 2
   build-and-test:
     jobs:
-      - install
+      - install:
+          filters:
+            branches:
+              ignore:
+                - master
+                - glitch-soc
       - install-ruby2.7:
           requires:
             - install
