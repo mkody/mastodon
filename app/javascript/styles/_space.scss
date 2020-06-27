@@ -133,14 +133,18 @@ body {
 .landing-page__information.contact-widget,
 .landing-page__call-to-action,
 .hero-widget__text,
+.hero-widget__footer,
+.table-of-contents,
 .public-account-bio,
 .public-account-header__bar::before,
+.directory__card__bar, 
 .directory__tag > a,
 .directory__tag > div {
     background-color: #223 !important;
 }
 
 .public-layout {
+    .page-header,
     .header {
         background: #223 !important;
 
