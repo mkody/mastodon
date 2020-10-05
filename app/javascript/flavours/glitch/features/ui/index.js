@@ -12,7 +12,7 @@ import { expandHomeTimeline } from 'flavours/glitch/actions/timelines';
 import { expandNotifications, notificationsSetVisibility } from 'flavours/glitch/actions/notifications';
 import { fetchFilters } from 'flavours/glitch/actions/filters';
 import { clearHeight } from 'flavours/glitch/actions/height_cache';
-import { synchronouslySubmitMarkers, fetchMarkers } from 'flavours/glitch/actions/markers';
+import { synchronouslySubmitMarkers, submitMarkers, fetchMarkers } from 'flavours/glitch/actions/markers';
 import { WrappedSwitch, WrappedRoute } from 'flavours/glitch/util/react_router_helpers';
 import UploadArea from './components/upload_area';
 import PermaLink from 'flavours/glitch/components/permalink';
@@ -358,24 +358,12 @@ class UI extends React.Component {
   handleVisibilityChange = () => {
     const visibility = !document[this.visibilityHiddenProp];
     this.props.dispatch(notificationsSetVisibility(visibility));
+    if (visibility) {
+      this.props.dispatch(submitMarkers());
+    }
   }
 
   componentWillMount () {
-    if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
-      this.visibilityHiddenProp = 'hidden';
-      this.visibilityChange = 'visibilitychange';
-    } else if (typeof document.msHidden !== 'undefined') {
-      this.visibilityHiddenProp = 'msHidden';
-      this.visibilityChange = 'msvisibilitychange';
-    } else if (typeof document.webkitHidden !== 'undefined') {
-      this.visibilityHiddenProp = 'webkitHidden';
-      this.visibilityChange = 'webkitvisibilitychange';
-    }
-    if (this.visibilityChange !== undefined) {
-      document.addEventListener(this.visibilityChange, this.handleVisibilityChange, false);
-      this.handleVisibilityChange();
-    }
-
     window.addEventListener('beforeunload', this.handleBeforeUnload, false);
     document.addEventListener('dragenter', this.handleDragEnter, false);
     document.addEventListener('dragover', this.handleDragOver, false);
@@ -399,6 +387,22 @@ class UI extends React.Component {
     this.hotkeys.__mousetrap__.stopCallback = (e, element) => {
       return ['TEXTAREA', 'SELECT', 'INPUT'].includes(element.tagName) && !e.altKey;
     };
+
+    if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+      this.visibilityHiddenProp = 'hidden';
+      this.visibilityChange = 'visibilitychange';
+    } else if (typeof document.msHidden !== 'undefined') {
+      this.visibilityHiddenProp = 'msHidden';
+      this.visibilityChange = 'msvisibilitychange';
+    } else if (typeof document.webkitHidden !== 'undefined') {
+      this.visibilityHiddenProp = 'webkitHidden';
+      this.visibilityChange = 'webkitvisibilitychange';
+    }
+
+    if (this.visibilityChange !== undefined) {
+      document.addEventListener(this.visibilityChange, this.handleVisibilityChange, false);
+      this.handleVisibilityChange();
+    }
   }
 
   componentDidUpdate (prevProps) {
