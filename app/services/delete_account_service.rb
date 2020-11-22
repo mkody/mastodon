@@ -41,6 +41,7 @@ class DeleteAccountService < BaseService
   # @option [Boolean] :reserve_email Keep user record. Only applicable for local accounts
   # @option [Boolean] :reserve_username Keep account record
   # @option [Boolean] :skip_side_effects Side effects are ActivityPub and streaming API payloads
+  # @option [Boolean] :skip_activitypub Skip sending ActivityPub payloads. Implied by :skip_side_effects
   # @option [Time]    :suspended_at Only applicable when :reserve_username is true
   def call(account, **options)
     @account = account
@@ -52,6 +53,8 @@ class DeleteAccountService < BaseService
       @options[:skip_side_effects] = true
     end
 
+    @options[:skip_activitypub] = true if @options[:skip_side_effects]
+
     reject_follows!
     purge_user!
     purge_profile!
@@ -62,10 +65,17 @@ class DeleteAccountService < BaseService
   private
 
   def reject_follows!
-    return if @account.local? || !@account.activitypub?
+    return if @account.local? || !@account.activitypub? || @options[:skip_activitypub]
+
+    # When deleting a remote account, the account obviously doesn't
+    # actually become deleted on its origin server, i.e. unlike a
+    # locally deleted account it continues to have access to its home
+    # feed and other content. To prevent it from being able to continue
+    # to access toots it would receive because it follows local accounts,
+    # we have to force it to unfollow them.
 
     ActivityPub::DeliveryWorker.push_bulk(Follow.where(account: @account)) do |follow|
-      [build_reject_json(follow), follow.target_account_id, follow.account.inbox_url]
+      [Oj.dump(serialize_payload(follow, ActivityPub::RejectFollowSerializer)), follow.target_account_id, @account.inbox_url]
     end
   end
 
@@ -114,19 +124,20 @@ class DeleteAccountService < BaseService
 
     return unless @options[:reserve_username]
 
-    @account.silenced_at      = nil
-    @account.suspended_at     = @options[:suspended_at] || Time.now.utc
-    @account.locked           = false
-    @account.memorial         = false
-    @account.discoverable     = false
-    @account.display_name     = ''
-    @account.note             = ''
-    @account.fields           = []
-    @account.statuses_count   = 0
-    @account.followers_count  = 0
-    @account.following_count  = 0
-    @account.moved_to_account = nil
-    @account.trust_level      = :untrusted
+    @account.silenced_at       = nil
+    @account.suspended_at      = @options[:suspended_at] || Time.now.utc
+    @account.suspension_origin = :local
+    @account.locked            = false
+    @account.memorial          = false
+    @account.discoverable      = false
+    @account.display_name      = ''
+    @account.note              = ''
+    @account.fields            = []
+    @account.statuses_count    = 0
+    @account.followers_count   = 0
+    @account.following_count   = 0
+    @account.moved_to_account  = nil
+    @account.trust_level       = :untrusted
     @account.avatar.destroy
     @account.header.destroy
     @account.save!
@@ -152,10 +163,6 @@ class DeleteAccountService < BaseService
 
   def delete_actor_json
     @delete_actor_json ||= Oj.dump(serialize_payload(@account, ActivityPub::DeleteActorSerializer, signer: @account))
-  end
-
-  def build_reject_json(follow)
-    Oj.dump(serialize_payload(follow, ActivityPub::RejectFollowSerializer))
   end
 
   def delivery_inboxes

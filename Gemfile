@@ -11,16 +11,13 @@ gem 'sprockets', '~> 3.7.2'
 gem 'thor', '~> 1.0'
 gem 'rack', '~> 2.2.3'
 
-gem 'thwait', '~> 0.2.0'
-gem 'e2mmap', '~> 0.1.0'
-
 gem 'hamlit-rails', '~> 0.2'
 gem 'pg', '~> 1.2'
 gem 'makara', '~> 0.4'
 gem 'pghero', '~> 2.7'
 gem 'dotenv-rails', '~> 2.7'
 
-gem 'aws-sdk-s3', '~> 1.83', require: false
+gem 'aws-sdk-s3', '~> 1.84', require: false
 gem 'fog-core', '<= 2.1.0'
 gem 'fog-openstack', '~> 0.3', require: false
 gem 'paperclip', '~> 6.0'
@@ -30,7 +27,7 @@ gem 'blurhash', '~> 0.1'
 
 gem 'active_model_serializers', '~> 0.10'
 gem 'addressable', '~> 2.7'
-gem 'bootsnap', '~> 1.4', require: false
+gem 'bootsnap', '~> 1.5', require: false
 gem 'browser'
 gem 'charlock_holmes', '~> 0.7.7'
 gem 'iso-639'
@@ -44,7 +41,7 @@ group :pam_authentication, optional: true do
 end
 
 gem 'net-ldap', '~> 0.16'
-gem 'omniauth-cas', '~> 1.1'
+gem 'omniauth-cas', '~> 2.0'
 gem 'omniauth-saml', '~> 1.10'
 gem 'omniauth', '~> 1.9'
 
@@ -71,7 +68,7 @@ gem 'nsa', '~> 0.2'
 gem 'oj', '~> 3.10'
 gem 'ox', '~> 2.13'
 gem 'parslet'
-gem 'parallel', '~> 1.19'
+gem 'parallel', '~> 1.20'
 gem 'posix-spawn'
 gem 'pundit', '~> 2.1'
 gem 'premailer-rails'
@@ -127,7 +124,7 @@ group :test do
   gem 'rails-controller-testing', '~> 1.0'
   gem 'rspec-sidekiq', '~> 3.1'
   gem 'simplecov', '~> 0.19', require: false
-  gem 'webmock', '~> 3.9'
+  gem 'webmock', '~> 3.10'
   gem 'parallel_tests', '~> 3.3'
   gem 'rspec_junit_formatter', '~> 0.4'
 end
@@ -135,13 +132,13 @@ end
 group :development do
   gem 'active_record_query_trace', '~> 1.8'
   gem 'annotate', '~> 3.1'
-  gem 'better_errors', '~> 2.8'
+  gem 'better_errors', '~> 2.9'
   gem 'binding_of_caller', '~> 0.7'
   gem 'bullet', '~> 6.1'
   gem 'letter_opener', '~> 1.7'
   gem 'letter_opener_web', '~> 1.4'
   gem 'memory_profiler'
-  gem 'rubocop', '~> 0.93', require: false
+  gem 'rubocop', '~> 1.3', require: false
   gem 'rubocop-rails', '~> 2.8', require: false
   gem 'brakeman', '~> 4.10', require: false
   gem 'bundler-audit', '~> 0.7', require: false
