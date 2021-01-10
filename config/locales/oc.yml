@@ -47,6 +47,7 @@ oc:
     what_is_mastodon: Qu’es Mastodon ?
   accounts:
     choices_html: 'Recomandacions de %{name} :'
+    endorsements_hint: Podètz recomandar personas que seguètz a partir de l’interfàcia web, apreissaràn aquí.
     featured_tags_hint: Podètz indicar d’etiquetas que mostrarem aquí.
     follow: Sègre
     followers:
@@ -132,6 +133,7 @@ oc:
       login_status: Estat formulari de connexion
       media_attachments: Mèdias enviats
       memorialize: Passar en memorial
+      memorialized: Memorizat
       moderation:
         active: Actius
         all: Totes
@@ -171,6 +173,8 @@ oc:
         user: Uitlizaire
       search: Cercar
       search_same_ip: Autres utilizaires amb la meteissa IP
+      sensitive: Sensible
+      sensitized: marcar coma sensible
       shared_inbox_url: URL de recepcion partejada
       show:
         created_reports: Senhalaments creats
@@ -183,6 +187,7 @@ oc:
       time_in_queue: En espèra a la fila %{time}
       title: Comptes
       unconfirmed_email: Adreça pas confirmada
+      undo_sensitized: Desmarcar coma sensible
       undo_silenced: Levar lo silenci
       undo_suspension: Levar la suspension
       unsubscribe: Se desabonar
@@ -198,6 +203,7 @@ oc:
         create_account_warning: Crear un avertiment
         create_announcement: Crear una anóncia
         create_custom_emoji: Crear un emoji personalizat
+        create_ip_block: Crear una règla IP
         demote_user: Retrogradar l’utilizaire
         destroy_announcement: Suprimir l’anóncia
         destroy_custom_emoji: Suprimir l’emoji personalizat
@@ -419,6 +425,8 @@ oc:
         title: Filtre
       title: Convits
     ip_blocks:
+      add_new: Crear una règla
+      delete: Suprimir
       expires_in:
         '1209600': 2 setmanas
         '15778476': 6 meses
@@ -426,6 +434,9 @@ oc:
         '31556952': 1 an
         '86400': 1 jorn
         '94670856': 3 ans
+      new:
+        title: Crear una règlas IP novèla
+      title: Règlas IP
     pending_accounts:
       title: Comptes en espèra (%{count})
     relationships:
@@ -700,7 +711,8 @@ oc:
     prompt: Confirmatz lo senhal per dire de contunhar
   date:
     formats:
-      default: "%d %B de %Y"
+      default: "%-d %B de %Y"
+      with_month_name: "%-d %B de %Y"
   datetime:
     distance_in_words:
       about_x_hours: "%{count} h"
@@ -763,6 +775,7 @@ oc:
       request: Demandar vòstre archiu
       size: Talha
     blocks: Personas que blocatz
+    bookmarks: Marcadors
     csv: CSV
     domain_blocks: Blocatge de domenis
     lists: Listas
@@ -837,6 +850,7 @@ oc:
     success: Vòstras donadas son ben estadas mandadas e seràn tractadas tre que possible
     types:
       blocking: Lista de blocatge
+      bookmarks: Marcadors
       domain_blocking: Lista dels domenis blocats
       following: Lista de monde que seguètz
       muting: Lista de monde que volètz pas legir
@@ -943,6 +957,7 @@ oc:
           trillion: T
   otp_authentication:
     enable: Activar
+    setup: Parametrar
   pagination:
     newer: Mai recents
     next: Seguent
@@ -972,13 +987,13 @@ oc:
     activity: Activitat del compte
     dormant: Inactiu
     followers: Seguidors
-    following: Aboanements
+    following: Abonaments
     invited: Convidat
     last_active: Darrièra activitat
     most_recent: Mai recenta
     moved: Mudat
     mutual: Mutuala
-    primary: Pirmària
+    primary: Primària
     relationship: Relacion
     remove_selected_domains: Levar totes los seguidors dels domenis seleccionats
     remove_selected_followers: Levar los seguidors seleccionats
@@ -1067,10 +1082,14 @@ oc:
     profile: Perfil
     relationships: Abonaments e seguidors
     two_factor_authentication: Autentificacion en dos temps
+    webauthn_authentication: Claus de seguretat
   spam_check:
     spam_detected: Aquò es un senhalament automatic. D’spam es estat detectat.
   statuses:
     attached:
+      audio:
+        one: "%{count} àudio"
+        other: "%{count} àudios"
       description: 'Ajustat : %{attached}'
       image:
         one: "%{count} imatge"
@@ -1207,10 +1226,12 @@ oc:
     mastodon-light: Mastodon (Clar)
   time:
     formats:
-      default: Lo %d %b de %Y a %Ho%M
-      month: "%b de %Y"
+      default: Lo %-d %B de %Y a %Ho%M
+      month: "%B de %Y"
   two_factor_authentication:
+    add: Ajustar
     disable: Desactivar
+    edit: Modificar
     enabled: Autentificacion en dos temps activada
     enabled_success: L’autentificacion en dos temps es ben activada
     generate_recovery_codes: Generar los còdis de recuperacion
@@ -1218,6 +1239,7 @@ oc:
     recovery_codes: Salvar los còdis de recuperacion
     recovery_codes_regenerated: Los còdis de recuperacion son ben estats tornats generar
     recovery_instructions_html: Se vos arriba de perdre vòstre mobil, podètz utilizar un dels còdis de recuperacion cai-jos per poder tornar accedir a vòstre compte. <strong>Gardatz los còdis en seguretat</strong>, per exemple, imprimissètz los e gardatz los amb vòstres documents importants.
+    webauthn: Claus de seguretat
   user_mailer:
     backup_ready:
       explanation: Avètz demandat una salvagarda complèta de vòstre compte Mastodon. Es prèsta per telecargament !
@@ -1269,3 +1291,8 @@ oc:
   verification:
     explanation_html: 'Podètz <strong>verificar vosautres meteisses coma proprietari dels ligams per las metadonadas de vòstre perfil</strong>. Per aquò far, lo site Web ligat deu conténer un ligam cap a vòstre perfil Mastodon. Lo ligam <strong>deu</strong> aver un atribut <code>rel="me"</code>. Lo contengut tèxte del ligam impòrta pas. Vaquí un exemple :'
     verification: Verificacion
+  webauthn_credentials:
+    add: Apondre una clau de seguretat novèla
+    delete: Suprimir
+    invalid_credential: Cau de seguretat invalida
+    registered_on: Inscripcion del %{date}
