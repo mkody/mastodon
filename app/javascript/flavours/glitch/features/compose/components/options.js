@@ -45,6 +45,10 @@ const messages = defineMessages({
     defaultMessage: 'Draw something',
     id: 'compose.attach.doodle',
   },
+  gif: {
+    defaultMessage: 'Embed GIF',
+    id: 'compose.attach.gif',
+  },
   html: {
     defaultMessage: 'HTML',
     id: 'compose.content-type.html',
@@ -132,6 +136,7 @@ class ComposerOptions extends ImmutablePureComponent {
     onChangeContentType: PropTypes.func,
     onTogglePoll: PropTypes.func,
     onDoodleOpen: PropTypes.func,
+    onEmbedGiphy: PropTypes.func,
     onModalClose: PropTypes.func,
     onModalOpen: PropTypes.func,
     onToggleSpoiler: PropTypes.func,
@@ -154,7 +159,7 @@ class ComposerOptions extends ImmutablePureComponent {
   //  Handles attachment clicks.
   handleClickAttach = (name) => {
     const { fileElement } = this;
-    const { onDoodleOpen } = this.props;
+    const { onDoodleOpen, onEmbedGiphy } = this.props;
 
     //  We switch over the name of the option.
     switch (name) {
@@ -166,6 +171,11 @@ class ComposerOptions extends ImmutablePureComponent {
     case 'doodle':
       if (onDoodleOpen) {
         onDoodleOpen();
+      }
+      return;
+    case 'gif':
+      if (onEmbedGiphy) {
+        onEmbedGiphy();
       }
       return;
     }
@@ -275,6 +285,11 @@ class ComposerOptions extends ImmutablePureComponent {
               name: 'doodle',
               text: <FormattedMessage {...messages.doodle} />,
             },
+            {
+              icon: 'file-image-o',
+              name: 'gif',
+              text: <FormattedMessage {...messages.gif} />,
+            }
           ]}
           onChange={this.handleClickAttach}
           onModalClose={onModalClose}
