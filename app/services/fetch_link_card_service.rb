@@ -47,11 +47,11 @@ class FetchLinkCardService < BaseService
 
     Request.new(:get, @url).add_headers('Accept' => 'text/html', 'User-Agent' => Mastodon::Version.user_agent + ' Bot').perform do |res|
       if res.code == 200 && res.mime_type == 'text/html'
-        @html = res.body_with_limit
         @html_charset = res.charset
+        @html = res.body_with_limit
       else
-        @html = nil
         @html_charset = nil
+        @html = nil
       end
     end
   end
@@ -67,7 +67,7 @@ class FetchLinkCardService < BaseService
     else
       html  = Nokogiri::HTML(@status.text)
       links = html.css('a')
-      urls  = links.map { |a| Addressable::URI.parse(a['href']) unless skip_link?(a) }.compact.map(&:normalize).compact
+      urls  = links.filter_map { |a| Addressable::URI.parse(a['href']) unless skip_link?(a) }.filter_map(&:normalize)
     end
 
     urls.reject { |uri| bad_url?(uri) }.first
