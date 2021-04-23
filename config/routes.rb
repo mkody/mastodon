@@ -3,14 +3,12 @@
 require 'sidekiq_unique_jobs/web'
 require 'sidekiq-scheduler/web'
 
-Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
-
 Rails.application.routes.draw do
   root 'home#index'
 
   mount LetterOpenerWeb::Engine, at: 'letter_opener' if Rails.env.development?
 
-  health_check_routes
+  get 'health', to: 'health#show'
 
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web, at: 'sidekiq', as: :sidekiq
@@ -296,6 +294,7 @@ Rails.application.routes.draw do
     end
 
     resources :account_moderation_notes, only: [:create, :destroy]
+    resource :follow_recommendations, only: [:show, :update]
 
     resources :tags, only: [:index, :show, :update] do
       collection do
@@ -513,6 +512,7 @@ Rails.application.routes.draw do
     namespace :v2 do
       resources :media, only: [:create]
       get '/search', to: 'search#index', as: :search
+      resources :suggestions, only: [:index]
     end
 
     namespace :web do

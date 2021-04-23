@@ -29,6 +29,7 @@ require_relative '../lib/webpacker/helper_extensions'
 require_relative '../lib/action_dispatch/cookie_jar_extensions'
 require_relative '../lib/rails/engine_extensions'
 require_relative '../lib/active_record/database_tasks_extensions'
+require_relative '../lib/active_record/batches'
 
 Dotenv::Railtie.load
 
@@ -39,7 +40,8 @@ require_relative '../lib/mastodon/redis_config'
 module Mastodon
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
+    config.load_defaults 6.1
+    config.add_autoload_paths_to_load_path = false
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
