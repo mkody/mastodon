@@ -4,6 +4,9 @@
 
 /* scrollbar fix */
 html {scrollbar-color: var(--bg) var(--bgPage)}
+::-webkit-scrollbar-thumb {background: var(--bg)}
+::-webkit-scrollbar-thumb:hover {background: var(--accent)}
+::-webkit-scrollbar-track:hover {background: rgba(0,0,0,0.2)}
 
 /*------------------
 headers and warnings
@@ -95,6 +98,7 @@ accented buttons
     .confirmation-modal__action-bar .mute-modal__cancel-button:active,
         .confirmation-modal__action-bar .mute-modal__cancel-button:focus,
         .confirmation-modal__action-bar .mute-modal__cancel-button:hover,
+    .dropdown-menu__item a:active, .dropdown-menu__item a:focus, .dropdown-menu__item a:hover,
     .mute-modal__action-bar .confirmation-modal__cancel-button:active,
         .mute-modal__action-bar .confirmation-modal__cancel-button:focus,
         .mute-modal__action-bar .confirmation-modal__cancel-button:hover,
@@ -209,7 +213,8 @@ accented links
 .icon-with-badge__badge,
 .filters .filter-subset a.selected,
 .introduction__dot,
-.public-layout .public-account-header__tabs__tabs .counter.active::after
+.public-layout .public-account-header__tabs__tabs .counter.active::after,
+.notification.unread::before, .status__wrapper.unread::before
 {border-color: var(--accent)}
 
 /* trends fix */
