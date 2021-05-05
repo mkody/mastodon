@@ -2,7 +2,7 @@
 # important settings can be changed from the admin interface.
 
 defaults: &defaults
-  site_title: 'dev.glitch.social'
+  site_title: 'Mastodon Glitch Edition'
   site_short_description: ''
   site_description: ''
   site_extended_description: ''
@@ -75,7 +75,6 @@ defaults: &defaults
   show_reblogs_in_public_timelines: false
   show_replies_in_public_timelines: false
   default_content_type: 'text/plain'
-  spam_check_enabled: true
   show_domain_blocks: 'disabled'
   show_domain_blocks_rationale: 'disabled'
   outgoing_spoilers: ''

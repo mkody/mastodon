@@ -458,6 +458,10 @@
   }
 }
 
+.favourite-modal .status-direct {
+  background-color: inherit;
+}
+
 .actions-modal {
   .status {
     background: $white;
@@ -872,7 +876,7 @@
       box-sizing: border-box;
       display: block;
       width: 100%;
-      border: none;
+      border: 0;
       padding: 10px;
       font-family: 'mastodon-font-monospace', monospace;
       background: $ui-base-color;
@@ -1026,4 +1030,13 @@
       text-decoration: underline
     }
   }
+}
+
+.modal-root__container .composer--options--dropdown {
+  flex-grow: 0;
+}
+
+.modal-root__container .composer--options--dropdown--content {
+  pointer-events: auto;
+  z-index: 9999;
 }
