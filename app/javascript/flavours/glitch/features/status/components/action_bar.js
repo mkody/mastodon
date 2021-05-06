@@ -163,6 +163,8 @@ class ActionBar extends React.PureComponent {
 
     let menu = [];
 
+    menu.push({ text: intl.formatMessage(messages.translate), action: this.handleTranslateClick });
+
     if (publicStatus) {
       menu.push({ text: intl.formatMessage(messages.copy), action: this.handleCopy });
       menu.push({ text: intl.formatMessage(messages.embed), action: this.handleEmbed });
@@ -226,7 +228,6 @@ class ActionBar extends React.PureComponent {
         <div className='detailed-status__button'><IconButton className={classNames({ reblogPrivate })} disabled={!publicStatus && !reblogPrivate} active={status.get('reblogged')} title={reblogTitle} icon='retweet' onClick={this.handleReblogClick} /></div>
         <div className='detailed-status__button'><IconButton className='star-icon' animate active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='star' onClick={this.handleFavouriteClick} /></div>
         {shareButton}
-        <div className='detailed-status__button'><IconButton key='translate-button' className='status__action-bar-button fa fa-language' title={intl.formatMessage(messages.translate)} onClick={this.handleTranslateClick} /></div>
         <div className='detailed-status__button'><IconButton className='bookmark-icon' active={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='bookmark' onClick={this.handleBookmarkClick} /></div>
 
         <div className='detailed-status__action-bar-dropdown'>
